@@ -24,40 +24,72 @@ import com.google.appengine.api.datastore.Query;
 import java.util.List;
 
 public class SignGuestbookServlet extends HttpServlet {
-	 private static final Logger log = Logger.getLogger(SignGuestbookServlet.class.getName());
-
-	    @Override
-	    public void doPost(HttpServletRequest req, HttpServletResponse resp)
-	                throws IOException {
-	    	UserService userService = UserServiceFactory.getUserService();
-	        User user = userService.getCurrentUser();
-
-	        // We have one entity group per Guestbook with all Greetings residing
-	        // in the same entity group as the Guestbook to which they belong.
-	        // This lets us run a transactional ancestor query to retrieve all
-	        // Greetings for a given Guestbook.  However, the write rate to each
-	        // Guestbook should be limited to ~1/second.
-	        String guestbookName = req.getParameter("guestbookName");
+	
+	 	@Override
+	 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
+				throws IOException {
+			String guestbookName = req.getParameter("guestbookName");
+		    if (guestbookName == null) {
+		        guestbookName = "default";
+		    }
 	        Key guestbookKey = KeyFactory.createKey("Guestbook", guestbookName);
-	        String content = req.getParameter("content");
-	        Date date = new Date();
-	        Entity greeting = new Entity("Greeting", guestbookKey);
-	        greeting.setProperty("user", user);
-	        greeting.setProperty("date", date);
-	        greeting.setProperty("content", content);
-	        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-	        datastore.put(greeting);
+	        
 	        try {
-	            // Run an ancestor query to ensure we see the most up-to-date
-	            // view of the Greetings belonging to the selected Guestbook.
-	            Query query = new Query("Greeting", guestbookKey).addSort("date", Query.SortDirection.DESCENDING);
-	            List<Entity> greetings = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(5));
-		        req.setAttribute("guestbookName", guestbookName);
-		        req.setAttribute("greetings", greetings);
+	            setReqAttr(req, guestbookName, dataQuery10Rows("Greeting", guestbookKey));
 		        req.getRequestDispatcher("/WEB-INF/JSP/guestbook.jsp").forward(req, resp);
 			} catch (ServletException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		}
+	 	
+	    @Override
+	    public void doPost(HttpServletRequest req, HttpServletResponse resp)
+	                throws IOException {	        
+	        String guestbookName = req.getParameter("guestbookName");
+	        Key guestbookKey = KeyFactory.createKey("Guestbook", guestbookName);
+	        
+	        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+			datastore.put(createGreetingEntity("Greeting", guestbookKey, req));
+			resp.sendRedirect("/"); //Post/Redirect/Get design pattern
+	    }
+	    
+	    /*
+	     * Create Greeting Type of Entity for Datastore
+	     */
+	    private Entity createGreetingEntity(String EntityKind, Key EntityKey, HttpServletRequest req) {	  
+	    	UserService userService = UserServiceFactory.getUserService();
+	        User user = userService.getCurrentUser();
+	        
+	        Entity greeting = new Entity(EntityKind, EntityKey);
+	        
+	        greeting.setProperty("user", (user == null) ? "anonymous person" : user.getNickname());
+	        greeting.setProperty("date", new Date());
+	        greeting.setProperty("content", req.getParameter("content"));
+	    	return greeting;
+	    }
+	    
+	    /*
+	     * Query 10 rows of data by given Entity type and key
+	     * return sorted list
+	     */
+	    private List<Entity> dataQuery10Rows(String EntityKind, Key EntityKey) {
+	    	DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+            // Run an ancestor query to ensure we see the most up-to-date
+            // view of the Greetings belonging to the selected Guestbook.
+            Query query = new Query(EntityKind, EntityKey).addSort("date", Query.SortDirection.DESCENDING);
+            return datastore.prepare(query).asList(FetchOptions.Builder.withLimit(10));    	
+	    }
+	    
+	    /*
+	     * Set request's attributes to pass greetings to JSP
+	     */
+	    private void setReqAttr(HttpServletRequest req, String guestbookName, List<Entity> ent) {
+	    	UserService userService = UserServiceFactory.getUserService();
+	        req.setAttribute("guestbookName", guestbookName);
+	        req.setAttribute("greetings", ent);
+	        req.setAttribute("user", userService.getCurrentUser());
+	        req.setAttribute("login", userService.createLoginURL(req.getRequestURI()));
+	        req.setAttribute("logout", userService.createLogoutURL(req.getRequestURI()));	    
 	    }
 }

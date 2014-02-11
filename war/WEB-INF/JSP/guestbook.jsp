@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <body>
-	<table style="margin:10px">
+	<table style="margin-left:10px">
 		<tr>
 			<td colspan="2">
 				<c:if test="${empty requestScope.user}">
@@ -23,11 +23,11 @@
 		<tr>
 			<td>
 				<span class="label label-info"><c:out value="${guestbookMsg}" /></span>
-			    <table>
+			    <table class="table-hover">
 			    <c:forEach items="${requestScope.greetings}" var="greeting">
 			    	<tr><td>
 			    	<blockquote>
-					  <p>${fn:escapeXml(greeting.properties.content)}</p>
+					  <p style="max-width:500px">${fn:escapeXml(greeting.properties.content)}</p>
 					  <footer>written by <span class="label label-default">${fn:escapeXml(greeting.properties.user)}</span> on ${fn:escapeXml(greeting.properties.date)}</footer>
 					</blockquote>
 					</td>

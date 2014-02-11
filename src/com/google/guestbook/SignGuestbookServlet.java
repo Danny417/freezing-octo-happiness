@@ -1,6 +1,7 @@
 package com.google.guestbook;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.logging.Logger;
 
 import javax.servlet.RequestDispatcher;
@@ -18,6 +19,7 @@ import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 
 import java.util.Date;
+import java.util.TimeZone;
 
 import com.google.appengine.api.datastore.Query;
 
@@ -64,7 +66,9 @@ public class SignGuestbookServlet extends HttpServlet {
 	        Entity greeting = new Entity(EntityKind, EntityKey);
 	        
 	        greeting.setProperty("user", (user == null) ? "anonymous person" : user.getNickname());
-	        greeting.setProperty("date", new Date());
+	        SimpleDateFormat isoFormat = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss z");
+	        isoFormat.setTimeZone(TimeZone.getTimeZone("PST"));
+	        greeting.setProperty("date", isoFormat.format(new Date()));	        
 	        greeting.setProperty("content", req.getParameter("content"));
 	    	return greeting;
 	    }

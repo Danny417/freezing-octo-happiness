@@ -90,6 +90,7 @@ public class SignGuestbookServlet extends HttpServlet {
 	        req.setAttribute("greetings", ent);
 	        req.setAttribute("user", userService.getCurrentUser());
 	        req.setAttribute("login", userService.createLoginURL(req.getRequestURI()));
-	        req.setAttribute("logout", userService.createLogoutURL(req.getRequestURI()));	    
+	        req.setAttribute("logout", userService.createLogoutURL(req.getRequestURI()));	
+	        req.setAttribute("guestbookMsg", (ent.size() == 0) ? "Guestbook '"+guestbookName+"' has no message": "Messages in Guestbook '"+guestbookName+"'");
 	    }
 }

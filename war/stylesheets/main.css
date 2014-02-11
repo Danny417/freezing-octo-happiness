@@ -1,6 +1,9 @@
 body {
     font-family: Verdana, Helvetica, sans-serif;
-    background-color: #FFFFCC;
+	background: -webkit-linear-gradient(45deg, rgba(255,255,255,1), rgba(62,58,74,0.7)); /*Safari*/
+	background: -o-linear-gradient(45deg, rgba(18,10,42,1), rgba(62,58,74,0.7), rgba(12,12,14,1)); /*Opera 11-12*/
+	background: -moz-linear-gradient(45deg, rgba(18,10,42,1), rgba(62,58,74,0.7), rgba(12,12,14,1)); /*Fx 3.6-15*/
+	background: linear-gradient(45deg, rgba(255,255,255,1), rgba(62,58,74,0.7)); /*Standard*/
 }
 
 .user {

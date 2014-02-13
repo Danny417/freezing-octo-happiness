@@ -74,7 +74,7 @@ public class SignGuestbookServlet extends HttpServlet {
 	    }
 	    
 	    /*
-	     * Query 10 rows of data by given Entity type and key
+	     * Query max 99 rows of data by given Entity type and key
 	     * return sorted list
 	     */
 	    private List<Entity> dataQuery10Rows(String EntityKind, Key EntityKey) {
@@ -82,7 +82,7 @@ public class SignGuestbookServlet extends HttpServlet {
             // Run an ancestor query to ensure we see the most up-to-date
             // view of the Greetings belonging to the selected Guestbook.
             Query query = new Query(EntityKind, EntityKey).addSort("date", Query.SortDirection.DESCENDING);
-            return datastore.prepare(query).asList(FetchOptions.Builder.withLimit(10));    	
+            return datastore.prepare(query).asList(FetchOptions.Builder.withLimit(99));    	
 	    }
 	    
 	    /*
@@ -95,6 +95,6 @@ public class SignGuestbookServlet extends HttpServlet {
 	        req.setAttribute("user", userService.getCurrentUser());
 	        req.setAttribute("login", userService.createLoginURL(req.getRequestURI()));
 	        req.setAttribute("logout", userService.createLogoutURL(req.getRequestURI()));	
-	        req.setAttribute("guestbookMsg", (ent.size() == 0) ? "Guestbook '"+guestbookName+"' has no message": "Messages in Guestbook '"+guestbookName+"'");
+	        req.setAttribute("guestbookMsg", (ent.size() == 0) ? "Guestbook '"+guestbookName+"' has no message": "Recent 10 messages in Guestbook '"+guestbookName+"'");
 	    }
 }

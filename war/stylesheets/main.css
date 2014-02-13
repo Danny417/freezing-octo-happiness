@@ -2,23 +2,38 @@
     font-family: Verdana, Helvetica, sans-serif;    
   	font: 83%/130% arial;
   	float: left;
-  	padding: 40px;
+}
+#map {
+	float: right;
+}
+.block {
+  	padding: 40px 40px 0 40px;	
 }
 table {	
 	border-collapse:separate;
 }
-.box-shadow {
+.box-shadow-left-bottom, .box-shadow-right-bottom {
+  	padding: 20px;   
+  	border: 1px solid #d6e9c6;
+}
+
+.box-shadow-left-bottom {	
 	background: -webkit-linear-gradient(45deg, rgba(124,116,128,0.5), rgba(255,255,255,1)); /*Safari*/
 	background: -o-linear-gradient(45deg, rgba(124,116,128,0.5), rgba(255,255,255,1)); /*Opera 11-12*/
 	background: -moz-linear-gradient(45deg, rgba(124,116,128,0.5), rgba(255,255,255,1)); /*Fx 3.6-15*/
 	background: linear-gradient(45deg, rgba(124,116,128,0.5), rgba(255,255,255,1)); /*Standard*/
-  	-moz-box-shadow: -10px -10px 15px #ccc;
-  	-webkit-box-shadow: -10px -10px 15px #ccc;
-  	box-shadow: -10px -10px 15px #ccc;  	
-  	padding: 20px;   
+  	-moz-box-shadow: -10px 10px 15px #ccc;
+  	-webkit-box-shadow: -10px 10px 15px #ccc;
+  	box-shadow: -10px 10px 15px #ccc;  	
 }
-.user {
-	font-weight: bold;
+.box-shadow-right-bottom {
+	background: -webkit-linear-gradient(315deg, rgba(124,116,128,0.5), rgba(255,255,255,1)); /*Safari*/
+	background: -o-linear-gradient(315deg, rgba(124,116,128,0.5), rgba(255,255,255,1)); /*Opera 11-12*/
+	background: -moz-linear-gradient(315deg, rgba(124,116,128,0.5), rgba(255,255,255,1)); /*Fx 3.6-15*/
+	background: linear-gradient(315deg, rgba(124,116,128,0.5), rgba(255,255,255,1)); /*Standard*/
+  	-moz-box-shadow: 10px 10px 15px #ccc;
+  	-webkit-box-shadow: 10px 10px 15px #ccc;
+  	box-shadow: 10px 10px 15px #ccc;  		
 }
 .badge {
 	float: right

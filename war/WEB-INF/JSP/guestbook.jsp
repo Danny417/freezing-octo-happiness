@@ -23,7 +23,7 @@
 			<div class="panel-heading"><c:out value="${guestbookMsg}" /> <span class="badge"><c:out value="${fn:length(requestScope.greetings)}" /></span></div>
 			<div class="panel-body">
 		    <table class="table-hover">
-		    <c:forEach items="${requestScope.greetings}" var="greeting">
+		    <c:forEach items="${requestScope.greetings}" var="greeting" end="9">
 		    	<tr><td>
 		    	<blockquote>
 				  <p style="max-width:500px">${fn:escapeXml(greeting.properties.content)}</p>

@@ -15,6 +15,7 @@ table {
 .box-shadow-left-bottom, .box-shadow-right-bottom {
   	padding: 20px;   
   	border: 1px solid #d6e9c6;
+  	word-wrap: break-word;
 }
 
 .box-shadow-left-bottom {	
@@ -33,7 +34,7 @@ table {
 	background: linear-gradient(315deg, rgba(124,116,128,0.5), rgba(255,255,255,1)); /*Standard*/
   	-moz-box-shadow: 10px 10px 15px #ccc;
   	-webkit-box-shadow: 10px 10px 15px #ccc;
-  	box-shadow: 10px 10px 15px #ccc;  		
+  	box-shadow: 10px 10px 15px #ccc;  	 		
 }
 .badge {
 	float: right

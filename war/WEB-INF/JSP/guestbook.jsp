@@ -7,27 +7,11 @@
   <head>
     <link type="text/css" rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" >
     <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    
-    <script type="text/javascript">
-    	//
-    	function initialize() {
-        	var mapOptions = {
-          		center: new google.maps.LatLng(-34.397, 150.644),
-          		zoom: 8
-        	};
-        	var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
-      	}
-      	
-      	function loadScript() { //load google map javascript after the page is fully loaded
-			var script = document.createElement('script');
-			script.type = 'text/javascript';
-			script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyBwIx4LV0tdO3OMeFZBvTroBgEBkFcbDTM&sensor=true&callback=initialize';
-			document.body.appendChild(script);
-		}
-
-		window.onload = loadScript;
-    </script>    
+    <meta name="viewport" content="width=device-width, initial-scale=1">  
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwIx4LV0tdO3OMeFZBvTroBgEBkFcbDTM&sensor=true"></script> 
+    <script>
+    	var markers = [];
+    </script>
   </head>
   <body>
   	<div class="alert alert-info" style="margin:40px 40px 0 40px">
@@ -49,8 +33,18 @@
 			    	<tr><td>
 			    	<blockquote>
 					  <p style="max-width:500px">${fn:escapeXml(greeting.properties.content)}</p>
-					  <footer>written by <span class="label label-default">${fn:escapeXml(greeting.properties.user)}</span> on ${fn:escapeXml(greeting.properties.date)}</footer>
+					  <footer>
+					  	written by <span class="label label-default">${fn:escapeXml(greeting.properties.user)}</span> on ${fn:escapeXml(greeting.properties.date)}<br />
+					  	at location : ${fn:escapeXml(greeting.properties.latitude)}, ${fn:escapeXml(greeting.properties.longitude)} in range of ${fn:escapeXml(greeting.properties.accuracy)} meters.
+					  </footer>
 					</blockquote>
+					<script>
+						var marker = new google.maps.Marker({
+						    position: new google.maps.LatLng(${greeting.properties.latitude}, ${greeting.properties.longitude}),
+						    title: "${fn:escapeXml(greeting.properties.user)}"
+						});
+						markers.push(marker);		
+					</script>
 					</td></tr>
 			    </c:forEach>
 			    </table>
@@ -60,6 +54,7 @@
 		      <div><textarea class="form-control" name="content" rows="3" cols="60" placeholder="Enter message"></textarea></div>
 		      <div><input type="submit" class="btn btn-primary" value="Post Greeting" /></div>
 		      <input type="hidden" name="guestbookName" value="${fn:escapeXml(guestbookName)}"/>
+		      <input type="hidden" name="coordinate" />
 		    </form> 
 		</div>
 		
@@ -68,7 +63,57 @@
 			</div>
 		</div>
 	</div>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript">	     	
+      	function loadMapScript() { //load google map javascript after the page is fully loaded
+			var script = document.createElement('script');
+			script.type = 'text/javascript';
+			script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyBwIx4LV0tdO3OMeFZBvTroBgEBkFcbDTM&sensor=true';
+			document.body.appendChild(script);
+		};
+		
+		function setPosition(position) {
+			var mapLatLng = position || {latitude : 0, longitude : 0, accuracy : 'UNKNOWN'};
+			document.getElementsByName("coordinate")[0].setAttribute('value', 
+				"latitude:"+mapLatLng.latitude.toFixed(4)+",longitude:"+mapLatLng.longitude.toFixed(4)+",accuracy:"+mapLatLng.accuracy);	
+				
+			var mapOptions = {
+          		center: new google.maps.LatLng(mapLatLng.latitude || 49.28, mapLatLng.longitude || -123.12),
+          		zoom: 8
+        	};
+        	var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+        	
+        	var marker = new google.maps.Marker({
+			    position: mapOptions.center,
+			    title:"Current Position",
+			    icon: new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_xpin_icon&chld=pin_star|home|4488FF",
+			    		new google.maps.Size(20, 40),
+			    		new google.maps.Point(0,0)),
+			    zIndex: 99999
+			});
+			markers.push(marker);
+			showMarkers(map);
+		};
+				
+		function showMarkers(map) {
+			if(markers) {
+				for(i in markers) {
+					markers[i].setMap(map);
+				}
+			}
+		};
+		
+		window.onload = function() {
+			if (navigator.geolocation) {
+				navigator.geolocation.getCurrentPosition(
+					function(position) {
+						setPosition(position.coords);
+					}, function() {
+						setPosition();
+					});
+			} else {
+				setPosition();
+			}
+		};
+    </script> 
   </body>
 </html>

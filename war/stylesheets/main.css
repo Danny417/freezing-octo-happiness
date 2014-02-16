@@ -1,10 +1,12 @@
 #content {
 	width:100%;
+	white-space:nowrap;
 }
 #guestbook {
     font-family: Verdana, Helvetica, sans-serif;    
   	font: 83%/130% arial;
   	float: left;
+  	white-space:normal;
   	word-wrap: break-word;
 }
 #map {

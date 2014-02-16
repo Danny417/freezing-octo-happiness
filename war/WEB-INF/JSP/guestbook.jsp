@@ -2,6 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page isELIgnored="false" %>
 <html>
   <head>
@@ -35,7 +36,9 @@
 					  <p style="max-width:500px">${fn:escapeXml(greeting.properties.content)}</p>
 					  <footer>
 					  	written by <span class="label label-default">${fn:escapeXml(greeting.properties.user)}</span> on ${fn:escapeXml(greeting.properties.date)}<br />
-					  	at location : ${fn:escapeXml(greeting.properties.latitude)}, ${fn:escapeXml(greeting.properties.longitude)} in range of ${fn:escapeXml(greeting.properties.accuracy)} meters.
+					  	at location : <fmt:formatNumber type="number" maxFractionDigits="6" value="${greeting.properties.latitude}"/>, 
+					  		<fmt:formatNumber type="number" maxFractionDigits="6" value="${greeting.properties.longitude}"/>
+					  		in range of ${fn:escapeXml(greeting.properties.accuracy)} meters.
 					  </footer>
 					</blockquote>
 					<script>
@@ -74,23 +77,25 @@
 		function setPosition(position) {
 			var mapLatLng = position || {latitude : 0, longitude : 0, accuracy : 'UNKNOWN'};
 			document.getElementsByName("coordinate")[0].setAttribute('value', 
-				"latitude:"+mapLatLng.latitude.toFixed(4)+",longitude:"+mapLatLng.longitude.toFixed(4)+",accuracy:"+mapLatLng.accuracy);	
+				"latitude:"+mapLatLng.latitude+",longitude:"+mapLatLng.longitude+",accuracy:"+mapLatLng.accuracy);	
 				
 			var mapOptions = {
           		center: new google.maps.LatLng(mapLatLng.latitude || 49.28, mapLatLng.longitude || -123.12),
-          		zoom: 8
+          		zoom: 12
         	};
         	var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
         	
-        	var marker = new google.maps.Marker({
-			    position: mapOptions.center,
-			    title:"Current Position",
-			    icon: new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_xpin_icon&chld=pin_star|home|4488FF",
-			    		new google.maps.Size(20, 40),
-			    		new google.maps.Point(0,0)),
-			    zIndex: 99999
-			});
-			markers.push(marker);
+        	if(position) {
+	        	var marker = new google.maps.Marker({
+				    position: mapOptions.center,
+				    title: "Current Position",
+				    icon: new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_xpin_icon&chld=pin_star|home|4488FF",
+				    		new google.maps.Size(20, 40),
+				    		new google.maps.Point(0,0)),
+				    zIndex: 99999
+				});
+				markers.push(marker);
+			}
 			showMarkers(map);
 		};
 				

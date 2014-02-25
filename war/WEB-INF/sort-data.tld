@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<taglib 
+    xmlns="http://java.sun.com/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
+    version="2.1">
+
+    <display-name>Entity Functions</display-name>
+    <tlib-version>1.0</tlib-version>
+    <short-name>entity</short-name>
+    <uri>com.google.guestbook</uri>
+
+    <function>
+        <name>sortByDate</name>
+        <function-class>com.google.guestbook.SignGuestbookServlet</function-class>
+        <function-signature>java.util.List sortByDate(java.util.List)</function-signature>
+    </function>
+
+</taglib>

@@ -2,6 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="p" uri="/WEB-INF/sort-data.tld" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page isELIgnored="false" %>
 <html>
@@ -30,7 +31,7 @@
 				<div class="panel-heading"><c:out value="${guestbookMsg}" /> <span class="badge"><c:out value="${fn:length(requestScope.greetings)}" /></span></div>
 				<div class="panel-body">
 			    <table class="table-hover">
-			    <c:forEach items="${requestScope.greetings}" var="greeting" end="9">
+			    <c:forEach items="${p:sortByDate(requestScope.greetings)}" var="greeting" end="9">
 			    	<tr><td>
 			    	<blockquote>
 					  <p style="max-width:500px">${fn:escapeXml(greeting.properties.content)}</p>

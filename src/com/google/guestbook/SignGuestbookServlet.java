@@ -19,15 +19,13 @@ import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.labs.repackaged.com.google.common.base.Splitter;
 
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.Map;
 import java.util.TimeZone;
 import java.util.List;
 
 public class SignGuestbookServlet extends HttpServlet {
-		
+	
 	 	@Override
 	 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 				throws IOException {
@@ -52,6 +50,7 @@ public class SignGuestbookServlet extends HttpServlet {
 	        String guestbookName = req.getParameter("guestbookName");
 	        Key guestbookKey = KeyFactory.createKey("Guestbook", guestbookName);
 			DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+			
 			datastore.put(createGreetingEntity("Greeting", guestbookKey, req));        
 			resp.sendRedirect("/"); //Post/Redirect/Get design pattern
 	    }
@@ -64,11 +63,12 @@ public class SignGuestbookServlet extends HttpServlet {
 	        User user = userService.getCurrentUser();
 
 	        Entity greeting = new Entity(EntityKind, EntityKey);
-	        
 	        greeting.setProperty("user", (user == null) ? "anonymous person" : user.getNickname());
-	        greeting.setProperty("date", new Date());	        
+	        SimpleDateFormat isoFormat = new SimpleDateFormat("EEE d MMM yyyy HH:mm:ss z");
+	        isoFormat.setTimeZone(TimeZone.getTimeZone("PST"));
+	        greeting.setProperty("date", isoFormat.format(new Date()));	        
 	        greeting.setProperty("content", req.getParameter("content"));
-	        greeting.setProperty("index", req.getParameter("index"));
+	        greeting.setProperty("index", (int) (new Date().getTime()/1000));
 	        Map<String, String> coordinate = Splitter.on(",").withKeyValueSeparator(":").split(req.getParameter("coordinate"));
 	        for(Map.Entry<String, String> entry : coordinate.entrySet()) {
 	        	greeting.setProperty(entry.getKey(), entry.getValue());
@@ -99,6 +99,5 @@ public class SignGuestbookServlet extends HttpServlet {
 	        req.setAttribute("login", userService.createLoginURL(req.getRequestURI()));
 	        req.setAttribute("logout", userService.createLogoutURL(req.getRequestURI()));	
 	        req.setAttribute("guestbookMsg", (ent.size() == 0) ? "Guestbook '"+guestbookName+"' has no message": "Recent 10 messages in Guestbook '"+guestbookName+"'");
-	        req.setAttribute("index", ent.size());
 	    }
 }

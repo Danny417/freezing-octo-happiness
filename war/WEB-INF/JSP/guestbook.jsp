@@ -57,6 +57,7 @@
 		      <div><textarea class="form-control" name="content" rows="3" cols="60" placeholder="Enter message"></textarea></div>
 		      <div><input type="submit" class="btn btn-primary" value="Post Greeting" /></div>
 		      <input type="hidden" name="guestbookName" value="${fn:escapeXml(guestbookName)}"/>
+		      <input type="hidden" name="index" value="${requestScope.index}"/>
 		      <input type="hidden" name="coordinate" />
 		    </form> 
 		</div>

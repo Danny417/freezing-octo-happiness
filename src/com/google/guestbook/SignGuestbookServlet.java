@@ -68,14 +68,7 @@ public class SignGuestbookServlet extends HttpServlet {
 	        greeting.setProperty("user", (user == null) ? "anonymous person" : user.getNickname());
 	        greeting.setProperty("date", new Date());	        
 	        greeting.setProperty("content", req.getParameter("content"));
-	        
-	        
-	        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-	        Query query = new Query(EntityKind, EntityKey);
-	        greeting.setProperty("index", datastore.prepare(query).countEntities(FetchOptions.Builder.withDefaults()));
-	        
-	        
-	        System.out.println(req.getParameter("content") + " has index of " + datastore.prepare(query).countEntities(FetchOptions.Builder.withDefaults()));
+	        greeting.setProperty("index", req.getParameter("index"));
 	        Map<String, String> coordinate = Splitter.on(",").withKeyValueSeparator(":").split(req.getParameter("coordinate"));
 	        for(Map.Entry<String, String> entry : coordinate.entrySet()) {
 	        	greeting.setProperty(entry.getKey(), entry.getValue());
@@ -106,5 +99,6 @@ public class SignGuestbookServlet extends HttpServlet {
 	        req.setAttribute("login", userService.createLoginURL(req.getRequestURI()));
 	        req.setAttribute("logout", userService.createLogoutURL(req.getRequestURI()));	
 	        req.setAttribute("guestbookMsg", (ent.size() == 0) ? "Guestbook '"+guestbookName+"' has no message": "Recent 10 messages in Guestbook '"+guestbookName+"'");
+	        req.setAttribute("index", ent.size());
 	    }
 }

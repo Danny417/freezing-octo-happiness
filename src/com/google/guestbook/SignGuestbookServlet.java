@@ -28,6 +28,8 @@ import java.util.List;
 
 public class SignGuestbookServlet extends HttpServlet {
 	
+		public static int index = 0;
+		
 	 	@Override
 	 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 				throws IOException {
@@ -66,10 +68,10 @@ public class SignGuestbookServlet extends HttpServlet {
 	        Entity greeting = new Entity(EntityKind, EntityKey);
 	        
 	        greeting.setProperty("user", (user == null) ? "anonymous person" : user.getNickname());
-	        //SimpleDateFormat isoFormat = new SimpleDateFormat("EEE d MMM yyyy HH:mm:ss z");
-	        //isoFormat.setTimeZone(TimeZone.getTimeZone("PST"));
 	        greeting.setProperty("date", new Date());	        
 	        greeting.setProperty("content", req.getParameter("content"));
+	        greeting.setProperty("index", index);
+	        System.out.println(req.getParameter("content") + " has index of " + index);
 	        Map<String, String> coordinate = Splitter.on(",").withKeyValueSeparator(":").split(req.getParameter("coordinate"));
 	        for(Map.Entry<String, String> entry : coordinate.entrySet()) {
 	        	greeting.setProperty(entry.getKey(), entry.getValue());
@@ -85,7 +87,7 @@ public class SignGuestbookServlet extends HttpServlet {
 	    	DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
             // Run an ancestor query to ensure we see the most up-to-date
             // view of the Greetings belonging to the selected Guestbook.
-            Query query = new Query(EntityKind, EntityKey);//.addSort("date", Query.SortDirection.DESCENDING);
+            Query query = new Query(EntityKind, EntityKey).addSort("index", Query.SortDirection.DESCENDING);
             return datastore.prepare(query).asList(FetchOptions.Builder.withLimit(99));    	
 	    }
 	    
@@ -100,16 +102,6 @@ public class SignGuestbookServlet extends HttpServlet {
 	        req.setAttribute("login", userService.createLoginURL(req.getRequestURI()));
 	        req.setAttribute("logout", userService.createLogoutURL(req.getRequestURI()));	
 	        req.setAttribute("guestbookMsg", (ent.size() == 0) ? "Guestbook '"+guestbookName+"' has no message": "Recent 10 messages in Guestbook '"+guestbookName+"'");
+	        index = ent.size();
 	    }
-	    
-	    public static List<Entity> sortByDate(List<Entity> ent){
-	    	Collections.sort(ent, new Comparator<Entity>(){
-				@Override
-				public int compare(Entity o1, Entity o2) {
-					return ((Date)(o1.getProperty("date"))).compareTo((Date)o2.getProperty("date")) ;
-				}
-	    	});
-	    	Collections.reverse(ent);
-	    	return ent;
-	    } 
 }

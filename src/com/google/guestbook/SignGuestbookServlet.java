@@ -18,6 +18,7 @@ import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.labs.repackaged.com.google.common.base.Splitter;
+import com.google.gson.Gson;
 
 import java.util.Date;
 import java.util.Map;
@@ -28,31 +29,27 @@ public class SignGuestbookServlet extends HttpServlet {
 	
 	 	@Override
 	 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
-				throws IOException {
-			String guestbookName = req.getParameter("guestbookName");
-		    if (guestbookName == null) {
-		        guestbookName = "default";
-		    }
-	        Key guestbookKey = KeyFactory.createKey("Guestbook", guestbookName);
+				throws IOException {	    
+	        String reqMarkerID = req.getParameter("markerID");	                
+	        Key guestbookKey = KeyFactory.createKey("Guestbook", reqMarkerID);
 	        
-	        try {
-	            setReqAttr(req, guestbookName, dataQuery10Rows("Greeting", guestbookKey));
-		        req.getRequestDispatcher("/WEB-INF/JSP/guestbook.jsp").forward(req, resp);
-			} catch (ServletException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-	 	
+	        setReqAttr(req);
+	        List<Entity> greetings = dataQueryRows("Greeting", guestbookKey);	        
+	        String responseHTMLString = new Gson().toJson(greetings);       
+	       
+	        resp.setContentType("text/html");
+	        resp.getWriter().println(responseHTMLString);        
+		}    
+	 		 	
 	    @Override
 	    public void doPost(HttpServletRequest req, HttpServletResponse resp)
 	                throws IOException {	        
-	        String guestbookName = req.getParameter("guestbookName");
-	        Key guestbookKey = KeyFactory.createKey("Guestbook", guestbookName);
+	        String reqMarkerID = req.getParameter("markerID");
+	        Key guestbookKey = KeyFactory.createKey("Guestbook", reqMarkerID);
 			DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 			
 			datastore.put(createGreetingEntity("Greeting", guestbookKey, req));        
-			resp.sendRedirect("/"); //Post/Redirect/Get design pattern
+			resp.sendRedirect("/ajax/?markerID="+reqMarkerID); //Post/Redirect/Get design pattern
 	    }
 	    
 	    /*
@@ -68,19 +65,20 @@ public class SignGuestbookServlet extends HttpServlet {
 	        isoFormat.setTimeZone(TimeZone.getTimeZone("PST"));
 	        greeting.setProperty("date", isoFormat.format(new Date()));	        
 	        greeting.setProperty("content", req.getParameter("content"));
+	        greeting.setProperty("markerID", req.getParameter("markerID"));
 	        greeting.setProperty("index", (int) (new Date().getTime()/1000));
-	        Map<String, String> coordinate = Splitter.on(",").withKeyValueSeparator(":").split(req.getParameter("coordinate"));
+	        /*Map<String, String> coordinate = Splitter.on(",").withKeyValueSeparator(":").split(req.getParameter("coordinate"));
 	        for(Map.Entry<String, String> entry : coordinate.entrySet()) {
 	        	greeting.setProperty(entry.getKey(), entry.getValue());
-	        }
+	        }*/
 	    	return greeting;
 	    }
 	    
 	    /*
-	     * Query max 99 rows of data by given Entity type and key
+	     * Query max 99 rows of data by given Entity type,key, markerId
 	     * return sorted list
 	     */
-	    private List<Entity> dataQuery10Rows(String EntityKind, Key EntityKey) {
+	    private List<Entity> dataQueryRows(String EntityKind, Key EntityKey) {
 	    	DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
             // Run an ancestor query to ensure we see the most up-to-date
             // view of the Greetings belonging to the selected Guestbook.
@@ -91,13 +89,13 @@ public class SignGuestbookServlet extends HttpServlet {
 	    /*
 	     * Set request's attributes to pass greetings to JSP
 	     */
-	    private void setReqAttr(HttpServletRequest req, String guestbookName, List<Entity> ent) {
+	    private void setReqAttr(HttpServletRequest req) {
 	    	UserService userService = UserServiceFactory.getUserService();
-	        req.setAttribute("guestbookName", guestbookName);
-	        req.setAttribute("greetings", ent);
+	       // req.setAttribute("guestbookName", guestbookName);
+	       // req.setAttribute("greetings", ent);
 	        req.setAttribute("user", userService.getCurrentUser());
 	        req.setAttribute("login", userService.createLoginURL(req.getRequestURI()));
 	        req.setAttribute("logout", userService.createLogoutURL(req.getRequestURI()));	
-	        req.setAttribute("guestbookMsg", (ent.size() == 0) ? "Guestbook '"+guestbookName+"' has no message": "Recent 10 messages in Guestbook '"+guestbookName+"'");
+	       // req.setAttribute("guestbookMsg", (ent.size() == 0) ? "Guestbook '"+guestbookName+"' has no message": "Recent 10 messages in Guestbook '"+guestbookName+"'");
 	    }
 }

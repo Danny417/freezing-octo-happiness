@@ -6,10 +6,7 @@ function loadMapScript() { //load google map javascript after the page is fully 
 };
 		
 function setPosition(position) {
-	var mapLatLng = position || {latitude : 0, longitude : 0, accuracy : 'UNKNOWN'};
-	document.getElementsByName("coordinate")[0].setAttribute('value', 
-		"latitude:"+mapLatLng.latitude+",longitude:"+mapLatLng.longitude+",accuracy:"+mapLatLng.accuracy);	
-		
+	var mapLatLng = position || {latitude : 0, longitude : 0, accuracy : 'UNKNOWN'};	
 	var mapOptions = {
   		center: new google.maps.LatLng(mapLatLng.latitude || 49.28, mapLatLng.longitude || -123.12),
   		zoom: 12
@@ -48,5 +45,5 @@ function showMarkers(map) {
 			markers[i].setMap(map);
 		}
 	}
-};
+}
 		

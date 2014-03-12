@@ -23,9 +23,9 @@
 			Hello, ${fn:escapeXml(requestScope.user.nickname)}! (You can <a class="alert-link" href="${logout}"> sign out</a>.)
 		</c:if>
 	</div>
-	
+
 	<div id="content">
-		<div id="guestbook" class="block">
+		<!--div id="guestbook" class="block">
 			<div class="box-shadow-left-bottom panel panel-success">
 				<div class="panel-heading"><c:out value="${guestbookMsg}" /> <span class="badge"><c:out value="${fn:length(requestScope.greetings)}" /></span></div>
 				<div class="panel-body">
@@ -59,8 +59,7 @@
 		      <input type="hidden" name="guestbookName" value="${fn:escapeXml(guestbookName)}"/>
 		      <input type="hidden" name="coordinate" />
 		    </form> 
-		</div>
-		
+		</div!-->
 		<div id="map" class="block">
 			<div id="map-canvas" class="box-shadow-right-bottom" >
 			</div>

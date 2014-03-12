@@ -6,7 +6,7 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
 http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	<servlet>
         <servlet-name>sign</servlet-name>
-        <servlet-class>com.google.guestbook.SignGuestbookServlet</servlet-class>
+        <servlet-class>com.google.guestbook.MainServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>sign</servlet-name>

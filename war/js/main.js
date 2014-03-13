@@ -1,9 +1,86 @@
-function loadMapScript() { //load google map javascript after the page is fully loaded
-	var script = document.createElement('script');
-	script.type = 'text/javascript';
-	script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyBwIx4LV0tdO3OMeFZBvTroBgEBkFcbDTM&sensor=true';
-	document.body.appendChild(script);
-};
+var xmlHttpReq = null;
+var selectedMarkerID;
+var markers;
+
+function loadMarkers(){
+	try {
+		xmlHttpReq = new XMLHttpRequest();
+		xmlHttpReq.onreadystatechange = httpCallBackFunction_loadMarkers;
+		var url = "/resources/markers.xml";
+	
+		xmlHttpReq.open('GET', url, true);
+		//alert(url);
+    	xmlHttpReq.send(null);
+    	
+    	//alert("loadMarkers");
+    	
+	} catch (e) {
+    	alert("Error: " + e);
+	}	
+}
+function httpCallBackFunction_loadMarkers() {
+	//alert("httpCallBackFunction_loadMarkers");
+	
+	if (xmlHttpReq.readyState == 1){
+		//alert("readyState is 1");
+		//updateStatusMessage("<blink>Opening HTTP...</blink>");
+	}else if (xmlHttpReq.readyState == 2){
+		//alert("readtState is 2, sending query");
+		//updateStatusMessage("<blink>Sending query...</blink>");
+	}else if (xmlHttpReq.readyState == 3){ 
+		//alert("readyState is 3, receiving");
+		//updateStatusMessage("<blink>Receiving...</blink>");
+	}else if (xmlHttpReq.readyState == 4){
+		//alert ("readyState is 4");
+		var xmlDoc = null;
+
+		if(xmlHttpReq.responseXML){
+			xmlDoc = xmlHttpReq.responseXML;
+			alert ("responsexml");
+		}else if(xmlHttpReq.responseText){
+			alert ("resposnseText")
+			var parser = new DOMParser();
+		 	xmlDoc = parser.parseFromString(xmlHttpReq.responseText,"text/xml");			 	
+		 	
+		}
+
+		if(xmlDoc){				
+			alert(xmlHttpReq.responseText);	
+						
+			var markerElements = xmlDoc.getElementsByTagName('marker');
+			//alert(markerElements[0].getAttribute("srl"));	
+			alert(markerElements.length);
+			
+			for(mE = 0; mE < markerElements.length; mE++) {
+				var markerElement = markerElements[mE];
+				
+				//alert(markerElement.getAttribute("srl"));
+				
+				var lat = parseFloat(markerElement.getAttribute("lat"));
+				var lng = parseFloat(markerElement.getAttribute("lng"));
+				var srl = markerElement.getAttribute("srl");
+							
+				var myLatlng = new google.maps.LatLng(lat, lng);
+								
+				//var mrkID = ""+srl;
+				//var msgbox = "msgbox_"+mrkID;				
+				//var msglist = "msglist_"+mrkID; 
+				//var gstBkNm = guestbookNameString; // "default"; 
+													
+				var marker = new google.maps.Marker({       
+					position: myLatlng,
+					map: map
+					//title: ''+mrkID
+				});
+				alert("pushing marker");
+				// marker.setMap(map);
+				markers.push(marker);				
+			}			
+		}else{
+			alert("No data.");
+		}	
+	}		
+}
 		
 function setPosition(position) {
 	var mapLatLng = position || {latitude : 0, longitude : 0, accuracy : 'UNKNOWN'};	
@@ -12,31 +89,11 @@ function setPosition(position) {
   		zoom: 12
 	};
 	var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
-	
-	if(position) {
-    	var marker = new google.maps.Marker({
-		    position: mapOptions.center,
-		    title: "Current Position",
-		    icon: new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_xpin_icon&chld=pin_star|home|4488FF",
-		    		new google.maps.Size(20, 40),
-		    		new google.maps.Point(0,0)),
-		    zIndex: 99999
-		});
-		markers.push(marker);
-	}
-	showMarkers(map);
+	loadMarkers();
+	//showMarkers(map);
 };
 window.onload = function() {
-	if (navigator.geolocation) {
-		navigator.geolocation.getCurrentPosition(
-			function(position) {
-				setPosition(position.coords);
-			}, function() {
-				setPosition();
-			});
-	} else {
-		setPosition();
-	}
+	setPosition();
 };
 		
 function showMarkers(map) {

@@ -31,6 +31,8 @@
 		<include path="/**.js" />
 		<include path="/**.css" />
 		<include path="/**.xml" />
+		<include path="/**.jpg"/>
+		<include path="/**.png"/>
 	</static-files>
 	<resource-files>
 	</resource-files>

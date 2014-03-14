@@ -37,15 +37,15 @@ public class GetImageServlet extends HttpServlet {
 
 	    //...
 	 private ImageModel getImage(String title) {
-		    PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory();
+		    PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory("ImageModel");
             PersistenceManager pm = pmf.getPersistenceManager();
 
 
 		    // Search for any ImageModel object with the passed-in title; limit the number
 		    // of results returned to 1 since there should be at most one Image with
 		    // a given title
-		    //NEED CHANGES!!!!!!!!!!!
-		    Query query = pm.newQuery(ImageModel.class, "title == titleParam");
+            
+		    Query query = pm.newQuery(ImageModel.class, "ImageName == titleParam");
 		    query.declareParameters("String titleParam");
 		    query.setRange(0, 1);
 

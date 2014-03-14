@@ -12,4 +12,7 @@
             <property name="datanucleus.ConnectionURL" value="appengine"/>
         </properties>
     </persistence-unit>
+    <persistence-unit name="ImageModel">
+        <class>com.google.guestbook.ImageModel</class>
+   </persistence-unit>
 </persistence>

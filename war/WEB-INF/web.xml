@@ -20,4 +20,20 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
         <servlet-name>ajax</servlet-name>
         <url-pattern>/ajax/*</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>ajax2</servlet-name>
+        <servlet-class>com.google.guestbook.StoreImageServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ajax2</servlet-name>
+        <url-pattern>/ajax2/*</url-pattern>
+    </servlet-mapping>
+    <servlet>
+    		<servlet-name>ajax3</servlet-name>
+    		<servlet-class>com.google.guestbook.GetImageServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+    		<servlet-name>ajax3</servlet-name>
+    		<url-pattern>/ajax3/*</url-pattern>
+    </servlet-mapping>
 </web-app>

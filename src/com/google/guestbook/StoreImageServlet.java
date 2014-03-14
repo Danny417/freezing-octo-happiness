@@ -23,9 +23,10 @@ public class StoreImageServlet extends HttpServlet {
 	        URLFetchService fetchService =
 	            URLFetchServiceFactory.getURLFetchService();
 	     // Fetch the image at the location given by the url query string parameter
+	     //   HTTPResponse fetchResponse = fetchService.fetch(new URL(
+	      //          req.getParameter("url")));
 	        HTTPResponse fetchResponse = fetchService.fetch(new URL(
 	                req.getParameter("url")));
-	        
 	        String fetchResponseContentType = null;
 	        for (HTTPHeader header : fetchResponse.getHeaders()) {
 	            // For each request header, check whether the name equals
@@ -49,10 +50,9 @@ public class StoreImageServlet extends HttpServlet {
 	            // from the image fetched via the URL Fetch service
 	            image.setImage(fetchResponse.getContent());
 
-	            //...
 
-	            	///MAYBE WORKING!!!!!!!!!!!!!!!!!     
-	            PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory();
+	            PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory("ImageModel");
+	            
 	            PersistenceManager pm = pmf.getPersistenceManager();
 	            try {
 	                // Store the image in App Engine's datastore

@@ -10,6 +10,7 @@
     <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1">  
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwIx4LV0tdO3OMeFZBvTroBgEBkFcbDTM&sensor=true"></script>
+    <script src="/js/infobox.js" type="text/javascript"></script>
     <script>
     	var markers = [];
     </script>

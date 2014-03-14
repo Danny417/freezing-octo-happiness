@@ -36,20 +36,20 @@ function httpCallBackFunction_loadMarkers() {
 
 		if(xmlHttpReq.responseXML){
 			xmlDoc = xmlHttpReq.responseXML;
-			alert ("responsexml");
+			//alert ("responsexml");
 		}else if(xmlHttpReq.responseText){
-			alert ("resposnseText")
+			//alert ("resposnseText")
 			var parser = new DOMParser();
 		 	xmlDoc = parser.parseFromString(xmlHttpReq.responseText,"text/xml");			 	
 		 	
 		}
 
 		if(xmlDoc){				
-			alert(xmlHttpReq.responseText);	
+			//alert(xmlHttpReq.responseText);	
 						
 			var markerElements = xmlDoc.getElementsByTagName('marker');
 			//alert(markerElements[0].getAttribute("srl"));	
-			alert(markerElements.length);
+			//alert(markerElements.length);
 			
 			for(mE = 0; mE < markerElements.length; mE++) {
 				var markerElement = markerElements[mE];
@@ -72,7 +72,7 @@ function httpCallBackFunction_loadMarkers() {
 					map: map
 					//title: ''+mrkID
 				});
-				alert("pushing marker");
+				//alert("pushing marker");
 				// marker.setMap(map);
 				markers.push(marker);				
 			}			

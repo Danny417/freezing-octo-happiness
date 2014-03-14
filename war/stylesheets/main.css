@@ -38,7 +38,8 @@
 
 input[type="button"]{
 	position: relative;
-	bottom: 10px;
+	left: 5px;
+	bottom: 15px;
 	border:2px solid;
 }
 

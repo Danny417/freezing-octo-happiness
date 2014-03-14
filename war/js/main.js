@@ -10,29 +10,17 @@ function loadMarkers(){
 		var url = "/resources/markers.xml";
 	
 		xmlHttpReq.open('GET', url, true);
-		//alert(url);
     	xmlHttpReq.send(null);
-    	
-    	//alert("loadMarkers");
     	
 	} catch (e) {
     	alert("Error: " + e);
 	}	
 }
-function httpCallBackFunction_loadMarkers() {
-	//alert("httpCallBackFunction_loadMarkers");
-	
+function httpCallBackFunction_loadMarkers() {	
 	if (xmlHttpReq.readyState == 1){
-		//alert("readyState is 1");
-		//updateStatusMessage("<blink>Opening HTTP...</blink>");
 	}else if (xmlHttpReq.readyState == 2){
-		//alert("readtState is 2, sending query");
-		//updateStatusMessage("<blink>Sending query...</blink>");
 	}else if (xmlHttpReq.readyState == 3){ 
-		//alert("readyState is 3, receiving");
-		//updateStatusMessage("<blink>Receiving...</blink>");
 	}else if (xmlHttpReq.readyState == 4){
-		//alert ("readyState is 4");
 		var xmlDoc = null;
 
 		if(xmlHttpReq.responseXML){

@@ -27,8 +27,30 @@
 }
 
 .msglist {
-	width:260px;
-	height:160px;	
+	position:relative;
+	left: 140px;
+	width:450px;
+	height:250px;	
 	overflow-y:auto;
 	background-color:#AEFFEA;
+	word-wrap:normal;	
 }
+
+input[type="button"]{
+	position: relative;
+	bottom: 10px;
+	border:2px solid;
+}
+
+textarea{
+	width: 400px;
+	resize: none;
+}
+
+.infowindow
+ {
+        font-size:24px;
+        width: 250px;
+        color: #ff0000;
+        font-family:Arial, Helvetica, sans-serif;
+     }

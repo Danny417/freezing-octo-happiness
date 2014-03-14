@@ -79,7 +79,7 @@ public class SignGuestbookServlet extends HttpServlet {
             // Run an ancestor query to ensure we see the most up-to-date
             // view of the Greetings belonging to the selected Guestbook.
             Query query = new Query(EntityKind, EntityKey).addSort("index", Query.SortDirection.DESCENDING);
-            return datastore.prepare(query).asList(FetchOptions.Builder.withLimit(99));    	
+            return datastore.prepare(query).asList(FetchOptions.Builder.withLimit(10));    	
 	    }
 	    
 	    /*

@@ -27,7 +27,7 @@
     stale session data. For details, see
     http://code.google.com/appengine/docs/java/config/appconfig.html#Enabling_Sessions
   -->
-	<static-files>
+    <static-files>
 		<include path="/**.js" />
 		<include path="/**.css" />
 		<include path="/**.xml" />

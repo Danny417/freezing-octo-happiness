@@ -31,6 +31,7 @@ function httpCallBackFunction_loadMarkers() {
 		}
 		if(xmlDoc){				
 			var tempArray = xmlDoc.getElementsByTagName('marker');
+			console.log(tempArray);
 			for (var i = 0; i < tempArray.length; i++){
 				var temp = new Object();
 				temp.marker = tempArray[i];
@@ -65,7 +66,7 @@ function showMarkers() {
 		var srl = markerElement.getAttribute("srl");
 		var myLatlng = new google.maps.LatLng(lat, lng);		
 		var mrkID = ""+srl;
-		
+		markers[mE]['id'] = mrkID;
 		var marker = new google.maps.Marker({       
 			position: myLatlng,
 			map: map,
@@ -84,17 +85,18 @@ function addInfowindow(marker, mrkID) {
 			  '<textarea id="'+mrkID+'_post" rows="2" cols="20"></textarea>' +			  
 			  '<input type="button" value="Post" onclick="postAjaxRequest(\''+ mrkID +'\')"/>'
 	});
+	var index = mrkID - 1;
 	google.maps.event.addListener(marker, 'click', function() {
 		infowindow.setPosition(marker.getPosition());
 		infowindow.open(marker.get('map'), marker);			
-		if (!markers[mrkID]['greeting']){
+		if (!markers[index]['greeting']){
 			getAjaxRequest(mrkID);
 		} else {
 			var htmlText = '<div id="content"><div class="msglist" id="'+mrkID+'"><div>';
-			for (var i = 0; i < markers[mrkID]["greeting"].length; i++){
-				htmlText = htmlText +markers[mrkID]['greeting'][i]['propertyMap']['user']+" "+
-				markers[mrkID]['greeting'][i]['propertyMap']['date']+" writes:<br>"+
-				markers[mrkID]['greeting'][i]['propertyMap']['content']+"<br>";
+			for (var i = 0; i < markers[index]["greeting"].length; i++){
+				htmlText = htmlText +markers[index]['greeting'][i]['propertyMap']['user']+" "+
+				markers[index]['greeting'][i]['propertyMap']['date']+" writes:<br>"+
+				markers[index]['greeting'][i]['propertyMap']['content']+"<br>";
 			}
 			htmlText = htmlText+ '</div></div></div>' +
 				'<textarea id="'+mrkID+'_post" rows="2" cols="20"></textarea>' +			  
@@ -121,7 +123,7 @@ function parseResponse(xmlDoc, xmlHttpReq) {
 	var jsonArray;
 	if(xmlDoc) jsonArray = JSON.parse(xmlHttpReq.responseText);
 	if(!(!jsonArray) && jsonArray.length > 0){					
-		var id = jsonArray[0].propertyMap.markerID;
+		var id = jsonArray[0].propertyMap.markerID -1;
 		markers[id]["greeting"] = jsonArray;			
 		
 		var htmlText = "<div>";
@@ -131,12 +133,11 @@ function parseResponse(xmlDoc, xmlHttpReq) {
 			markers[id]['greeting'][i]['propertyMap']['content']+"<br>";
 		}
 		htmlText = htmlText+ "</div>";
-		document.getElementById(id).innerHTML= htmlText;
+		document.getElementById(id+1).innerHTML= htmlText;
 	}
 }
 
 function postAjaxRequest(markerID) {
-	//alert("postAjaxRequest");
 	try {
 		xmlHttpReq = new XMLHttpRequest();
 		xmlHttpReq.onreadystatechange = httpCallBackFunction;

@@ -25,3 +25,10 @@
 .badge {
 	float: right
 }
+
+.msglist {
+	width:260px;
+	height:160px;	
+	overflow-y:auto;
+	background-color:#AEFFEA;
+}

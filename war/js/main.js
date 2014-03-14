@@ -10,39 +10,25 @@ function loadMarkers(){
 		var url = "/resources/markers.xml";
 	
 		xmlHttpReq.open('GET', url, true);
-		//alert(url);
     	xmlHttpReq.send(null);
-    	
-    	//alert("loadMarkers");
     	
 	} catch (e) {
     	alert("Error: " + e);
 	}	
 }
-function httpCallBackFunction_loadMarkers() {
-	//alert("httpCallBackFunction_loadMarkers");
-	
+function httpCallBackFunction_loadMarkers() {	
 	if (xmlHttpReq.readyState == 1){
-		//alert("readyState is 1");
-		//updateStatusMessage("<blink>Opening HTTP...</blink>");
 	}else if (xmlHttpReq.readyState == 2){
-		//alert("readtState is 2, sending query");
-		//updateStatusMessage("<blink>Sending query...</blink>");
 	}else if (xmlHttpReq.readyState == 3){ 
-		//alert("readyState is 3, receiving");
-		//updateStatusMessage("<blink>Receiving...</blink>");
 	}else if (xmlHttpReq.readyState == 4){
-		//alert ("readyState is 4");
 		var xmlDoc = null;
 
 		if(xmlHttpReq.responseXML){
 			xmlDoc = xmlHttpReq.responseXML;
 		}else if(xmlHttpReq.responseText){
 			var parser = new DOMParser();
-		 	xmlDoc = parser.parseFromString(xmlHttpReq.responseText,"text/xml");			 	
-		 	
+		 	xmlDoc = parser.parseFromString(xmlHttpReq.responseText,"text/xml");	 
 		}
-
 		if(xmlDoc){				
 			var tempArray = xmlDoc.getElementsByTagName('marker');
 			for (var i = 0; i < tempArray.length; i++){
@@ -68,62 +54,41 @@ window.onload = function() {
 	loadMarkers();
 };
 
-function showMarkers() {
-	
+function showMarkers() {	
 	var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
 	var parkingIcon = iconBase + 'parking_lot_maps.png';		     
 	for(mE = 0; mE < markers.length; mE++) {
 		var markerElement = markers[mE]['marker'];
-		console.log(markers[mE]);
 		
 		var lat = parseFloat(markerElement.getAttribute("lat"));
 		var lng = parseFloat(markerElement.getAttribute("lng"));
 		var srl = markerElement.getAttribute("srl");
-		var myLatlng = new google.maps.LatLng(lat, lng);
-		
+		var myLatlng = new google.maps.LatLng(lat, lng);		
 		var mrkID = ""+srl;
-		var msgbox = "msgbox_"+mrkID;				
-		var msglist = "msglist_"+mrkID; 
-		var gstBkNm = "default"; //guestbookNameString; // "default"; 
 		
-		
-		
-		if (mE < parseInt(markers.length/2)) {
-			var marker = new google.maps.Marker({       
-				position: myLatlng,
-				map: map,
-				title : mrkID
-			});	
-			marker.setMap(map);
-			
-			addInfowindow(marker, mrkID);
-		} else {
-			var parkingMarker = new google.maps.Marker({       
-				  position: myLatlng,
-				  map: map,
-				  icon: parkingIcon,
-				  title : mrkID
-			}); 
-			parkingMarker.setMap(map);
-			addInfowindow(parkingMarker, mrkID);
-		}
+		var marker = new google.maps.Marker({       
+			position: myLatlng,
+			map: map,
+			title : mrkID,
+			icon : (mE < parseInt(markers.length/2)) ? null : parkingIcon
+		});	
+
+		marker.setMap(map);		
+		addInfowindow(marker, mrkID);		
 	}
 }
 
 function addInfowindow(marker, mrkID) {
-	var content  = 
-		'<div id="content"><div class="msglist" id="'+mrkID+'"></div></div>' +
-	  '<textarea id="'+mrkID+'_post" rows="2" cols="20"></textarea>' +			  
-	  '<input type="button" value="Post" onclick="postAjaxRequest('+ 
-		"'', '" + mrkID + "', '', ''" +')"/>';
 	var infowindow = new google.maps.InfoWindow({
-			content: content
+			content: '<div id="content"><div class="msglist" id="'+mrkID+'"></div></div>' +
+			  '<textarea id="'+mrkID+'_post" rows="2" cols="20"></textarea>' +			  
+			  '<input type="button" value="Post" onclick="postAjaxRequest(\''+ mrkID +'\')"/>'
 	});
 	google.maps.event.addListener(marker, 'click', function() {
-		
-		
+		infowindow.setPosition(marker.getPosition());
+		infowindow.open(marker.get('map'), marker);			
 		if (!markers[mrkID]['greeting']){
-			getAjaxRequest();
+			getAjaxRequest(mrkID);
 		} else {
 			var htmlText = '<div id="content"><div class="msglist" id="'+mrkID+'"><div>';
 			for (var i = 0; i < markers[mrkID]["greeting"].length; i++){
@@ -133,131 +98,61 @@ function addInfowindow(marker, mrkID) {
 			}
 			htmlText = htmlText+ '</div></div></div>' +
 				'<textarea id="'+mrkID+'_post" rows="2" cols="20"></textarea>' +			  
-				'<input type="button" value="Post" onclick="postAjaxRequest('+ 
-				"'', '" + mrkID + "', '', ''" +')"/>';
+				'<input type="button" value="Post" onclick="postAjaxRequest(\'' + mrkID + '\')"/>';
 			infowindow.setContent(""+htmlText);
-		}
-		infowindow.setPosition(marker.getPosition());
-		infowindow.open(marker.get('map'), marker);	
-		
+		}		
 	});
-	
-	
 }
 
-
-function getAjaxRequest() {
-	//alert("getAjaxRequest");
+function getAjaxRequest(mrkID) {
 	try {
 		xmlHttpReq = new XMLHttpRequest();
-		xmlHttpReq.onreadystatechange = httpCallBackFunction_getAjaxRequest;
-		var url = "/ajax/?markerID=1&guestbookName=test";
+		xmlHttpReq.onreadystatechange = httpCallBackFunction;
+		var url = "/ajax/?markerID="+mrkID;
 		
 		xmlHttpReq.open('GET', url, true);
-    	xmlHttpReq.send(null);
-    	
-    	//alert();
-    	
+    	xmlHttpReq.send(null);    	
 	} catch (e) {
     	alert("Error: " + e);
 	}	
 }
 
-function httpCallBackFunction_getAjaxRequest() {
-	//alert("httpCallBackFunction_getAjaxRequest");
-	
-	if (xmlHttpReq.readyState == 1){
-		//updateStatusMessage("<blink>Opening HTTP...</blink>");
-	}else if (xmlHttpReq.readyState == 2){
-		//updateStatusMessage("<blink>Sending query...</blink>");
-	}else if (xmlHttpReq.readyState == 3){ 
-		//updateStatusMessage("<blink>Receiving...</blink>");
-	}else if (xmlHttpReq.readyState == 4){
-		var xmlDoc = null;
-
-		if(xmlHttpReq.responseXML){
-			xmlDoc = xmlHttpReq.responseXML;
-		}else if(xmlHttpReq.responseText){
-			var parser = new DOMParser();
-		 	xmlDoc = parser.parseFromString(xmlHttpReq.responseText,"text/xml");			 	
+function parseResponse(xmlDoc, xmlHttpReq) {
+	var jsonArray;
+	if(xmlDoc) jsonArray = JSON.parse(xmlHttpReq.responseText);
+	if(!(!jsonArray) && jsonArray.length > 0){					
+		var id = jsonArray[0].propertyMap.markerID;
+		markers[id]["greeting"] = jsonArray;			
+		
+		var htmlText = "<div>";
+		for (var i = 0; i < markers[id]["greeting"].length; i++){
+			htmlText = htmlText +markers[id]['greeting'][i]['propertyMap']['user']+" "+
+			markers[id]['greeting'][i]['propertyMap']['date']+" writes:<br>"+
+			markers[id]['greeting'][i]['propertyMap']['content']+"<br>";
 		}
-
-		if(xmlDoc){				
-
-			var jsonArray = eval(xmlHttpReq.responseText);
-			console.log(jsonArray[0].propertyMap.markerID);
-			
-			var id = jsonArray[0].propertyMap.markerID;
-			markers[id]["greeting"] = jsonArray;
-			
-			
-			var htmlText = "<div>";
-			console.log(markers[id]["greeting"].length);
-			for (var i = 0; i < markers[id]["greeting"].length; i++){
-				htmlText = htmlText +markers[id]['greeting'][i]['propertyMap']['user']+" "+
-				markers[id]['greeting'][i]['propertyMap']['date']+" writes:<br>"+
-				markers[id]['greeting'][i]['propertyMap']['content']+"<br>";
-			}
-			htmlText = htmlText+ "</div>";
-			console.log(htmlText);
-			document.getElementById(id).innerHTML= htmlText;
-		}else{
-			alert("No data.");
-		}	
-	}		
+		htmlText = htmlText+ "</div>";
+		document.getElementById(id).innerHTML= htmlText;
+	}
 }
-function postAjaxRequest(postMsg, markerID, guestbookName, rspMsgList) {
+
+function postAjaxRequest(markerID) {
 	//alert("postAjaxRequest");
 	try {
 		xmlHttpReq = new XMLHttpRequest();
-		xmlHttpReq.onreadystatechange = httpCallBackFunction_postAjaxRequest;
-		var url = "/ajax";
-	
+		xmlHttpReq.onreadystatechange = httpCallBackFunction;
+		var url = "/ajax";	
 		xmlHttpReq.open("POST", url, true);
 		xmlHttpReq.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');		
 		
-		var postMsgValue = document.getElementById(markerID+'_post').value;
-		console.log(postMsgValue);
-		//var markerIDValue = markerID; 
-		//var guestbookNameValue = guestbookName; 
-    	
+		var postMsgValue = document.getElementById(markerID+'_post').value;    	
 		xmlHttpReq.send("content="+postMsgValue+"&markerID="+markerID);
-    	
-    	//alert();
     	
 	} catch (e) {
     	alert("Error: " + e);
 	}	
 }
 
-function showGreetings(index, infowindow){
-	
-	if (!markers[index]['greeting']){
-		console.log('ajax');
-		getAjaxRequest();
-	} else {
-		var htmlText = "<div>";
-		for (var i = 0; i < markers[index]["greeting"].length; i++){
-			htmlText = htmlText +markers[index]['greeting'][i]['propertyMap']['user']+" "+
-			markers[index]['greeting'][i]['propertyMap']['date']+" writes:<br>"+
-			markers[index]['greeting'][i]['propertyMap']['content']+"<br>";
-		}
-		htmlText = htmlText+ "</div>";
-		console.log('no ajax');
-		console.log(document.getElementById(1));
-		document.getElementById(1).innerHTML= htmlText;
-		//console.log(document.getElementById(index).innerHTML);
-	}
-
-	infowindow.setContent(htmlText);
-	infowindow.setPosition(marker.getPosition());
-	infowindow.open(marker.get('map'), marker);	
-}
-
-
-
-function httpCallBackFunction_postAjaxRequest() {
-	//alert("httpCallBackFunction_postAjaxRequest");
+function httpCallBackFunction() {
 	
 	if (xmlHttpReq.readyState == 1){
 		//updateStatusMessage("<blink>Opening HTTP...</blink>");
@@ -273,14 +168,7 @@ function httpCallBackFunction_postAjaxRequest() {
 		}else if(xmlHttpReq.responseText){
 			var parser = new DOMParser();
 		 	xmlDoc = parser.parseFromString(xmlHttpReq.responseText,"text/xml");		 		
-		}
-		
-		if(xmlDoc){				
-			console.log(xmlHttpReq.responseText);			
-			//document.getElementById("msglist_"+selectedMarkerID).innerHTML=xmlHttpReq.responseText;
-			//document.getElementById("msgbox_"+selectedMarkerID).value = "";
-		}else{
-			alert("No data.");
-		}	
+		}		
+		parseResponse(xmlDoc, xmlHttpReq);
 	}		
 }

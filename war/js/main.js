@@ -76,31 +76,34 @@ function showMarkers() {
 
 		marker.setMap(map);		
 		addInfowindow(marker, mrkID);		
+		
 	}
 }
 
 function addInfowindow(marker, mrkID) {
-	var infowindow = new google.maps.InfoWindow({
-			content: '<div id="content"><div class="msglist" id="'+mrkID+'"></div></div>' +
-			  '<textarea id="'+mrkID+'_post" rows="2" cols="20"></textarea>' +			  
-			  '<input type="button" value="Post" onclick="postAjaxRequest(\''+ mrkID +'\')"/>'
-	});
 	var index = mrkID - 1;
+	var infowindow = new google.maps.InfoWindow({
+			content: '<table><tr><div id="content"><td><div class="img" id="img'+ index +'"></div></td><td>'+
+				'<table><tr><div class="msglist" id="'+mrkID+'"></tr></div></div>' +
+			  '<tr><textarea id="'+mrkID+'_post" rows="2" cols="20"></textarea>' +			  
+			  '<input type="button" value="Post" onclick="postAjaxRequest(\''+ mrkID +'\')"/></tr></table></tr></table>'
+	});
 	google.maps.event.addListener(marker, 'click', function() {
 		infowindow.setPosition(marker.getPosition());
 		infowindow.open(marker.get('map'), marker);			
 		if (!markers[index]['greeting']){
 			getAjaxRequest(mrkID);
 		} else {
-			var htmlText = '<div id="content"><div class="msglist" id="'+mrkID+'"><div>';
+			var htmlText = '<table><tr><div id="content"><td><div class="img" id="img'+ index +'"></div></td><td>'+
+				'<table><tr><div class="msglist" id="'+mrkID+'"><div>';
 			for (var i = 0; i < markers[index]["greeting"].length; i++){
-				htmlText = htmlText +markers[index]['greeting'][i]['propertyMap']['user']+" "+
+				htmlText = htmlText + "<b>" + markers[index]['greeting'][i]['propertyMap']['user']+" </b>"+
 				markers[index]['greeting'][i]['propertyMap']['date']+" writes:<br>"+
 				markers[index]['greeting'][i]['propertyMap']['content']+"<br>";
 			}
-			htmlText = htmlText+ '</div></div></div>' +
-				'<textarea id="'+mrkID+'_post" rows="2" cols="20"></textarea>' +			  
-				'<input type="button" value="Post" onclick="postAjaxRequest(\'' + mrkID + '\')"/>';
+			htmlText = htmlText+ '</div></tr></div></div>' +
+				'<tr><textarea id="'+mrkID+'_post" rows="2" cols="20"></textarea>' +			  
+				'<input type="button" value="Post" onclick="postAjaxRequest(\'' + mrkID + '\')"/></tr></table></tr></table>';
 			infowindow.setContent(""+htmlText);
 		}		
 	});
@@ -128,7 +131,7 @@ function parseResponse(xmlDoc, xmlHttpReq) {
 		
 		var htmlText = "<div>";
 		for (var i = 0; i < markers[id]["greeting"].length; i++){
-			htmlText = htmlText +markers[id]['greeting'][i]['propertyMap']['user']+" "+
+			htmlText = htmlText + "<b>" + markers[id]['greeting'][i]['propertyMap']['user']+"</b> "+
 			markers[id]['greeting'][i]['propertyMap']['date']+" writes:<br>"+
 			markers[id]['greeting'][i]['propertyMap']['content']+"<br>";
 		}

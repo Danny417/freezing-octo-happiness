@@ -9,6 +9,7 @@
 }
 #map-canvas { 
 	height: 100%;
+	bottom: 30px;
 }
 .block {
   	padding: 40px 40px 0 40px;	
@@ -28,30 +29,78 @@
 
 .msglist {
 	position:relative;
-	left: 140px;
-	width:450px;
+	left: 5px;
+	bottom: 2px;
+	width:350px;
 	height:250px;	
 	overflow-y:auto;
-	background-color:#AEFFEA;
-	word-wrap:normal;	
+	background-color:#cad8e8;
+	word-wrap:break-word;
+	background-	
+}
+
+div.img{
+	position:relative;
+	bottom: 2px;
+	height: 300px;
+	width: 250px;
+}
+
+#img0{
+	content:url(http://cutestuff.co/wp-content/uploads/2012/06/adorable_panda.jpg);
+}
+#img1{
+	content:url(http://www.fondosni.com/images/2013-04-07/Perrito%20cafe%20peludito-55489.jpg);
+}
+#img2{
+	content:url(http://smashingpicture.com/wp-content/uploads/2012/06/llama.jpg);
+}
+#img3{
+	content:url(http://images4.fanpop.com/image/photos/16100000/Cute-Kitten-kittens-16122057-1280-800.jpg);
+}
+#img4{
+	content:url(http://www.topdreamer.com/wp-content/uploads/2013/08/tumblr_lrhjcn3Qn61r36twko1_400.jpg);
+}
+#img5{
+	content:url(http://cdn2.hellogiggles.com/wp-content/uploads/2012/03/23/cute-animals-1.jpg);
+}
+#img6{
+	content:url(http://webtoolfeed.files.wordpress.com/2012/04/poof-l1.jpg);
+}
+#img7{
+	content:url(http://cdn.zmescience.com/wp-content/uploads/2012/10/cute-animals-02.jpg);
+}
+#img8{
+	content:url(http://3219a2.medialib.glogster.com/media/14/14ea8766335deb68dd42383d67ebfc3cca99b2f0a9e98728900fa228f9940871/cute-animal1-jpg.jpg);
+}
+#img9{
+	content:url(http://www.123inspiration.com/wp-content/uploads/2013/11/Cute-Animal-Photos-5.jpg);
+}
+#img10{
+	content:url(http://xaxor.com/wp-content/uploads/2013/04/cute-animal-pics-part79-8.jpg);
+}
+#img11{
+	content:url(http://justcuteanimals.com/wp-content/uploads/2012/11/cute-animal-bunny-rabbit-shopping-cart-trolly-store-carrot-lettuce-pics-600x450.jpg);
+}
+#img12{
+	content:url(https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQU54lY8OMx4ZP0KuANp1YiuqCMmcESAaYcXs8qFcKbijfO-Jdg);
+}
+#img13{
+	content:url(http://prafulla.net/wp-content/sharenreadfiles/2011/02/cute-animals10.jpg);
 }
 
 input[type="button"]{
 	position: relative;
-	left: 5px;
+	left: 10px;
 	bottom: 15px;
 	border:2px solid;
 }
 
 textarea{
-	width: 400px;
+	position: relative;
+	left:5px;
+	top: 5px;
+	width: 295px;
 	resize: none;
 }
 
-.infowindow
- {
-        font-size:24px;
-        width: 250px;
-        color: #ff0000;
-        font-family:Arial, Helvetica, sans-serif;
-     }

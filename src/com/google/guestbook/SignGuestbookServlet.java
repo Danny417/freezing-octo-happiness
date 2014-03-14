@@ -67,10 +67,6 @@ public class SignGuestbookServlet extends HttpServlet {
 	        greeting.setProperty("content", req.getParameter("content"));
 	        greeting.setProperty("markerID", req.getParameter("markerID"));
 	        greeting.setProperty("index", (int) (new Date().getTime()/1000));
-	        /*Map<String, String> coordinate = Splitter.on(",").withKeyValueSeparator(":").split(req.getParameter("coordinate"));
-	        for(Map.Entry<String, String> entry : coordinate.entrySet()) {
-	        	greeting.setProperty(entry.getKey(), entry.getValue());
-	        }*/
 	    	return greeting;
 	    }
 	    

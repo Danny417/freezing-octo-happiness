@@ -31,7 +31,6 @@ function httpCallBackFunction_loadMarkers() {
 		}
 		if(xmlDoc){				
 			var tempArray = xmlDoc.getElementsByTagName('marker');
-			console.log(tempArray);
 			for (var i = 0; i < tempArray.length; i++){
 				var temp = new Object();
 				temp.marker = tempArray[i];
@@ -49,7 +48,7 @@ function httpCallBackFunction_loadMarkers() {
 window.onload = function() {
 	var mapOptions = {
 	  		center: new google.maps.LatLng(37.34, -122.03),
-	  		zoom: 12
+	  		zoom: 13
 		};
 	map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
 	loadMarkers();
@@ -83,10 +82,10 @@ function showMarkers() {
 function addInfoBox(marker, mrkID){
 	var index = mrkID - 1;
 	var myOptions = {
-		 content: '<div id="infoBox"><table><tr><div id="content"><td><div class="img" id="img'+ index +'"></div></td><td>'+
-			'<table><tr><div class="msglist" id="'+mrkID+'"></tr></div></div>' +
-			  '<tr><textarea id="'+mrkID+'_post" rows="2" cols="20"></textarea>' +			  
-			  '<input type="button" value="Post" onclick="postAjaxRequest(\''+ mrkID +'\')"/></tr></table></tr></table></div>'
+		 content: '<div id="infoBox"><table><tr><td><div class="imgContainer"><div class="img img-thumbnail" id="img'+ index +'" ></div></div></td><td>'+
+			'<div id="content"><div class="msglist" id="'+mrkID+'" ></div>' +
+			  '<div style="padding:20px"><textarea id="'+mrkID+'_post" rows="3" cols="10" class="form-control"></textarea><br/>' +			  
+			  '<input type="button" value="Post" onclick="postAjaxRequest(\''+ mrkID +'\')"/></div></div></td></tr></table></div>'
 		,disableAutoPan: false
 		,maxWidth: 0
 		,pixelOffset: new google.maps.Size(-140, 0)
@@ -94,6 +93,8 @@ function addInfoBox(marker, mrkID){
 		,closeBoxMargin: "12px 2px 0px 2px"
 		,boxStyle: {
 	        background: "url('http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobox/examples/tipbox.gif') no-repeat",
+	        width: "600px",
+	        height: "400px"
 	    }
 		,closeBoxURL: "http://www.google.com/intl/en_us/mapfiles/close.gif"
 		,infoBoxClearance: new google.maps.Size(1, 1)
@@ -106,55 +107,25 @@ function addInfoBox(marker, mrkID){
 	google.maps.event.addListener(marker, 'click', function() {
 		
 		ib.open(marker.get('map'), marker);
-		ib.setPosition(marker.getPosition());
-		ib.open(marker.get('map'), marker);			
+		ib.setPosition(marker.getPosition());		
 		if (!markers[index]['greeting']){
 			getAjaxRequest(mrkID);
 		} else {
-			var htmlText = '<div id="infoBox"><table><tr><div id="content"><td><div class="img" id="img'+ index +'"></div></td><td>'+
-				'<table><tr><div class="msglist" id="'+mrkID+'"><div>';
+			var htmlText = '<div id="infoBox"><table><tr><td><div class="imgContainer"><div class="img img-thumbnail" id="img'+ index +'"></div></div></td><td>'+
+				'<div id="content"><div class="msglist" id="'+mrkID+'">';
 			for (var i = 0; i < markers[index]["greeting"].length; i++){
 				htmlText = htmlText + "<b>" + markers[index]['greeting'][i]['propertyMap']['user']+" </b>"+
-				markers[index]['greeting'][i]['propertyMap']['date']+" writes:<br>"+
-				markers[index]['greeting'][i]['propertyMap']['content']+"<br>";
+				markers[index]['greeting'][i]['propertyMap']['date']+" writes:<br/>"+
+				markers[index]['greeting'][i]['propertyMap']['content']+"<br/>";
 			}
-			htmlText = htmlText+ '</div></tr></div></div>' +
-				'<tr><textarea id="'+mrkID+'_post" rows="2" cols="20"></textarea>' +			  
-				'<input type="button" value="Post" onclick="postAjaxRequest(\'' + mrkID + '\')"/></tr></table></tr></table></div>';
+			htmlText = htmlText+ '</div><div style="padding:20px>' +
+				'<textarea id="'+mrkID+'_post" rows="3" cols="10" class="form-control"></textarea><br/>' +			  
+				'<input type="button" value="Post" onclick="postAjaxRequest(\'' + mrkID + '\')"/></div></div></td></tr></table></div>';
 			ib.setContent(""+htmlText);
 		}	
 	});
 	
 
-}
-
-function addInfowindow(marker, mrkID) {
-	var index = mrkID - 1;
-	var infowindow = new google.maps.InfoWindow({
-			content: '<table><tr><div id="content"><td><div class="img" id="img'+ index +'"></div></td><td>'+
-				'<table><tr><div class="msglist" id="'+mrkID+'"></tr></div></div>' +
-			  '<tr><textarea id="'+mrkID+'_post" rows="2" cols="20"></textarea>' +			  
-			  '<input type="button" value="Post" onclick="postAjaxRequest(\''+ mrkID +'\')"/></tr></table></tr></table>'
-	});
-	google.maps.event.addListener(marker, 'click', function() {
-		infowindow.setPosition(marker.getPosition());
-		infowindow.open(marker.get('map'), marker);			
-		if (!markers[index]['greeting']){
-			getAjaxRequest(mrkID);
-		} else {
-			var htmlText = '<table><tr><div id="content"><td><div class="img" id="img'+ index +'"></div></td><td>'+
-				'<table><tr><div class="msglist" id="'+mrkID+'"><div>';
-			for (var i = 0; i < markers[index]["greeting"].length; i++){
-				htmlText = htmlText + "<b>" + markers[index]['greeting'][i]['propertyMap']['user']+" </b>"+
-				markers[index]['greeting'][i]['propertyMap']['date']+" writes:<br>"+
-				markers[index]['greeting'][i]['propertyMap']['content']+"<br>";
-			}
-			htmlText = htmlText+ '</div></tr></div></div>' +
-				'<tr><textarea id="'+mrkID+'_post" rows="2" cols="20"></textarea>' +			  
-				'<input type="button" value="Post" onclick="postAjaxRequest(\'' + mrkID + '\')"/></tr></table></tr></table>';
-			infowindow.setContent(""+htmlText);
-		}		
-	});
 }
 
 function getAjaxRequest(mrkID) {
@@ -177,13 +148,12 @@ function parseResponse(xmlDoc, xmlHttpReq) {
 		var id = jsonArray[0].propertyMap.markerID -1;
 		markers[id]["greeting"] = jsonArray;			
 		
-		var htmlText = "<div>";
+		var htmlText = "";
 		for (var i = 0; i < markers[id]["greeting"].length; i++){
 			htmlText = htmlText + "<b>" + markers[id]['greeting'][i]['propertyMap']['user']+"</b> "+
-			markers[id]['greeting'][i]['propertyMap']['date']+" writes:<br>"+
-			markers[id]['greeting'][i]['propertyMap']['content']+"<br>";
+			markers[id]['greeting'][i]['propertyMap']['date']+" writes:<br/>"+
+			markers[id]['greeting'][i]['propertyMap']['content']+"<br/>";
 		}
-		htmlText = htmlText+ "</div>";
 		document.getElementById(id+1).innerHTML= htmlText;
 	}
 }

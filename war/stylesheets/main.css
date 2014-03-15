@@ -3,16 +3,15 @@
 	white-space:nowrap;
 }
 #map {
-	display:inline-block;
-	height: 600px;
-	width: 1250px;	
+	width: 100%;	
+	height: 800px;
 }
 #map-canvas { 
 	height: 100%;
 	bottom: 30px;
 }
 .block {
-  	padding: 40px 40px 0 40px;	
+  	padding: 40px;	
 }
 .box-shadow-right-bottom {
   	padding: 20px;   
@@ -28,28 +27,32 @@
 }
 
 .msglist {
-	position:relative;
-	margin-left: 10px;
 	bottom: 2px;
-	width:300px;
-	height:250px;	
+	width:350px;
+	height:200px;	
 	overflow-y:auto;
 	opacity: 1;
 	color: #ffffff;
 	word-wrap:break-word;	
+	padding: 10px;
+	font-size: 12px;
+}
+
+textarea {
+	width: 250px;
 }
 
 #infoBox{
 	border: 1px solid black; 
 	margin-top: 8px; 
-	background-image: url(http://www.readactor.com/wp-content/uploads/2010/06/hammerhead-background.jpg);
+	background: -webkit-linear-gradient(45deg, rgba(240,248,243,1), rgba(207,237,217,0.5), rgba(240,248,243,1)); /*Safari*/
+	background: -o-linear-gradient(45deg, rgba(240,248,243,1), rgba(207,237,217,0.5), rgba(240,248,243,1)); /*Opera 11-12*/
+	background: -moz-linear-gradient(45deg, rgba(240,248,243,1), rgba(207,237,217,0.5), rgba(240,248,243,1)); /*Fx 3.6-15*/
+	background: linear-gradient(45deg, rgba(69,68,95,1), rgba(49,42,183,0.5), rgba(14,10,93,1)); /*Standard*/
 	padding: 5px;
 }
 
 input[type="button"]{
-	position: relative;
-	left: 15px;
-	bottom: 8px;
 	border:1px solid;
 	color: #ffffff;
 	border-color: #ffffff;
@@ -57,16 +60,7 @@ input[type="button"]{
 	box-shadow: 0px 0px 10px #ffffff;
 }
 
-textarea{
-	position: relative;
-	left:10px;
-	top: 5px;
-	width: 250px;
-	resize: none;
-}
-
 div.img{
-	position:relative;
 	bottom: 8px;
 	left: 5px;
 	height: 320px;
@@ -74,46 +68,88 @@ div.img{
 }
 
 #img0{
-	content:url(http://cutestuff.co/wp-content/uploads/2012/06/adorable_panda.jpg);
+	background:url(http://cutestuff.co/wp-content/uploads/2012/06/adorable_panda.jpg);
+	background-size: 100% 100%;
+    background-repeat: no-repeat;
 }
 #img1{
-	content:url(http://www.fondosni.com/images/2013-04-07/Perrito%20cafe%20peludito-55489.jpg);
+	background:url(http://www.fondosni.com/images/2013-04-07/Perrito%20cafe%20peludito-55489.jpg);
+	background-size: 100% 100%;
+    background-repeat: no-repeat;
 }
 #img2{
-	content:url(http://smashingpicture.com/wp-content/uploads/2012/06/llama.jpg);
+	background:url(http://smashingpicture.com/wp-content/uploads/2012/06/llama.jpg);
+	background-size: 100% 100%;
+    background-repeat: no-repeat;
 }
 #img3{
-	content:url(http://images4.fanpop.com/image/photos/16100000/Cute-Kitten-kittens-16122057-1280-800.jpg);
+	background:url(http://images4.fanpop.com/image/photos/16100000/Cute-Kitten-kittens-16122057-1280-800.jpg);
+	background-size: 100% 100%;
+    background-repeat: no-repeat;
 }
 #img4{
-	content:url(http://www.topdreamer.com/wp-content/uploads/2013/08/tumblr_lrhjcn3Qn61r36twko1_400.jpg);
+	background:url(http://www.topdreamer.com/wp-content/uploads/2013/08/tumblr_lrhjcn3Qn61r36twko1_400.jpg);
+	background-size: 100% 100%;
+    background-repeat: no-repeat;
 }
 #img5{
-	content:url(http://cdn2.hellogiggles.com/wp-content/uploads/2012/03/23/cute-animals-1.jpg);
+	background:url(http://cdn2.hellogiggles.com/wp-content/uploads/2012/03/23/cute-animals-1.jpg);
+	background-size: 100% 100%;
+    background-repeat: no-repeat;
 }
 #img6{
-	content:url(http://webtoolfeed.files.wordpress.com/2012/04/poof-l1.jpg);
+	background:url(http://webtoolfeed.files.wordpress.com/2012/04/poof-l1.jpg);
+	background-size: 100% 100%;
+    background-repeat: no-repeat;
 }
 #img7{
-	content:url(http://cdn.zmescience.com/wp-content/uploads/2012/10/cute-animals-02.jpg);
+	background:url(http://cdn.zmescience.com/wp-content/uploads/2012/10/cute-animals-02.jpg);
+	background-size: 100% 100%;
+    background-repeat: no-repeat;
 }
 #img8{
-	content:url(http://3219a2.medialib.glogster.com/media/14/14ea8766335deb68dd42383d67ebfc3cca99b2f0a9e98728900fa228f9940871/cute-animal1-jpg.jpg);
+	background:url(http://3219a2.medialib.glogster.com/media/14/14ea8766335deb68dd42383d67ebfc3cca99b2f0a9e98728900fa228f9940871/cute-animal1-jpg.jpg);
+	background-size: 100% 100%;
+    background-repeat: no-repeat;
 }
 #img9{
-	content:url(http://www.123inspiration.com/wp-content/uploads/2013/11/Cute-Animal-Photos-5.jpg);
+	background:url(http://www.123inspiration.com/wp-content/uploads/2013/11/Cute-Animal-Photos-5.jpg);
+	background-size: 100% 100%;
+    background-repeat: no-repeat;
 }
 #img10{
-	content:url(http://xaxor.com/wp-content/uploads/2013/04/cute-animal-pics-part79-8.jpg);
+	background:url(http://prafulla.net/wp-content/sharenreadfiles/2011/02/cute-animals10.jpg);
+	background-size: 100% 100%;
+    background-repeat: no-repeat;
 }
 #img11{
-	content:url(http://justcuteanimals.com/wp-content/uploads/2012/11/cute-animal-bunny-rabbit-shopping-cart-trolly-store-carrot-lettuce-pics-600x450.jpg);
+	background:url(http://justcuteanimals.com/wp-content/uploads/2012/11/cute-animal-bunny-rabbit-shopping-cart-trolly-store-carrot-lettuce-pics-600x450.jpg);
+	background-size: 100% 100%;
+    background-repeat: no-repeat;
 }
 #img12{
-	content:url(https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQU54lY8OMx4ZP0KuANp1YiuqCMmcESAaYcXs8qFcKbijfO-Jdg);
+	background:url(https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQU54lY8OMx4ZP0KuANp1YiuqCMmcESAaYcXs8qFcKbijfO-Jdg);
+	background-size: 100% 100%;
+    background-repeat: no-repeat;
 }
 #img13{
-	content:url(http://prafulla.net/wp-content/sharenreadfiles/2011/02/cute-animals10.jpg);
+	background:url(http://prafulla.net/wp-content/sharenreadfiles/2011/02/cute-animals10.jpg);
+	background-size: 100% 100%;
+    background-repeat: no-repeat;
 }
 
-
+.imgContainer div { 
+  -webkit-transition: all 0.5s ease;
+     -moz-transition: all 0.5s ease;
+       -o-transition: all 0.5s ease;
+      -ms-transition: all 0.5s ease;
+          transition: all 0.5s ease;
+}
+ 
+.imgContainer div:hover {
+  -webkit-transform: rotate(-10deg);
+     -moz-transform: rotate(-10deg);
+       -o-transform: rotate(-10deg);
+      -ms-transform: rotate(-10deg);
+          transform: rotate(-10deg);
+}

@@ -16,8 +16,6 @@
 .box-shadow-right-bottom {
   	padding: 20px;   
   	border: 1px solid #d6e9c6;
-}
-.box-shadow-right-bottom {
   	-moz-box-shadow: 10px 10px 15px #ccc;
   	-webkit-box-shadow: 10px 10px 15px #ccc;
   	box-shadow: 10px 10px 15px #ccc;  		

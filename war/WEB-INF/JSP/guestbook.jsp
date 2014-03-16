@@ -18,12 +18,30 @@
   <body>
   	<div class="panel panel-default" style="margin:40px">
   		<div class="panel-body">
-		<c:if test="${empty requestScope.user}">
-			Hello! <a class="alert-link" href="${login}">Sign in</a> to include your name with greetings you post.
-		</c:if>
-		<c:if test="${not empty requestScope.user}">
-			Hello, ${fn:escapeXml(requestScope.user.nickname)}! (You can <a class="alert-link" href="${logout}"> sign out</a>.)
-		</c:if>
+  			<div class="btn-group">
+			  <button type="button" class="btn btn-default">Home</button>
+			  <button type="button" class="btn btn-default">Tutorial</button>
+			
+			  <div class="btn-group">
+			    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+			      Search
+			      <span class="caret"></span>
+			    </button>
+			    <ul class="dropdown-menu">
+			      <li><a href="#">By Map</a></li>
+			      <li><a href="#">By Text</a></li>
+			    </ul>
+			  </div>
+			</div>
+  			<div style="float:right">
+			<c:if test="${empty requestScope.user}">
+				<a class="btn btn-primary" href="${login}">Sign in</a>
+				<a class="btn btn-success" href="${login}">Register</a>
+			</c:if>
+			<c:if test="${not empty requestScope.user}">
+				Hello, ${fn:escapeXml(requestScope.user.nickname)}! <a class="btn btn-warning" href="${logout}"> sign out</a>
+			</c:if>
+			</div>
 		</div>
 	</div>
 	
@@ -31,7 +49,8 @@
 		<div id="map-canvas" class="box-shadow-right-bottom" >
 		</div>
 	</div>
-
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
     <script src="/js/main.js"></script>	   	
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js" ></script>
   </body>
 </html>

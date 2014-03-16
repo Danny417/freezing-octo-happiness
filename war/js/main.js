@@ -48,9 +48,11 @@ function httpCallBackFunction_loadMarkers() {
 window.onload = function() {
 	var mapOptions = {
 	  		center: new google.maps.LatLng(37.34, -122.03),
-	  		zoom: 13
+	  		zoom: 13,
+	  		mapTypeId: google.maps.MapTypeId.HYBRID 
 		};
 	map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+	map.setTilt(45);
 	loadMarkers();
 };
 

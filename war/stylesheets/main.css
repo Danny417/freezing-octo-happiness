@@ -43,10 +43,10 @@ textarea {
 #infoBox{
 	border: 1px solid black; 
 	margin-top: 8px; 
-	background: -webkit-linear-gradient(45deg, rgba(240,248,243,1), rgba(207,237,217,0.5), rgba(240,248,243,1)); /*Safari*/
-	background: -o-linear-gradient(45deg, rgba(240,248,243,1), rgba(207,237,217,0.5), rgba(240,248,243,1)); /*Opera 11-12*/
-	background: -moz-linear-gradient(45deg, rgba(240,248,243,1), rgba(207,237,217,0.5), rgba(240,248,243,1)); /*Fx 3.6-15*/
-	background: linear-gradient(45deg, rgba(69,68,95,1), rgba(49,42,183,0.5), rgba(14,10,93,1)); /*Standard*/
+	background: -webkit-linear-gradient(45deg, rgba(69,68,95,1), rgba(49,42,183,0.8), rgba(14,10,93,1)); /*Safari*/
+	background: -o-linear-gradient(45deg, rgba(69,68,95,1), rgba(49,42,183,0.8), rgba(14,10,93,1)); /*Opera 11-12*/
+	background: -moz-linear-gradient(45deg, rgba(69,68,95,1), rgba(49,42,183,0.8), rgba(14,10,93,1)); /*Fx 3.6-15*/
+	background: linear-gradient(45deg, rgba(69,68,95,1), rgba(49,42,183,0.8), rgba(14,10,93,1)); /*Standard*/
 	padding: 5px;
 }
 
@@ -81,7 +81,7 @@ div.img{
     background-repeat: no-repeat;
 }
 #img3{
-	background:url(http://images4.fanpop.com/image/photos/16100000/Cute-Kitten-kittens-16122057-1280-800.jpg);
+	background:url(http://www.today.colostate.edu/userfiles/images/dachshund_md.jpg);
 	background-size: 100% 100%;
     background-repeat: no-repeat;
 }

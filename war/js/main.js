@@ -151,6 +151,7 @@ function postAjaxRequest(markerID) {
 		
 		var postMsgValue = document.getElementById(markerID+'_post').value;    	
 		xmlHttpReq.send("content="+postMsgValue+"&markerID="+markerID);
+		document.getElementById(markerID+'_post').value = '';
     	
 	} catch (e) {
     	alert("Error: " + e);

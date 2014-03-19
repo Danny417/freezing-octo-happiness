@@ -18,16 +18,27 @@ public class User {
 	@Persistent (valueStrategy = IdGeneratorStrategy.IDENTITY)
 	private Key userID;
 	
+	public enum Role {
+		host, admin
+	}
+	
+	@Persistent
+	private Role role;
+	
 	@Persistent
 	private String name;
 	
 	@Persistent
 	private Email gmail;
 	
-	// contact info
-	// license plate
-	// profile - enum : {host, admin}
-	// add the reviews
+	@Persistent
+	private String phone;
+	
+	@Persistent
+	private String licensePlate;
+	
+	@Persistent (mappedBy = "guest")
+	private List<Review> reviews;
 	
 	@Persistent
 	private int rating;

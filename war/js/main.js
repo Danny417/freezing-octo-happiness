@@ -86,7 +86,7 @@ function addInfoBox(marker, mrkID){
 	var myOptions = {
 		 content: '<div id="infoBox"><table><tr><td><div class="imgContainer"><div class="img img-thumbnail" id="img'+ index +'" ></div></div></td><td>'+
 			'<div id="content"><div class="msglist" id="'+mrkID+'" ></div>' +
-			  '<div style="padding:10px"><div class="rateit"></div><textarea id="'+mrkID+'_post" rows="3" cols="10" class="form-control"></textarea><br/>' +			  
+			  '<div style="padding:10px"><div class="rateit" id="rateit_'+mrkID+'"></div><textarea id="'+mrkID+'_post" rows="3" cols="10" class="form-control"></textarea><br/>' +			  
 			  '<input type="button" value="Post" onclick="postAjaxRequest(\''+ mrkID +'\')"/></div></div></td></tr></table></div>'
 		,disableAutoPan: false
 		,maxWidth: 0
@@ -153,9 +153,10 @@ function postAjaxRequest(markerID) {
 		xmlHttpReq.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');		
 		
 		var postMsgValue = document.getElementById(markerID+'_post').value;    	
-		xmlHttpReq.send("content="+postMsgValue+"&markerID="+markerID+"&rating="+$('.rateit').rateit('value'));
+		xmlHttpReq.send("content="+postMsgValue+"&markerID="+markerID+"&rating="+$('#rateit_'+markerID).rateit('value'));
+		
 		document.getElementById(markerID+'_post').value = '';
-    	
+		$('#rateit_'+markerID).rateit('value', 0);
 	} catch (e) {
     	alert("Error: " + e);
 	}	

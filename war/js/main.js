@@ -86,7 +86,7 @@ function addInfoBox(marker, mrkID){
 	var myOptions = {
 		 content: '<div id="infoBox"><table><tr><td><div class="imgContainer"><div class="img img-thumbnail" id="img'+ index +'" ></div></div></td><td>'+
 			'<div id="content"><div class="msglist" id="'+mrkID+'" ></div>' +
-			  '<div style="padding:10px"><textarea id="'+mrkID+'_post" rows="3" cols="10" class="form-control"></textarea><br/>' +			  
+			  '<div style="padding:10px"><div class="rateit"></div><textarea id="'+mrkID+'_post" rows="3" cols="10" class="form-control"></textarea><br/>' +			  
 			  '<input type="button" value="Post" onclick="postAjaxRequest(\''+ mrkID +'\')"/></div></div></td></tr></table></div>'
 		,disableAutoPan: false
 		,maxWidth: 0
@@ -110,6 +110,7 @@ function addInfoBox(marker, mrkID){
 		ib.open(marker.get('map'), marker);
 		ib.setPosition(marker.getPosition());		
 		getAjaxRequest(mrkID);
+		
 	});
 }
 
@@ -178,5 +179,6 @@ function httpCallBackFunction() {
 		 	xmlDoc = parser.parseFromString(xmlHttpReq.responseText,"text/xml");		 		
 		}		
 		parseResponse(xmlDoc, xmlHttpReq);
+		$('.rateit').rateit();
 	}		
 }

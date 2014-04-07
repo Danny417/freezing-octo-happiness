@@ -153,7 +153,7 @@ function postAjaxRequest(markerID) {
 		xmlHttpReq.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');		
 		
 		var postMsgValue = document.getElementById(markerID+'_post').value;    	
-		xmlHttpReq.send("content="+postMsgValue+"&markerID="+markerID);
+		xmlHttpReq.send("content="+postMsgValue+"&markerID="+markerID+"&rating="+$('.rateit').rateit('value'));
 		document.getElementById(markerID+'_post').value = '';
     	
 	} catch (e) {

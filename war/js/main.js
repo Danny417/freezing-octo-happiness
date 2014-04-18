@@ -84,7 +84,8 @@ function showMarkers() {
 function addInfoBox(marker, mrkID){
 	var index = mrkID - 1;
 	var myOptions = {
-		 content: '<div id="infoBox"><table><tr><td><div class="imgContainer"><div class="img img-thumbnail" id="img'+ index +'" ></div></div></td><td>'+
+		 content: '<div id="infoBox"><table><tr><td><div class="imgContainer"><div class="img img-thumbnail" id="img'+ index +'" ></div></div>'
+		 +'<div class="rateit bigstars" id="totalRank'+mrkID+'" data-rateit-starwidth="32" data-rateit-starheight="32"></div></td><td>'+
 			'<div id="content"><div class="msglist" id="'+mrkID+'" ></div>' +
 			  '<div style="padding:10px"><div class="rateit" id="rateit_'+mrkID+'"></div><textarea id="'+mrkID+'_post" rows="3" cols="10" class="form-control"></textarea><br/>' +			  
 			  '<input type="button" value="Post" onclick="postAjaxRequest(\''+ mrkID +'\')"/></div></div></td></tr></table></div>'
@@ -129,15 +130,19 @@ function getAjaxRequest(mrkID) {
 
 function parseResponse(xmlDoc, xmlHttpReq) {
 	var jsonArray;
+	alert(xmlHttpReq.responseText);
 	if(xmlDoc) jsonArray = JSON.parse(xmlHttpReq.responseText);
 	if(!(!jsonArray) && jsonArray.length > 0){					
 		var id = jsonArray[0].propertyMap.markerID -1;
 		markers[id]["greeting"] = jsonArray;			
 		
+		
 		var htmlText = "";
 		for (var i = 0; i < markers[id]["greeting"].length; i++){
-			htmlText = htmlText + "<b>" + markers[id]['greeting'][i]['propertyMap']['user']+"</b> "+
-			markers[id]['greeting'][i]['propertyMap']['date']+" writes:<br/>"+
+			htmlText = htmlText + 
+			"<b>" + markers[id]['greeting'][i]['propertyMap']['date'] +" <br/>"
+			+ markers[id]['greeting'][i]['propertyMap']['user']+"</b> rates: "
+			+ markers[id]['greeting'][i]['propertyMap']['rating']+ " out of 5.<br/>" +
 			markers[id]['greeting'][i]['propertyMap']['content']+"<br/>";
 		}
 		document.getElementById(id+1).innerHTML= htmlText;
@@ -181,5 +186,6 @@ function httpCallBackFunction() {
 		}		
 		parseResponse(xmlDoc, xmlHttpReq);
 		$('.rateit').rateit();
+		//$('.rateit bigstars').rateit();
 	}		
 }

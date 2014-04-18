@@ -34,7 +34,8 @@ public class SignGuestbookServlet extends HttpServlet {
 	        Key guestbookKey = KeyFactory.createKey("Guestbook", reqMarkerID);
 	        
 	        setReqAttr(req);
-	        List<Entity> greetings = dataQueryRows("Greeting", guestbookKey);	        
+	        List<Entity> greetings = dataQueryRows("Greeting", guestbookKey);
+	        calculateRating(greetings);
 	        String responseHTMLString = new Gson().toJson(greetings);       
 	       
 	        resp.setContentType("text/html");
@@ -66,6 +67,7 @@ public class SignGuestbookServlet extends HttpServlet {
 	        greeting.setProperty("date", isoFormat.format(new Date()));	        
 	        greeting.setProperty("content", req.getParameter("content"));
 	        greeting.setProperty("markerID", req.getParameter("markerID"));
+	        greeting.setProperty("rating", req.getParameter("rating"));
 	        greeting.setProperty("index", (int) (new Date().getTime()/1000));
 	    	return greeting;
 	    }
@@ -80,6 +82,19 @@ public class SignGuestbookServlet extends HttpServlet {
             // view of the Greetings belonging to the selected Guestbook.
             Query query = new Query(EntityKind, EntityKey).addSort("index", Query.SortDirection.DESCENDING);
             return datastore.prepare(query).asList(FetchOptions.Builder.withLimit(10));    	
+	    }
+	    
+	    private void calculateRating(List<Entity> entity){
+	    	float averageRank = 0;
+	    	for (Entity e : entity) {
+	    		System.out.println("rating of greeting is " + e.getProperty("rating"));
+	    		averageRank = averageRank + Float.parseFloat(""+e.getProperty("rating"));
+	    	}
+	    	averageRank = averageRank / entity.size();
+	    	System.out.println(averageRank);
+	    	for (Entity e: entity){
+	    		e.setProperty("totalRank", averageRank);
+	    	}
 	    }
 	    
 	    /*

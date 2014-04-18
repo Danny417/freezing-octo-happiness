@@ -32,6 +32,7 @@
 		<include path="/**.css" />
 		<include path="/**.xml" />
 		<include path="/**.gif" />
+		<include path="/**.png" />
 	</static-files>
 	<resource-files>
 	</resource-files>

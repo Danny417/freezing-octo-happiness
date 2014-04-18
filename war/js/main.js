@@ -146,7 +146,9 @@ function parseResponse(xmlDoc, xmlHttpReq) {
 			markers[id]['greeting'][i]['propertyMap']['content']+"<br/>";
 		}
 		document.getElementById(id+1).innerHTML= htmlText;
+		return markers[id]['greeting'][(markers[id]["greeting"].length-1)]['propertyMap']['totalRank'];
 	}
+	
 }
 
 function postAjaxRequest(markerID) {
@@ -184,8 +186,8 @@ function httpCallBackFunction() {
 			var parser = new DOMParser();
 		 	xmlDoc = parser.parseFromString(xmlHttpReq.responseText,"text/xml");		 		
 		}		
-		parseResponse(xmlDoc, xmlHttpReq);
 		$('.rateit').rateit();
-		//$('.rateit bigstars').rateit();
+		$('.bigstars').rateit('readonly', true);
+		$('.bigstars').rateit('value', parseResponse(xmlDoc, xmlHttpReq));
 	}		
 }

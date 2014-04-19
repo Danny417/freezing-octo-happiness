@@ -7,8 +7,8 @@
 <html>
   <head>
     <link type="text/css" rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" >
-    <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
-    <link type="text/css" rel="stylesheet" href="/rateit.css" />
+    <link type="text/css" rel="stylesheet" href="/stylesheets/Search.css" />
+    <link type="text/css" rel="stylesheet" href="/stylesheets/rateit.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1">  
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwIx4LV0tdO3OMeFZBvTroBgEBkFcbDTM&sensor=true"></script>
     <script src="/js/infoBox.js" type="text/javascript"></script>
@@ -20,7 +20,7 @@
   	<div class="panel panel-default" style="margin:40px">
   		<div class="panel-body">
   			<div class="btn-group">
-			  <button type="button" class="btn btn-default">Home</button>
+			  <a class="btn btn-default" href="/">Home</a>
 			  <button type="button" class="btn btn-default">Tutorial</button>
 			  <div class="btn-group">
 			    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
@@ -50,7 +50,7 @@
 		</div>
 	</div>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
-    <script src="/js/main.js"></script>	   	
+    <script src="/js/Search.js"></script>	   	
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js" ></script>
     <script src="/js/jquery.rateit.min.js"></script>
   </body>

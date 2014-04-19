@@ -25,7 +25,7 @@ import java.util.Map;
 import java.util.TimeZone;
 import java.util.List;
 
-public class SignGuestbookServlet extends HttpServlet {
+public class ReviewController extends HttpServlet {
 	
 	 	@Override
 	 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -50,7 +50,7 @@ public class SignGuestbookServlet extends HttpServlet {
 			DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 			
 			datastore.put(createGreetingEntity("Greeting", guestbookKey, req));        
-			resp.sendRedirect("/ajax/?markerID="+reqMarkerID); //Post/Redirect/Get design pattern
+			resp.sendRedirect("/reviewController/?markerID="+reqMarkerID); //Post/Redirect/Get design pattern
 	    }
 	    
 	    /*

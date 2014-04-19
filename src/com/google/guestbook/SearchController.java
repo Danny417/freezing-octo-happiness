@@ -8,13 +8,13 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 
-public class MainServlet extends HttpServlet{
+public class SearchController extends HttpServlet{
 	
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException{
         try {
             setReqAttr(req);
-	        req.getRequestDispatcher("/WEB-INF/JSP/Main.jsp").forward(req, resp);
+	        req.getRequestDispatcher("/WEB-INF/JSP/Search.jsp").forward(req, resp);
 		} catch (ServletException e) {
 			e.printStackTrace();
 		}

@@ -3,6 +3,18 @@ var selectedMarkerID;
 var markers;
 var map;
 
+function getURLParam(variable) {
+	var query = window.location.search.substring(1);
+	var vars = query.split("&");
+	for (var i=0;i<vars.length;i++) {
+		var pair = vars[i].split("=");
+		if (pair[0] == variable) {
+			return pair[1];
+		}
+	} 
+	return null;
+}
+
 function loadMarkers(){
 	try {
 		xmlHttpReq = new XMLHttpRequest();
@@ -46,45 +58,48 @@ function httpCallBackFunction_loadMarkers() {
 }
 		
 window.onload = function() {
+	var lat = parseFloat(getURLParam('lat')) || 49.232241;
+	var lng = parseFloat(getURLParam('lng')) || -123.12641;
 	var mapOptions = {
-	  		center: new google.maps.LatLng(37.34, -122.03),
+	  		center: new google.maps.LatLng(lat,lng),//new google.maps.LatLng(37.34, -122.03),
 	  		zoom: 13,
 	  		mapTypeId: google.maps.MapTypeId.HYBRID 
 		};
 	map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
 	map.setTilt(45);
-	loadMarkers();
+	//loadMarkers();
+	showMarkers();
 };
 
 function showMarkers() {	
 	var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
 	var parkingIcon = iconBase + 'parking_lot_maps.png';		     
 	for(mE = 0; mE < markers.length; mE++) {
-		var markerElement = markers[mE]['marker'];
+		//var markerElement = markers[mE]['marker'];
 		
-		var lat = parseFloat(markerElement.getAttribute("lat"));
-		var lng = parseFloat(markerElement.getAttribute("lng"));
-		var srl = markerElement.getAttribute("srl");
-		var myLatlng = new google.maps.LatLng(lat, lng);		
-		var mrkID = ""+srl;
-		markers[mE]['id'] = mrkID;
+		var lat = parseFloat(markers[mE].lat);
+		var lng = parseFloat(markers[mE].lng);
+		//var srl = markerElement.getAttribute("srl");
+		var myLatlng = new google.maps.LatLng(lat, lng);	
+		console.log(myLatlng);
+		//markers[mE]['id'] = marker.parkingSpotID;
 		var marker = new google.maps.Marker({       
 			position: myLatlng,
 			map: map,
-			title : mrkID,
-			icon : (mE < parseInt(markers.length/2)) ? null : parkingIcon
+			title : markers[mE].parkingSpotID,
+			icon : parkingIcon
 		});	
-
+		console.log(marker);
 		marker.setMap(map);			
-		addInfoBox(marker, mrkID);
+		addInfoBox(marker, marker.parkingSpotID);
 		
 	}
 }
 
 function addInfoBox(marker, mrkID){
-	var index = mrkID - 1;
+	//var index = mrkID - 1;
 	var myOptions = {
-		 content: '<div id="infoBox"><table><tr><td><div class="imgContainer"><div class="img img-thumbnail" id="img'+ index +'" ></div></div>'
+		 content: '<div id="infoBox"><table><tr><td><div class="imgContainer"><div class="img img-thumbnail" id="img'+ mrkID +'" ></div></div>'
 		 +'<div class="rateit bigstars" id="totalRank'+mrkID+'" data-rateit-starwidth="32" data-rateit-starheight="32"></div></td><td>'+
 			'<div id="content"><div class="msglist" id="'+mrkID+'" ></div>' +
 			  '<div style="padding:10px"><div class="rateit" id="rateit_'+mrkID+'"></div><textarea id="'+mrkID+'_post" rows="3" cols="10" class="form-control"></textarea><br/>' +			  

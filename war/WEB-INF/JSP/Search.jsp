@@ -12,9 +12,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">  
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwIx4LV0tdO3OMeFZBvTroBgEBkFcbDTM&sensor=true"></script>
     <script src="/js/infoBox.js" type="text/javascript"></script>
-    <script>
-    	var markers = [];
-    </script>
   </head>
   <body>
   	<div class="panel panel-default" style="margin:40px">
@@ -49,6 +46,36 @@
 		<div id="map-canvas" class="box-shadow-right-bottom" >
 		</div>
 	</div>
+	
+    <script>
+    	var markers = [
+    		<c:forEach items="${parkingSpots}" var="ps" varStatus="status">
+    			{
+    				parkingSpotID : '${ps.parkingSpotID}',
+    				host : {
+    					name : '${ps.host.name}'
+    				},
+    				lat : '${ps.lat}',
+    				lng : '${ps.lng}',
+    				address : '${ps.address}',
+    				reviews : [
+    					<c:forEach items="${ps.reviews}" var="review" varStatus="reviewStatus">
+    						{
+    							date : "${review.date}",
+    							reviewMessage : "${review.reviewMessage}",
+    							rating : "${review.rating}",
+    							user : {
+    								name : '${review.user.name}'
+    							}
+    						}
+    						<c:if test="${!reviewStatus.last}">,</c:if>
+    					</c:forEach>
+    				]
+    			}
+    			<c:if test="${!status.last}">,</c:if>
+    		</c:forEach>
+    	];
+    </script>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
     <script src="/js/Search.js"></script>	   	
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js" ></script>

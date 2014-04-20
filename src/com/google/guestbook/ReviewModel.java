@@ -16,11 +16,11 @@ public class ReviewModel{
 	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
 	private Key key;
 	
-	@Persistent (dependent = "true")
+	@Persistent 
 	private ParkingSpotModel parkingSpot;
-	
+		
 	@Persistent
-	private UserModel guest;
+	private UserModel user;
 	
 	@Persistent
 	private Date date;
@@ -31,21 +31,21 @@ public class ReviewModel{
 	@Persistent
 	private int rating;
 	
-	public ReviewModel(UserModel user, Date date, ParkingSpotModel parkingSpot, int rating){
-		this.guest = user;
+	public ReviewModel(Date date, int rating, String reviewMessage){
 		this.date = date;
-		this.parkingSpot = parkingSpot;
 		this.rating = rating;
+		this.reviewMessage = reviewMessage;
 	}
 
 	public ParkingSpotModel getParkingSpot() {
 		return parkingSpot;
 	}
 
-	public UserModel getUser() {
-		return guest;
+	public void setParkingSpot(ParkingSpotModel ps) {
+		this.parkingSpot = ps;
+		this.parkingSpot.addReview(this);
 	}
-
+	
 	public Date getDate() {
 		return date;
 	}
@@ -70,5 +70,12 @@ public class ReviewModel{
 		this.rating = rating;
 	}
 	
+	public UserModel getUser() {
+		return this.user;
+	}
 	
+	public void setUser(UserModel user) {
+		this.user = user;
+		user.addReview(this);
+	}
 }

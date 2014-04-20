@@ -1,14 +1,16 @@
 package com.google.guestbook;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.jdo.annotations.Element;
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
 import com.google.appengine.api.datastore.Key;
-import com.google.appengine.api.search.GeoPoint;
+import com.google.appengine.api.datastore.KeyFactory;
 
 @PersistenceCapable
 public class ParkingSpotModel{
@@ -17,7 +19,7 @@ public class ParkingSpotModel{
 	@Persistent (valueStrategy = IdGeneratorStrategy.IDENTITY)
 	private Key parkingSpotID;
 	
-	@Persistent (dependent = "true")
+	@Persistent
 	private UserModel host; 
 	
 	@Persistent
@@ -27,16 +29,20 @@ public class ParkingSpotModel{
 	private String address;
 	
 	@Persistent
-	private float price;
+	private double price;
 	
 	@Persistent
 	private int rating;
 	
 	@Persistent (mappedBy = "parkingSpot")
+	@Element(dependent = "true")
 	private List<ReviewModel> reviews;
 	
 	@Persistent
-	private GeoPoint coordinate;
+	private double lat;
+	
+	@Persistent
+	private double lng;
 	
 	@Persistent
 	private AvailabilityManagerModel availabilityManager;
@@ -65,21 +71,20 @@ public class ParkingSpotModel{
 
 	public void setHost(UserModel host) {
 		this.host = host;
+		this.host.addParkingSpot(this);
 	}
 
 	public void setAddress(String address) {
 		this.address = address;
 	}
 
-	public void setCoordinate(GeoPoint coordinate) {
-		this.coordinate = coordinate;
-	}
-
-	public ParkingSpotModel(UserModel host, float newPrice, String address, float lat, float lng){
-		this.host = host;
+	public ParkingSpotModel(double newPrice, String address, double lat, double lng){
 		this.price = newPrice;
 		this.address = address;
-		this.coordinate = new GeoPoint(Math.round(lat), Math.round(lng));
+		this.lat = lat;
+		this.lng = lng;
+		this.reviews = new ArrayList<ReviewModel>();
+		this.parkingSpotID = KeyFactory.createKey(ParkingSpotModel.class.getSimpleName(), address+String.valueOf(lat)+String.valueOf(lng));
 	}
 	
 	public Key getParkingSpotID() {
@@ -106,7 +111,7 @@ public class ParkingSpotModel{
 		return address;
 	}
 
-	public float getPrice() {
+	public double getPrice() {
 		return price;
 	}
 
@@ -126,12 +131,28 @@ public class ParkingSpotModel{
 		return reviews;
 	}
 
-	public void setReviews(List<ReviewModel> reviews) {
-		this.reviews = reviews;
-	}
-
-	public GeoPoint getCoordinate() {
-		return coordinate;
+	public void addReview(ReviewModel review) {
+		if(this.reviews == null) {
+			this.reviews = new ArrayList<ReviewModel>();			
+		}
+		if(!this.reviews.contains(review)) {
+			review.setParkingSpot(this);
+			this.reviews.add(review);			
+		}
 	}
 	
+	public double getLat() {
+		return this.lat;
+	}
+	
+	public double getLng() {
+		return this.lng;
+	}
+	
+	public void setLat(double lat) {
+		this.lat = lat;
+	}
+	public void setLng(double lng) {
+		this.lng = lng;
+	}
 }

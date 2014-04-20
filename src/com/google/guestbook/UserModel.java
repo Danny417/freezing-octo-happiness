@@ -3,6 +3,7 @@ package com.google.guestbook;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.jdo.annotations.Element;
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
@@ -10,13 +11,14 @@ import javax.jdo.annotations.PrimaryKey;
 
 import com.google.appengine.api.datastore.Email;
 import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
 
 @PersistenceCapable
 public class UserModel {
 	
 	@PrimaryKey
 	@Persistent (valueStrategy = IdGeneratorStrategy.IDENTITY)
-	private Key userID;
+	private Key key;
 	
 	public enum Role {
 		host, admin
@@ -37,29 +39,32 @@ public class UserModel {
 	@Persistent
 	private String licensePlate;
 	
-	@Persistent (mappedBy = "guest")
+	@Persistent 
 	private List<ReviewModel> reviews;
 	
 	@Persistent
 	private int rating;
 	
 	@Persistent (mappedBy = "host")
+	@Element(dependent = "true")
 	private List<ParkingSpotModel> parkingSpots;
 	
 	public UserModel(String fullName, Email mail){
 		this.name = fullName;
 		this.gmail = mail;
+		this.key = KeyFactory.createKey(UserModel.class.getSimpleName(), mail.toString());
 		this.parkingSpots = new ArrayList<ParkingSpotModel>();
+		this.reviews = new ArrayList<ReviewModel>();
 	}
 	
 	// ACCESSORS
 
 	public Key getUserID() {
-		return userID;
+		return key;
 	}
 
 	public void setUserID(Key userID) {
-		this.userID = userID;
+		this.key = userID;
 	}
 
 	public String getName() {
@@ -94,4 +99,26 @@ public class UserModel {
 		this.parkingSpots = parkingSpots;
 	}
 	
+	public void addParkingSpot(ParkingSpotModel ps) {
+		if(this.parkingSpots == null) {
+			this.parkingSpots = new ArrayList<ParkingSpotModel>();
+		}
+		if(!this.parkingSpots.contains(ps)) {
+			this.parkingSpots.add(ps);
+			ps.setHost(this);
+		}
+	}
+	
+	public List<ReviewModel> getReviews() {
+		return this.reviews;
+	}
+	
+	public void addReview(ReviewModel review) {
+		if(this.reviews == null) {
+			this.reviews = new ArrayList<ReviewModel>();
+		}
+		if(!this.reviews.contains(review)) {
+			this.reviews.add(review);
+		}
+	}
 }

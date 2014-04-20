@@ -10,14 +10,14 @@ import javax.jdo.annotations.PrimaryKey;
 import com.google.appengine.api.datastore.Key;
 
 @PersistenceCapable
-public class RegisterParkingEntry{
+public class RegisterParkingEntryModel{
 	
 	@PrimaryKey
 	@Persistent (valueStrategy = IdGeneratorStrategy.IDENTITY)
 	private Key registerParkingEntryKey;
 	
 	@Persistent
-	private User guest;
+	private UserModel guest;
 	
 	@Persistent
 	private Date bookingDate;
@@ -26,9 +26,9 @@ public class RegisterParkingEntry{
 	private int price;
 	
 	@Persistent
-	private ParkingSpot parkingSpot;
+	private ParkingSpotModel parkingSpot;
 	
-	public RegisterParkingEntry(Date bookingDate, int price, ParkingSpot parkingSpot, User guest){
+	public RegisterParkingEntryModel(Date bookingDate, int price, ParkingSpotModel parkingSpot, UserModel guest){
 		this.price = price;
 		this.bookingDate = bookingDate;
 		this.parkingSpot = parkingSpot;
@@ -43,11 +43,11 @@ public class RegisterParkingEntry{
 		this.registerParkingEntryKey = registerParkingEntryKey;
 	}
 
-	public User getGuest() {
+	public UserModel getGuest() {
 		return guest;
 	}
 
-	public void setGuest(User guest) {
+	public void setGuest(UserModel guest) {
 		this.guest = guest;
 	}
 
@@ -67,11 +67,11 @@ public class RegisterParkingEntry{
 		this.price = price;
 	}
 
-	public ParkingSpot getParkingSpot() {
+	public ParkingSpotModel getParkingSpot() {
 		return parkingSpot;
 	}
 
-	public void setParkingSpot(ParkingSpot parkingSpot) {
+	public void setParkingSpot(ParkingSpotModel parkingSpot) {
 		this.parkingSpot = parkingSpot;
 	}
 	

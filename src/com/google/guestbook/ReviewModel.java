@@ -10,17 +10,17 @@ import javax.jdo.annotations.PrimaryKey;
 import com.google.appengine.api.datastore.Key;
 
 @PersistenceCapable
-public class Review{
+public class ReviewModel{
 	
 	@PrimaryKey
 	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
 	private Key key;
 	
 	@Persistent (dependent = "true")
-	private ParkingSpot parkingSpot;
+	private ParkingSpotModel parkingSpot;
 	
 	@Persistent
-	private User guest;
+	private UserModel guest;
 	
 	@Persistent
 	private Date date;
@@ -31,18 +31,18 @@ public class Review{
 	@Persistent
 	private int rating;
 	
-	public Review(User user, Date date, ParkingSpot parkingSpot, int rating){
+	public ReviewModel(UserModel user, Date date, ParkingSpotModel parkingSpot, int rating){
 		this.guest = user;
 		this.date = date;
 		this.parkingSpot = parkingSpot;
 		this.rating = rating;
 	}
 
-	public ParkingSpot getParkingSpot() {
+	public ParkingSpotModel getParkingSpot() {
 		return parkingSpot;
 	}
 
-	public User getUser() {
+	public UserModel getUser() {
 		return guest;
 	}
 

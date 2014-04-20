@@ -12,7 +12,7 @@ import com.google.appengine.api.datastore.Email;
 import com.google.appengine.api.datastore.Key;
 
 @PersistenceCapable
-public class User {
+public class UserModel {
 	
 	@PrimaryKey
 	@Persistent (valueStrategy = IdGeneratorStrategy.IDENTITY)
@@ -38,18 +38,18 @@ public class User {
 	private String licensePlate;
 	
 	@Persistent (mappedBy = "guest")
-	private List<Review> reviews;
+	private List<ReviewModel> reviews;
 	
 	@Persistent
 	private int rating;
 	
 	@Persistent (mappedBy = "host")
-	private List<ParkingSpot> parkingSpots;
+	private List<ParkingSpotModel> parkingSpots;
 	
-	public User(String fullName, Email mail){
+	public UserModel(String fullName, Email mail){
 		this.name = fullName;
 		this.gmail = mail;
-		this.parkingSpots = new ArrayList<ParkingSpot>();
+		this.parkingSpots = new ArrayList<ParkingSpotModel>();
 	}
 	
 	// ACCESSORS
@@ -86,11 +86,11 @@ public class User {
 		this.rating = rating;
 	}
 
-	public List<ParkingSpot> getParkingSpots() {
+	public List<ParkingSpotModel> getParkingSpots() {
 		return parkingSpots;
 	}
 
-	public void setParkingSpots(List<ParkingSpot> parkingSpots) {
+	public void setParkingSpots(List<ParkingSpotModel> parkingSpots) {
 		this.parkingSpots = parkingSpots;
 	}
 	

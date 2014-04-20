@@ -11,14 +11,14 @@ import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.search.GeoPoint;
 
 @PersistenceCapable
-public class ParkingSpot{
+public class ParkingSpotModel{
 	
 	@PrimaryKey
 	@Persistent (valueStrategy = IdGeneratorStrategy.IDENTITY)
 	private Key parkingSpotID;
 	
 	@Persistent (dependent = "true")
-	private User host; 
+	private UserModel host; 
 	
 	@Persistent
 	private String description;
@@ -33,13 +33,13 @@ public class ParkingSpot{
 	private int rating;
 	
 	@Persistent (mappedBy = "parkingSpot")
-	private List<Review> reviews;
+	private List<ReviewModel> reviews;
 	
 	@Persistent
 	private GeoPoint coordinate;
 	
 	@Persistent
-	private AvailabilityManager availabilityManager;
+	private AvailabilityManagerModel availabilityManager;
 	
 	@Persistent
 	private int accuraccy; 	// range
@@ -63,7 +63,7 @@ public class ParkingSpot{
 		this.parkingImage = parkingImage;
 	}
 
-	public void setHost(User host) {
+	public void setHost(UserModel host) {
 		this.host = host;
 	}
 
@@ -75,7 +75,7 @@ public class ParkingSpot{
 		this.coordinate = coordinate;
 	}
 
-	public ParkingSpot(User host, float newPrice, String address, float lat, float lng){
+	public ParkingSpotModel(UserModel host, float newPrice, String address, float lat, float lng){
 		this.host = host;
 		this.price = newPrice;
 		this.address = address;
@@ -90,7 +90,7 @@ public class ParkingSpot{
 		this.parkingSpotID = parkingSpotID;
 	}
 
-	public User getHost() {
+	public UserModel getHost() {
 		return host;
 	}
 
@@ -122,11 +122,11 @@ public class ParkingSpot{
 		this.rating = rating;
 	}
 
-	public List<Review> getReviews() {
+	public List<ReviewModel> getReviews() {
 		return reviews;
 	}
 
-	public void setReviews(List<Review> reviews) {
+	public void setReviews(List<ReviewModel> reviews) {
 		this.reviews = reviews;
 	}
 

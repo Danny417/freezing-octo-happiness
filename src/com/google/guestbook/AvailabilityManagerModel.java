@@ -13,19 +13,19 @@ import javax.jdo.annotations.PrimaryKey;
 import com.google.appengine.api.datastore.Key;
 
 @PersistenceCapable
-public class AvailabilityManager {
+public class AvailabilityManagerModel {
 	
 	@PrimaryKey
 	@Persistent (valueStrategy = IdGeneratorStrategy.IDENTITY)
 	private Key managerKey;
 	
 	@Persistent (dependent = "true")
-	private ParkingSpot parkingSpot;
+	private ParkingSpotModel parkingSpot;
 
 	@Persistent
 	private Map<Date, List<Boolean>> availability;
 	
-	public AvailabilityManager(ParkingSpot pSpot, Map<Date, List<Boolean>> tSlots){
+	public AvailabilityManagerModel(ParkingSpotModel pSpot, Map<Date, List<Boolean>> tSlots){
 		this.parkingSpot = pSpot;
 		this.availability = tSlots;
 	}
@@ -75,11 +75,11 @@ public class AvailabilityManager {
 		this.managerKey = managerKey;
 	}
 
-	public ParkingSpot getParkingSpot() {
+	public ParkingSpotModel getParkingSpot() {
 		return parkingSpot;
 	}
 
-	public void setParkingSpot(ParkingSpot parkingSpot) {
+	public void setParkingSpot(ParkingSpotModel parkingSpot) {
 		this.parkingSpot = parkingSpot;
 	}
 

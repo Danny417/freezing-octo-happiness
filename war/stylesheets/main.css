@@ -179,3 +179,19 @@ div.img{
       -ms-transform: rotate(-10deg);
           transform: rotate(-10deg);
 }
+.swiper-container {
+	padding:30px 0;
+	max-width: 1200px;
+}
+.swiper-slide {
+	width:auto;		
+	max-height:450px;	
+	min-height: 150px;
+	min-width: 100px;
+	background-size:cover;
+	background-repeat:no-repeat;
+	background-position:center;
+	border-radius:5px;
+	border-bottom:1px solid #555; 
+	-webkit-box-reflect: below 1px -webkit-linear-gradient(bottom, rgba(0,0,0,0.5) 0px, rgba(0,0,0,0) 20px);
+}

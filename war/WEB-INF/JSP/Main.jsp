@@ -8,6 +8,8 @@
   <head>
     <link type="text/css" rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" >
     <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
+	<link rel="stylesheet" type="text/css" href="/stylesheets/idangerous.swiper.css">
+	<link rel="stylesheet" type="text/css" href="/stylesheets/idangerous.swiper.3dflow.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">  
   </head>
   <body>
@@ -38,8 +40,18 @@
 			</div>
 		</div>
 	</div>
-  	Main Page : I am out for dinner. 
+  	
+	<div class="swiper-container">
+		<div class="swiper-wrapper">
+			<div class="swiper-slide" style="background-color:white"><a href="#"></a></div>
+			<div class="swiper-slide" style="background-color:white"><a href="#"></a></div>
+			<div class="swiper-slide" style="background-color:white"><a href="#"></a></div>
+		</div>
+	</div>
+		
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+	<script src="/js/idangerous.swiper-2.0.min.js"></script>
+	<script src="/js/idangerous.swiper.3dflow-2.0.js"></script>
     <script src="/js/main.js"></script>	   	
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js" ></script>
   </body>

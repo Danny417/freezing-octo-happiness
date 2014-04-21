@@ -54,6 +54,7 @@ public class SearchController extends HttpServlet{
             image.setImage(fetchResponse.getContent());
             
             //Add to the ParkSpotModel for saving
+            //test
             ps.setParkingImage(image);
     	}
     	

@@ -1,6 +1,7 @@
 package com.google.guestbook;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 import javax.jdo.PersistenceManager;
@@ -20,10 +21,11 @@ public class SearchController extends HttpServlet{
 	
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException{
-    	//temp data to have some parking spots
-    	PersistenceManager pm = PMF.get().getPersistenceManager();
-    	ParkingSpotModel ps = new ParkingSpotModel(115.0, "2 address st.", 49.279387, -122.958822);
-    	UserModel host = new UserModel("test user1", new Email("2testUser1@test.com"));
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+    	
+		//temp data to have some parking spots
+    	ParkingSpotModel ps = new ParkingSpotModel(115.0, "3 address st.", 49.279387, -122.958822);
+    	UserModel host = new UserModel("test user32", new Email("2testUser1@test.com"));
     	host.addParkingSpot(ps);
     	try {
         	pm.currentTransaction().begin();

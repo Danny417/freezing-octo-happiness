@@ -14,48 +14,6 @@ function getURLParam(variable) {
 	} 
 	return null;
 }
-
-function loadMarkers(){
-	try {
-		xmlHttpReq = new XMLHttpRequest();
-		xmlHttpReq.onreadystatechange = httpCallBackFunction_loadMarkers;
-		var url = "/resources/markers.xml";
-	
-		xmlHttpReq.open('GET', url, true);
-    	xmlHttpReq.send(null);
-    	
-	} catch (e) {
-    	alert("Error: " + e);
-	}	
-}
-function httpCallBackFunction_loadMarkers() {	
-	if (xmlHttpReq.readyState == 1){
-	}else if (xmlHttpReq.readyState == 2){
-	}else if (xmlHttpReq.readyState == 3){ 
-	}else if (xmlHttpReq.readyState == 4){
-		var xmlDoc = null;
-
-		if(xmlHttpReq.responseXML){
-			xmlDoc = xmlHttpReq.responseXML;
-		}else if(xmlHttpReq.responseText){
-			var parser = new DOMParser();
-		 	xmlDoc = parser.parseFromString(xmlHttpReq.responseText,"text/xml");	 
-		}
-		if(xmlDoc){				
-			var tempArray = xmlDoc.getElementsByTagName('marker');
-			for (var i = 0; i < tempArray.length; i++){
-				var temp = new Object();
-				temp.marker = tempArray[i];
-				temp.id = "";
-				temp.greeting;
-				markers.push(temp);
-			}
-			showMarkers();
-		}else{
-			alert("No data.");
-		}	
-	}		
-}
 		
 window.onload = function() {
 	var lat = parseFloat(getURLParam('lat')) || 49.232241;
@@ -66,8 +24,7 @@ window.onload = function() {
 	  		mapTypeId: google.maps.MapTypeId.HYBRID 
 		};
 	map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
-	map.setTilt(45);
-	//loadMarkers();
+	//map.setTilt(45);
 	showMarkers();
 };
 
@@ -80,23 +37,22 @@ function showMarkers() {
 		var lat = parseFloat(markers[mE].lat);
 		var lng = parseFloat(markers[mE].lng);
 		//var srl = markerElement.getAttribute("srl");
-		var myLatlng = new google.maps.LatLng(lat, lng);	
-		console.log(myLatlng);
-		//markers[mE]['id'] = marker.parkingSpotID;
+		var myLatlng = new google.maps.LatLng(lat, lng);
+		markers[mE].parkingSpotID = markers[mE].parkingSpotID.replace(/&#034;/g, '')
 		var marker = new google.maps.Marker({       
 			position: myLatlng,
 			map: map,
 			title : markers[mE].parkingSpotID,
 			icon : parkingIcon
 		});	
-		console.log(marker);
 		marker.setMap(map);			
-		addInfoBox(marker, marker.parkingSpotID);
+		addInfoBox(marker, markers[mE].parkingSpotID);
 		
 	}
 }
 
 function addInfoBox(marker, mrkID){
+	console.log(mrkID);
 	//var index = mrkID - 1;
 	var myOptions = {
 		 content: '<div id="infoBox"><table><tr><td><div class="imgContainer"><div class="img img-thumbnail" id="img'+ mrkID +'" ></div></div>'
@@ -133,7 +89,7 @@ function addInfoBox(marker, mrkID){
 function getAjaxRequest(mrkID) {
 	try {
 		xmlHttpReq = new XMLHttpRequest();
-		xmlHttpReq.onreadystatechange = httpCallBackFunction;
+		xmlHttpReq.onreadystatechange = function() {httpCallBackFunction(mrkID);}
 		var url = "/reviewController/?markerID="+mrkID;
 		
 		xmlHttpReq.open('GET', url, true);
@@ -143,48 +99,47 @@ function getAjaxRequest(mrkID) {
 	}	
 }
 
-function parseResponse(xmlDoc, xmlHttpReq) {
+function parseResponse(xmlDoc, xmlHttpReq, mrkID) {
 	var jsonArray;
-	//alert(xmlHttpReq.responseText);
 	if(xmlDoc) jsonArray = JSON.parse(xmlHttpReq.responseText);
-	if(!(!jsonArray) && jsonArray.length > 0){					
-		var id = jsonArray[0].propertyMap.markerID -1;
-		markers[id]["greeting"] = jsonArray;			
-		
-		
+	console.log(jsonArray);
+	if(!(!jsonArray) && jsonArray.length > 0){			
 		var htmlText = "";
-		for (var i = 0; i < markers[id]["greeting"].length; i++){
-			htmlText = htmlText + 
-			"<b>" + markers[id]['greeting'][i]['propertyMap']['date'] +" <br/>"
-			+ markers[id]['greeting'][i]['propertyMap']['user']+"</b> rates: "
-			+ markers[id]['greeting'][i]['propertyMap']['rating']+ " out of 5.<br/>" +
-			markers[id]['greeting'][i]['propertyMap']['content']+"<br/>";
+		var totalRate = 0;
+		for (var i = 0; i < jsonArray.length; i++){
+			var username = (jsonArray[i]['username'] == undefined) ? 'nija user' : jsonArray[i]['username'];
+			htmlText = htmlText + "<b>" + jsonArray[i]['date'] +" <br/>"
+			+ username +"</b> rates: "
+			+ jsonArray[i]['rating']+ " out of 5.<br/>" +
+			jsonArray[i]['reviewMessage']+"<br/>";
+			totalRate += parseInt(jsonArray[i]['rating']);
 		}
-		document.getElementById(id+1).innerHTML= htmlText;
-		return markers[id]['greeting'][(markers[id]["greeting"].length-1)]['propertyMap']['totalRank'];
+		document.getElementById(mrkID).innerHTML= htmlText;
+		$('.rateit').rateit();
+		$('.bigstars').rateit('readonly', true);
+		$('.bigstars').rateit('value', totalRate/jsonArray.length);
 	}
 	
 }
 
-function postAjaxRequest(markerID) {
+function postAjaxRequest(mrkID) {
 	try {
 		xmlHttpReq = new XMLHttpRequest();
-		xmlHttpReq.onreadystatechange = httpCallBackFunction;
+		xmlHttpReq.onreadystatechange = function(){httpCallBackFunction(mrkID);}
 		var url = "/reviewController";	
 		xmlHttpReq.open("POST", url, true);
 		xmlHttpReq.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');		
 		
-		var postMsgValue = document.getElementById(markerID+'_post').value;    	
-		xmlHttpReq.send("content="+postMsgValue+"&markerID="+markerID+"&rating="+$('#rateit_'+markerID).rateit('value'));
-		
-		document.getElementById(markerID+'_post').value = '';
-		$('#rateit_'+markerID).rateit('value', 0);
+		var postMsgValue = document.getElementById(mrkID+'_post').value;    
+		xmlHttpReq.send("content="+postMsgValue+"&markerID="+mrkID+"&rating="+$('[id="rateit_'+mrkID+'"]').rateit('value'));
+		document.getElementById(mrkID+'_post').value = '';
+		$('[id="rateit_'+mrkID+'"]').rateit('value', 0);
 	} catch (e) {
-    	alert("Error: " + e);
+		console.log(e);
 	}	
 }
 
-function httpCallBackFunction() {
+function httpCallBackFunction(mrkID) {
 	
 	if (xmlHttpReq.readyState == 1){
 		//updateStatusMessage("<blink>Opening HTTP...</blink>");
@@ -201,8 +156,6 @@ function httpCallBackFunction() {
 			var parser = new DOMParser();
 		 	xmlDoc = parser.parseFromString(xmlHttpReq.responseText,"text/xml");		 		
 		}		
-		$('.rateit').rateit();
-		$('.bigstars').rateit('readonly', true);
-		$('.bigstars').rateit('value', parseResponse(xmlDoc, xmlHttpReq));
+		parseResponse(xmlDoc, xmlHttpReq, mrkID);
 	}		
 }

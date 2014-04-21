@@ -18,9 +18,9 @@ public class ReviewModel{
 	
 	@Persistent 
 	private ParkingSpotModel parkingSpot;
-		
+			
 	@Persistent
-	private UserModel user;
+	private String username;
 	
 	@Persistent
 	private Date date;
@@ -29,14 +29,18 @@ public class ReviewModel{
 	private String reviewMessage;
 	
 	@Persistent
-	private int rating;
+	private double rating;
 	
-	public ReviewModel(Date date, int rating, String reviewMessage){
+	public ReviewModel(Date date, double rating, String reviewMessage){
 		this.date = date;
 		this.rating = rating;
-		this.reviewMessage = reviewMessage;
+		this.reviewMessage = reviewMessage;		
 	}
 
+	public Key getKey() {
+		return this.key;
+	}
+	
 	public ParkingSpotModel getParkingSpot() {
 		return parkingSpot;
 	}
@@ -62,20 +66,19 @@ public class ReviewModel{
 		this.reviewMessage = reviewMessage;
 	}
 
-	public int getRating() {
+	public double getRating() {
 		return rating;
 	}
 
-	public void setRating(int rating) {
+	public void setRating(double rating) {
 		this.rating = rating;
 	}
 	
-	public UserModel getUser() {
-		return this.user;
+	public void setUser(UserModel user) {
+		this.username = user.getName();
 	}
 	
-	public void setUser(UserModel user) {
-		this.user = user;
-		user.addReview(this);
+	public String getUser() {
+		return this.username;
 	}
 }

@@ -51,26 +51,13 @@
     	var markers = [
     		<c:forEach items="${parkingSpots}" var="ps" varStatus="status">
     			{
-    				parkingSpotID : '${ps.parkingSpotID}',
+    				parkingSpotID : '${fn:escapeXml(ps.parkingSpotID)}',
     				host : {
     					name : '${ps.host.name}'
     				},
     				lat : '${ps.lat}',
     				lng : '${ps.lng}',
-    				address : '${ps.address}',
-    				reviews : [
-    					<c:forEach items="${ps.reviews}" var="review" varStatus="reviewStatus">
-    						{
-    							date : "${review.date}",
-    							reviewMessage : "${review.reviewMessage}",
-    							rating : "${review.rating}",
-    							user : {
-    								name : '${review.user.name}'
-    							}
-    						}
-    						<c:if test="${!reviewStatus.last}">,</c:if>
-    					</c:forEach>
-    				]
+    				address : '${ps.address}'
     			}
     			<c:if test="${!status.last}">,</c:if>
     		</c:forEach>

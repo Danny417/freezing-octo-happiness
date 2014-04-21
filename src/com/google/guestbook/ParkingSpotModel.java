@@ -3,6 +3,7 @@ package com.google.guestbook;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.jdo.PersistenceManager;
 import javax.jdo.annotations.Element;
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
@@ -136,8 +137,8 @@ public class ParkingSpotModel{
 			this.reviews = new ArrayList<ReviewModel>();			
 		}
 		if(!this.reviews.contains(review)) {
-			review.setParkingSpot(this);
-			this.reviews.add(review);			
+			this.reviews.add(review);	
+			review.setParkingSpot(this);		
 		}
 	}
 	
@@ -154,5 +155,11 @@ public class ParkingSpotModel{
 	}
 	public void setLng(double lng) {
 		this.lng = lng;
+	}
+	
+	public static ParkingSpotModel getParkingSpotById(Key key, PersistenceManager pm) {
+        ParkingSpotModel ps = null;
+    	ps =  pm.getObjectById(ParkingSpotModel.class, key);
+    	return ps;
 	}
 }

@@ -33,6 +33,7 @@
 		<include path="/**.xml" />
 		<include path="/**.gif" />
 		<include path="/**.png" />
+		<include path="/**.jpg" />
 	</static-files>
 	<resource-files>
 	</resource-files>

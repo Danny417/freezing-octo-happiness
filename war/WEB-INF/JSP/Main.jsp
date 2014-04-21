@@ -13,7 +13,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">  
   </head>
   <body>
+
+  	<h1 style="margin:40px"><font face="Georgia" size="10" color="white"> Find a place to park. </font></h1>
+  	<hr style="margin-left:40px; margin-right:40px; border-color:white;">
   	<div class="panel panel-default" style="margin:40px">
+		<div class="swiper-container">
+			<div class="swiper-wrapper">
+				<div class="swiper-slide" style="background-color:white">
+					<c:if test="${empty requestScope.user}">
+						<a href="${login}"><img src="/img/signin.png"></a>
+					</c:if>
+					<c:if test="${not empty requestScope.user}">
+						<a href="${logout}"><img src="/img/signin.png"></a>
+					</c:if>
+				</div>
+				<div class="swiper-slide"><a href="/SearchController"><img src="/img/advanced_search.png"></a></div>
+				<div class="swiper-slide"><a href="#"><img src="/img/quick_search.png"></a></div>
+				<div class="swiper-slide"><a href="#"><img src="/img/register.png"></a></div>
+				<div class="swiper-slide"><a href="#"><img src="/img/tutorial.png"></a></div>
+			</div>
+		</div>
+	</div>
+	</div>
+	<hr style="margin-left:40px; margin-right:40px; border-color:white;">
+	<p style="color:white; text-align:right; margin-right:40px">(c) OurParkingSpot.com</p>
+  	
+  	<!--div class="panel panel-default" style="margin:40px">
+    	<div class="panel-body">
+    		<div class="swiper-container">
+			<div class="swiper-wrapper">
+				<div class="swiper-slide" style="background-color:white">
+					<c:if test="${empty requestScope.user}">
+						<a href="${login}"><img src="/img/signin.png"></a>
+					</c:if>
+					<c:if test="${not empty requestScope.user}">
+						<a href="${logout}"><img src="/img/signin.png"></a>
+					</c:if>
+				</div>
+				<div class="swiper-slide"><a href="/SearchController"><img src="/img/advanced_search.png"></a></div>
+				<div class="swiper-slide"><a href="#"><img src="/img/quick_search.png"></a></div>
+				<div class="swiper-slide"><a href="#"><img src="/img/register.png"></a></div>
+				<div class="swiper-slide"><a href="#"><img src="/img/tutorial.png"></a></div>
+			</div>
+		</div>
+    	</div>
+	
+	</div-->
+
+  	<!--div class="panel panel-default" style="margin:40px">
   		<div class="panel-body">
   			<div class="btn-group">
 			  <button type="button" class="btn btn-default">Home</button>
@@ -39,18 +86,8 @@
 			</c:if>
 			</div>
 		</div>
-	</div>
-  	<div class="panel panel-default" style="margin:40px">
-		<div class="swiper-container">
-			<div class="swiper-wrapper">
-				<div class="swiper-slide" style="background-color:white"><a href="#"><img src="/img/signin.png"></a></div>
-				<div class="swiper-slide"><a href="/SearchController"><img src="/img/advanced_search.png"></a></div>
-				<div class="swiper-slide"><a href="#"><img src="/img/quick_search.png"></a></div>
-				<div class="swiper-slide"><a href="#"><img src="/img/register.png"></a></div>
-				<div class="swiper-slide"><a href="#"><img src="/img/tutorial.png"></a></div>
-			</div>
-		</div>
-	</div>
+	</div-->
+  	
 		
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
 	<script src="/js/idangerous.swiper-2.0.min.js"></script>

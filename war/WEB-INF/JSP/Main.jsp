@@ -36,7 +36,7 @@
 	</div>
 	</div>
 	<hr style="margin-left:40px; margin-right:40px; border-color:white;">
-	<p style="color:white; text-align:right; margin-right:40px">(c) OurParkingSpot.com</p>
+	<p style="color:white; text-align:right; margin-right:40px">&#169; OurParkingSpot.com</p>
   	
   	<!--div class="panel panel-default" style="margin:40px">
     	<div class="panel-body">

@@ -1,8 +1,10 @@
 package com.google.guestbook;
 
 import java.io.IOException;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
@@ -12,10 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.appengine.api.datastore.Email;
-import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
-import com.google.gson.Gson;
 
 public class SearchController extends HttpServlet{
 	
@@ -38,8 +38,6 @@ public class SearchController extends HttpServlet{
     	}
         try {        	
             setReqAttr(req);
-            //List<Entity> greetings = dataQueryRows("Greeting", guestbookKey);
-	        //calculateRating(greetings);
 	        req.getRequestDispatcher("/WEB-INF/JSP/Search.jsp").forward(req, resp);
 		} catch (ServletException e) {
 			e.printStackTrace();
@@ -58,16 +56,35 @@ public class SearchController extends HttpServlet{
         }
     }
 	
-	//TODO implement where cause
+	//GAE has some limitation of inequality queries
+	//GeoHash is a better way to solve this problem but I do not have time to do that
+	//so...Brutal force!
 	private List<ParkingSpotModel> searchByCoord(String lat, String lng) {
     	PersistenceManager pm = PMF.get().getPersistenceManager();
-    	Query q = pm.newQuery(ParkingSpotModel.class);
+    	Double maxlat = Double.valueOf(lat)+0.01;
+    	Double maxlng = Double.valueOf(lng)+0.01; //~1.1km range
+    	Double minlat = Double.valueOf(lat)-0.01;
+    	Double minlng = Double.valueOf(lng)-0.01;
+    	Query q = pm.newQuery(ParkingSpotModel.class, "lat <= maxlat");
+    	q.declareParameters("java.lang.Double maxlat");
     	List<ParkingSpotModel> results = null;
     	try {
-    		results = (List<ParkingSpotModel>) q.execute();	
+    		results = (List<ParkingSpotModel>) q.execute(maxlat);	
+    		List<ParkingSpotModel> removeList = new ArrayList<ParkingSpotModel>();
+    		for(ParkingSpotModel ps : results) {
+        		if(ps.getLat() < minlat || ps.getLng() < minlng || ps.getLng() > maxlng) {
+        			removeList.add(ps);
+        		}
+        	}
+    		for(ParkingSpotModel ps : removeList) {
+    			results.remove(ps);
+    		}
+    	} catch(Exception e) {
+    		System.out.println(e.toString());
     	} finally {
     		q.closeAll();
     	}
+    	
     	return results;
 	}
 }

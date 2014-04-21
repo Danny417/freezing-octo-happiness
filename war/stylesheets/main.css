@@ -196,6 +196,8 @@ div.img{
 }
 
 body {
-	background-image:url('/img/asphalt.png');
+	background-image:url('/img/park.jpg');
+	background-repeat: no-repeat;
+	background-size: 100%;
 }
 

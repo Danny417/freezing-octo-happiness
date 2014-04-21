@@ -84,7 +84,7 @@ sizes, pagination, etc.
 .swiper-container {
 	/* Specify Swiper's Size: */
 
-	/*width:200px;
+	/*width:1000px;
 	height: 100px;*/
 }
 .swiper-slide {
@@ -117,5 +117,5 @@ Pagination Styles
 	
 }
 .swiper-wrapper, .swiper-slide {
-	max-height:500px;
+	max-height: 300px;
 }

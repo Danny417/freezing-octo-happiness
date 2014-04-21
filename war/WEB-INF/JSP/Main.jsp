@@ -40,12 +40,15 @@
 			</div>
 		</div>
 	</div>
-  	
-	<div class="swiper-container">
-		<div class="swiper-wrapper">
-			<div class="swiper-slide" style="background-color:white"><a href="#"></a></div>
-			<div class="swiper-slide" style="background-color:white"><a href="#"></a></div>
-			<div class="swiper-slide" style="background-color:white"><a href="#"></a></div>
+  	<div class="panel panel-default" style="margin:40px">
+		<div class="swiper-container">
+			<div class="swiper-wrapper">
+				<div class="swiper-slide" style="background-color:white"><a href="#"><img src="/img/signin.png"></a></div>
+				<div class="swiper-slide"><a href="/SearchController"><img src="/img/advanced_search.png"></a></div>
+				<div class="swiper-slide"><a href="#"><img src="/img/quick_search.png"></a></div>
+				<div class="swiper-slide"><a href="#"><img src="/img/register.png"></a></div>
+				<div class="swiper-slide"><a href="#"><img src="/img/tutorial.png"></a></div>
+			</div>
 		</div>
 	</div>
 		

@@ -44,7 +44,10 @@ public class ParkingSpotModel{
 	
 	@Persistent
 	private double lng;
-		
+	
+	@Persistent
+	private AvailabilityManagerModel availabilityManager;
+	
 	@Persistent
 	private int accuraccy; 	// range
 
@@ -155,7 +158,15 @@ public class ParkingSpotModel{
 	public void setLng(double lng) {
 		this.lng = lng;
 	}
-		
+	
+	public void setAvailability(AvailabilityManagerModel avail) {
+		this.availabilityManager = avail;
+	}
+	
+	public AvailabilityManagerModel getAvailability() {
+		return this.availabilityManager;
+	}
+	
 	public static ParkingSpotModel getParkingSpotById(Key key, PersistenceManager pm) {
         ParkingSpotModel ps = null;
     	ps =  pm.getObjectById(ParkingSpotModel.class, key);

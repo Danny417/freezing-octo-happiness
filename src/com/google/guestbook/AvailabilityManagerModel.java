@@ -13,6 +13,7 @@ import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
 import com.google.appengine.api.datastore.Key;
+import com.google.gson.Gson;
 
 @PersistenceCapable
 public class AvailabilityManagerModel {
@@ -21,21 +22,17 @@ public class AvailabilityManagerModel {
 	@Persistent (valueStrategy = IdGeneratorStrategy.IDENTITY)
 	private Key managerKey;
 	
-	@Persistent 
-	private ParkingSpotModel parkingSpot;
-
 	@Persistent
-	private Map<Date, List<Boolean>> availability;
+	private String availability;
 	
-	public AvailabilityManagerModel(ParkingSpotModel pSpot){
-		this.parkingSpot = pSpot;
-		this.availability = new HashMap<Date, List<Boolean>>();
+	public AvailabilityManagerModel(){
+		this.availability = "{}";
 	}
 	
 	public boolean isAvailable(Date desiredDate){
-		
+		Map<Date, List<Boolean>> result = new Gson().fromJson(this.availability, HashMap.class);
 		// check the date only (don't compare time yet)
-		List<Boolean> dateStatus = availability.get(getZeroTimeDate(desiredDate));
+		List<Boolean> dateStatus = result.get(getZeroTimeDate(desiredDate));
 		
 		if (dateStatus == null){
 			return false;
@@ -82,7 +79,9 @@ public class AvailabilityManagerModel {
 				timeSlots.add(false);
 			}
 		}
-		this.availability.put(d, timeSlots);		
+		Map<Date, List<Boolean>> result = new Gson().fromJson(this.availability, HashMap.class);
+		result.put(d, timeSlots);
+		this.availability = new Gson().toJson(result);	
 	}
 	// ACCESSORS
 	
@@ -94,19 +93,11 @@ public class AvailabilityManagerModel {
 		this.managerKey = managerKey;
 	}
 
-	public ParkingSpotModel getParkingSpot() {
-		return parkingSpot;
-	}
-
-	public void setParkingSpot(ParkingSpotModel parkingSpot) {
-		this.parkingSpot = parkingSpot;
-	}
-
-	public Map<Date, List<Boolean>> getAvailability() {
+	public String getAvailability() {
 		return availability;
 	}
 
-	public void setAvailability(Map<Date, List<Boolean>> availability) {
+	public void setAvailability(String availability) {
 		this.availability = availability;
 	}
 

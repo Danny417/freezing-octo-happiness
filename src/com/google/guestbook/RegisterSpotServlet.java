@@ -51,17 +51,18 @@ public class RegisterSpotServlet extends HttpServlet {
 			if(desc != null && !desc.isEmpty()) {
 				ps.setDescription(desc);
 			}
-			AvailabilityManagerModel avail = new AvailabilityManagerModel(ps);
+			AvailabilityManagerModel avail = new AvailabilityManagerModel();
 			Date d;
 			d = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH).parse(req.getParameter("date"));		
 			avail.addAvaliableTime(d, req.getParameter("startTime"), req.getParameter("endTime"));
-			
+			ps.setAvailability(avail);
 			UserModel host = UserModel.getUserById(new Email(user.getEmail()), pm);
         	if(host == null) {
         		host = new UserModel(user.getNickname(), new Email(user.getEmail()));
 	        	pm.currentTransaction().begin();
 	    	    pm.makePersistent(host);
 	    	    pm.currentTransaction().commit();
+	    	    pm.flush();
         	}
         	
         	host.addParkingSpot(ps);
@@ -71,6 +72,11 @@ public class RegisterSpotServlet extends HttpServlet {
     	    Query q = pm.newQuery(ParkingSpotModel.class);
     	    List<ParkingSpotModel> results = (List<ParkingSpotModel>) q.execute();
     	    for(ParkingSpotModel p : results) {
+    	    	System.out.println(p.getAvailability().getAvailability());
+    	    }
+    	    q = pm.newQuery(AvailabilityManagerModel.class);
+    	    List<AvailabilityManagerModel> results2 = (List<AvailabilityManagerModel>) q.execute();
+    	    for(AvailabilityManagerModel p : results2) {
     	    	System.out.println("test");
     	    }
 		} catch (Exception e) {
@@ -82,8 +88,9 @@ public class RegisterSpotServlet extends HttpServlet {
     	    }
         }	
 		
-		//resp.sendRedirect("/reviewController/?markerID="+req.getParameter("markerID")); //Post/Redirect/Get design pattern
-    }
+		resp.sendRedirect("/"); 
+	}
+	
 	private void setReqAttr(HttpServletRequest req) {
         String spotId = req.getParameter("spotId");
         if(spotId != null && !spotId.isEmpty()) {

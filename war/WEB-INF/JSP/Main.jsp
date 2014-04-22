@@ -22,13 +22,12 @@
 			<c:if test="${empty requestScope.user}">
 				<div class="swiper-slide" style="background-image:url(/img/sign_in.png)"><a href="${login}"></a></div>
 			</c:if>
-			<c:if test="${not empty requestScope.user}">
-				<div class="swiper-slide" style="background-image:url(/img/sign_in.png)"><a href="${logout}"></a></div>
-			</c:if>
-			<div class="swiper-slide" style="background-image:url(/img/advanced_search.png)"><a href="/SearchController"></a></div>
 			<div class="swiper-slide" style="background-image:url(/img/quick_search.png)"><a id="quickSearch" href="/SearchController"></a></div>
-			<div class="swiper-slide" style="background-image:url(/img/register.png)"><a href="/RegisterSpot"></a></div>
-			
+			<div class="swiper-slide" style="background-image:url(/img/advanced_search.png)"><a href="/SearchController"></a></div>
+			<div class="swiper-slide" style="background-image:url(/img/register.png)"><a href="/RegisterSpot"></a></div>			
+			<c:if test="${not empty requestScope.user}">
+				<div class="swiper-slide" style="background-image:url(/img/sign_out.png)"><a href="${logout}"></a></div>
+			</c:if>
 		</div>
 	</div>
 	</div>

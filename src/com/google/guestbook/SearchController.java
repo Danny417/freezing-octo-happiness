@@ -22,20 +22,6 @@ public class SearchController extends HttpServlet{
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException{
 		PersistenceManager pm = PMF.get().getPersistenceManager();
-    	
-		//temp data to have some parking spots
-    	ParkingSpotModel ps = new ParkingSpotModel(115.0, "3 address st.", 49.279387, -122.958822);
-    	UserModel host = new UserModel("test user32", new Email("2testUser1@test.com"));
-    	host.addParkingSpot(ps);
-    	try {
-        	pm.currentTransaction().begin();
-    	    pm.makePersistent(host);
-    	    pm.currentTransaction().commit();
-    	} finally {
-    	    if (pm.currentTransaction().isActive()) {
-    	        pm.currentTransaction().rollback();
-    	    }
-    	}
         try {        	
             setReqAttr(req);
 	        req.getRequestDispatcher("/WEB-INF/JSP/Search.jsp").forward(req, resp);
@@ -78,7 +64,6 @@ public class SearchController extends HttpServlet{
     		List<ParkingSpotModel> results = (List<ParkingSpotModel>) q.execute();	
     		finalRes = new ArrayList<ParkingSpotModel>();
     		for(ParkingSpotModel ps : results) {
-    			System.out.println(ps.getLat() +", "+ps.getLng());
     			for(int i = 0; i < lats.size(); i++) {
 	        		if(ps.getLat() <= lats.get(i)+0.01 && ps.getLat() >= lats.get(i)-0.01 && ps.getLng() >= lngs.get(i)-0.01 && ps.getLng() <= lngs.get(i)+0.01) {
 	        			finalRes.add(ps);	        			

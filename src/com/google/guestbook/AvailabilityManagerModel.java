@@ -1,7 +1,9 @@
 package com.google.guestbook;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -11,6 +13,7 @@ import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
 import com.google.appengine.api.datastore.Key;
+import com.google.gson.Gson;
 
 @PersistenceCapable
 public class AvailabilityManagerModel {
@@ -19,21 +22,17 @@ public class AvailabilityManagerModel {
 	@Persistent (valueStrategy = IdGeneratorStrategy.IDENTITY)
 	private Key managerKey;
 	
-	@Persistent (dependent = "true")
-	private ParkingSpotModel parkingSpot;
-
 	@Persistent
-	private Map<Date, List<Boolean>> availability;
+	private String availability;
 	
-	public AvailabilityManagerModel(ParkingSpotModel pSpot, Map<Date, List<Boolean>> tSlots){
-		this.parkingSpot = pSpot;
-		this.availability = tSlots;
+	public AvailabilityManagerModel(){
+		this.availability = "{}";
 	}
 	
 	public boolean isAvailable(Date desiredDate){
-		
+		Map<Date, List<Boolean>> result = new Gson().fromJson(this.availability, HashMap.class);
 		// check the date only (don't compare time yet)
-		List<Boolean> dateStatus = availability.get(getZeroTimeDate(desiredDate));
+		List<Boolean> dateStatus = result.get(getZeroTimeDate(desiredDate));
 		
 		if (dateStatus == null){
 			return false;
@@ -65,6 +64,25 @@ public class AvailabilityManagerModel {
 	    return res;
 	}
 	
+	public void addAvaliableTime(Date d, String startTime, String endTime) {
+		String[] hhmm = startTime.split(":");
+		int minutes = Integer.parseInt(hhmm[0])*60+Integer.parseInt(hhmm[1]);
+		int startIndex = minutes/30;
+		hhmm = endTime.split(":");
+		minutes = Integer.parseInt(hhmm[0])*60+Integer.parseInt(hhmm[1]);
+		int endIndex = minutes/30;
+		List<Boolean> timeSlots = new ArrayList<Boolean>();
+		for(int i = 0; i < 48 ; i++){
+			if(i >= startIndex && i <= endIndex) {
+				timeSlots.add(true);
+			} else {
+				timeSlots.add(false);
+			}
+		}
+		Map<Date, List<Boolean>> result = new Gson().fromJson(this.availability, HashMap.class);
+		result.put(d, timeSlots);
+		this.availability = new Gson().toJson(result);	
+	}
 	// ACCESSORS
 	
 	public Key getManagerKey() {
@@ -75,19 +93,11 @@ public class AvailabilityManagerModel {
 		this.managerKey = managerKey;
 	}
 
-	public ParkingSpotModel getParkingSpot() {
-		return parkingSpot;
-	}
-
-	public void setParkingSpot(ParkingSpotModel parkingSpot) {
-		this.parkingSpot = parkingSpot;
-	}
-
-	public Map<Date, List<Boolean>> getAvailability() {
+	public String getAvailability() {
 		return availability;
 	}
 
-	public void setAvailability(Map<Date, List<Boolean>> availability) {
+	public void setAvailability(String availability) {
 		this.availability = availability;
 	}
 

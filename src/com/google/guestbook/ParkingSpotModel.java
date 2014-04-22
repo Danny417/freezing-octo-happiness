@@ -84,6 +84,8 @@ public class ParkingSpotModel{
 		this.address = address;
 		this.lat = lat;
 		this.lng = lng;
+		this.rating = 0;
+		this.accuraccy = 0;
 		this.reviews = new ArrayList<ReviewModel>();
 		this.parkingSpotID = KeyFactory.createKey(ParkingSpotModel.class.getSimpleName(), address+String.valueOf(lat)+String.valueOf(lng));
 	}
@@ -155,6 +157,14 @@ public class ParkingSpotModel{
 	}
 	public void setLng(double lng) {
 		this.lng = lng;
+	}
+	
+	public void setAvailability(AvailabilityManagerModel avail) {
+		this.availabilityManager = avail;
+	}
+	
+	public AvailabilityManagerModel getAvailability() {
+		return this.availabilityManager;
 	}
 	
 	public static ParkingSpotModel getParkingSpotById(Key key, PersistenceManager pm) {

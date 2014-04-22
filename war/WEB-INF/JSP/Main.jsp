@@ -19,18 +19,18 @@
   	<div class="panel panel-default" style="margin:40px">
 		<div class="swiper-container">
 			<div class="swiper-wrapper">
-				<div class="swiper-slide" style="background-color:white">
+				<div class="swiper-slide"><a href="#"><img src="/img/tutorial.png"></a></div>
+				<div class="swiper-slide">
 					<c:if test="${empty requestScope.user}">
-						<a href="${login}"><img src="/img/signin.png"></a>
+						<a href="${login}"><img src="/img/sign_in.png"></a>
 					</c:if>
 					<c:if test="${not empty requestScope.user}">
-						<a href="${logout}"><img src="/img/signin.png"></a>
+						<a href="${logout}"><img src="/img/sign_in.png"></a>
 					</c:if>
 				</div>
 				<div class="swiper-slide"><a href="/SearchController"><img src="/img/advanced_search.png"></a></div>
 				<div class="swiper-slide"><a href="#"><img src="/img/quick_search.png"></a></div>
 				<div class="swiper-slide"><a href="#"><img src="/img/register.png"></a></div>
-				<div class="swiper-slide"><a href="#"><img src="/img/tutorial.png"></a></div>
 			</div>
 		</div>
 	</div>

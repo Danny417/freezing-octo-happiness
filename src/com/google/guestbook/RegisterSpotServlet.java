@@ -88,7 +88,7 @@ public class RegisterSpotServlet extends HttpServlet {
     	    }
         }	
 		
-		resp.sendRedirect("/UserProfile"); 
+		resp.sendRedirect("/UserProfile?userId="); 
 	}
 	
 	private void setReqAttr(HttpServletRequest req) {

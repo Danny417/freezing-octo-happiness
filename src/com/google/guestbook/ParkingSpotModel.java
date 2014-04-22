@@ -172,4 +172,21 @@ public class ParkingSpotModel{
     	ps =  pm.getObjectById(ParkingSpotModel.class, key);
     	return ps;
 	}
+	
+	public static Key getChildKeys(String keyStr) {
+	  	String[] pair = keyStr.split("/");
+	   	String className = pair[0].substring(0, pair[0].indexOf("("));
+	   	String keyval = pair[0].substring(pair[0].indexOf("(")+1, pair[0].indexOf(")"));
+	   	Key result = null;
+	   	try {
+			Key parent = KeyFactory.createKey(Class.forName("com.google.guestbook."+className).getSimpleName(), keyval);
+	    	className = pair[1].substring(0, pair[1].indexOf("("));
+	    	keyval = pair[1].substring(pair[1].indexOf("(")+1, pair[1].indexOf(")"));
+			result = KeyFactory.createKey(parent, Class.forName("com.google.guestbook."+className).getSimpleName(), keyval);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	   	return result;
+	}
 }

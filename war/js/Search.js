@@ -74,11 +74,8 @@ function showMarkers() {
 	var parkingIcon = iconBase + 'parking_lot_maps.png';	
 	
 	for(mE = 0; mE < markers.length; mE++) {
-		//var markerElement = markers[mE]['marker'];
-		
 		var lat = parseFloat(markers[mE].lat);
 		var lng = parseFloat(markers[mE].lng);
-		//var srl = markerElement.getAttribute("srl");
 		var myLatlng = new google.maps.LatLng(lat, lng);
 		markers[mE].parkingSpotID = markers[mE].parkingSpotID.replace(/&#034;/g, '')
 		var marker = new google.maps.Marker({       
@@ -94,8 +91,6 @@ function showMarkers() {
 }
 
 function addInfoBox(marker, mrkID){
-	console.log(mrkID);
-	//var index = mrkID - 1;
 	var myOptions = {
 		 content: '<div id="infoBox"><table><tr><td><div class="imgContainer"><div class="img img-thumbnail" id="img'+ mrkID +'" ></div></div>'
 		 +'<div name="desc">Description:<br/></div><div class="rateit bigstars" id="totalRank'+mrkID+'" data-rateit-starwidth="32" data-rateit-starheight="32"></div></td><td>'+
@@ -126,11 +121,13 @@ function addInfoBox(marker, mrkID){
 		getAjaxRequest(mrkID);
 		
 	});
-}
+};
 
 function requestRent(mrkID) {
-	console.log(mrkID);
-}
+	var url = '/Rent?parkingID='+mrkID;
+	window.location = url;
+};
+
 function getAjaxRequest(mrkID) {
 	try {
 		xmlHttpReq = new XMLHttpRequest();
@@ -142,7 +139,7 @@ function getAjaxRequest(mrkID) {
 	} catch (e) {
     	alert("Error: " + e);
 	}	
-}
+};
 
 function parseResponse(xmlDoc, xmlHttpReq, mrkID) {
 	$('.rateit').rateit();

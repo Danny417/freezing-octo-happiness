@@ -9,8 +9,6 @@
     <link type="text/css" rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" >
     <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
     <link type="text/css" rel="stylesheet" href="/stylesheets/rent.css" />
-   
-   
     <meta name="viewport" content="width=device-width, initial-scale=1">  
 
   </head>
@@ -23,14 +21,15 @@
       <div class="panel-heading">
         <h3 class="panel-title">Parking spot detail </h3>
       </div>
-    <div class="panel-body">
+      <div class="panel-body">
+    
   <form class="form-horizontal" role="form">
 
     <!-- parking spot ID-->
      <div class="form-group">
         <label class="col-sm-2 control-label">Parking Spot ID</label>
         <div class="col-sm-10">
-          <p class="form-control-static">00123</p>
+          <p class="form-control-static">${parkingSpot.parkingSpotID}</p>
         </div>
     </div>
 
@@ -38,7 +37,7 @@
   <div class="form-group">
         <label class="col-sm-2 control-label">Host Name</label>
         <div class="col-sm-10">
-          <p class="form-control-static">Danny Hsieh</p>
+          <p class="form-control-static">${parkingSpot.host.name}</p>
         </div>
     </div>
   
@@ -46,7 +45,7 @@
   <div class="form-group">
         <label class="col-sm-2 control-label">Price per hour</label>
         <div class="col-sm-10">
-          <p class="form-control-static">CAD$ 1.50</p>
+          <p class="form-control-static">CAD $${parkingSpot.price}</p>
         </div>
     </div>
 
@@ -54,7 +53,7 @@
   <div class="form-group">
         <label class="col-sm-2 control-label">Latitude</label>
         <div class="col-sm-10">
-          <p class="form-control-static">46.02349234</p>
+          <p class="form-control-static">${parkingSpot.lat}</p>
         </div>
     </div>
 
@@ -62,7 +61,7 @@
   <div class="form-group">
         <label class="col-sm-2 control-label">Longitude</label>
         <div class="col-sm-10">
-          <p class="form-control-static">123.12312321</p>
+          <p class="form-control-static">${parkingSpot.lng}</p>
         </div>
     </div>
   
@@ -70,27 +69,32 @@
   <div class="form-group">
         <label class="col-sm-2 control-label">Adress</label>
         <div class="col-sm-10">
-          <p class="form-control-static">random address here</p>
+          <p class="form-control-static">${parkingSpot.address}</p>
         </div>
     </div>
 
   <!-- Additional Description-->
   <div class="form-group">
-        <label class="col-sm-2 control-label">Additional Description</label>
+        <label class="col-sm-2 control-label">Description</label>
         <div class="col-sm-10">
-          <p class="form-control-static">blah0</p>
+          	<p class="form-control-static">
+          	<c:if test="${not empty requestScope.parkingSpot.description}">
+			${fn:escapeXml(parkingSpot.description)}
+			</c:if>	
+          	</p>
         </div>
     </div>
+    
 </form>
-</div>
-</div>
+</div></div>
 
    <div class="panel panel-success"  style="margin:40px;">
       <div class="panel-heading">
         <h3 class="panel-title">Rent Period detail </h3>
       </div>
-    <div class="panel-body">
-  <form class="form-horizontal" id="rentForm" role="form">
+      <div class="panel-body">
+    
+  <form class="form-horizontal" id="rentForm" role="form" action="Rent">
   <!-- Availability Date-->
   <div class="form-group" style="margin-right:40px">
     <label for="inputDate" class="col-sm-2 control-label">Available Date</label>
@@ -130,9 +134,6 @@
 </form>
 </div>
 </div>
-  
-
-  
 
 <hr style="margin-left:40px; margin-right:40px; border-color:white;">
 <p style="color:white; text-align:right; margin-right:40px">&#169; OurParkingSpot.com</p>
@@ -140,8 +141,7 @@
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script> 	
   	<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 	<script>
-		$('.date').datepicker({dateFormat: 'MM d, yy', minDate:0})
-    $('#rentForm').validate();
+		$('.date').datepicker({dateFormat: 'MM d, yy', minDate:0});
 	</script>
   </body>
 </html>

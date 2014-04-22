@@ -15,17 +15,14 @@ public class UserProfileServlet extends HttpServlet {
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException{
 		try {        	
-            setReqAttr(req);
+			UserService userService = UserServiceFactory.getUserService();
+			if(userService.getCurrentUser() == null) {
+				resp.sendRedirect(userService.createLoginURL(req.getRequestURI()));
+			}
+			req.setAttribute("user", userService.getCurrentUser());
 	        req.getRequestDispatcher("/WEB-INF/JSP/UserProfile.jsp").forward(req, resp);
 		} catch (ServletException e) {
 			e.printStackTrace();
 		} 
-	}
-	
-	private void setReqAttr(HttpServletRequest req) {
-    	UserService userService = UserServiceFactory.getUserService();
-        req.setAttribute("user", userService.getCurrentUser());
-        req.setAttribute("login", userService.createLoginURL(req.getRequestURI()));
-        req.setAttribute("logout", userService.createLogoutURL(req.getRequestURI()));	
 	}
 }

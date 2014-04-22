@@ -94,12 +94,12 @@
       </div>
       <div class="panel-body">
     
-  <form class="form-horizontal" id="rentForm" role="form" action="Rent">
+  <form class="form-horizontal" id="rentForm" role="form" method="post" action="Rent">
   <!-- Availability Date-->
   <div class="form-group" style="margin-right:40px">
     <label for="inputDate" class="col-sm-2 control-label">Available Date</label>
     <div class="col-sm-4">
-      <input type="text" class="date form-control" id="inputDate" placeholder="Availabile date" required>
+      <input type="text" class="date form-control" id="date" placeholder="Availabile date" required>
     </div>
   </div>
 
@@ -107,13 +107,13 @@
   <div class="form-group" style="margin-right:40px">
     <label for="inputStartTime" class="col-sm-2 control-label">From</label>
     <div class="col-sm-4">
-      <input type="time" class="form-control" id="inputStartTime" placeholder="Availability start time" required>
+      <input type="time" class="form-control" name="startTime" placeholder="Availability start time" required>
     </div>
   </div>
   <div class="form-group" style="margin-right:40px">
     <label for="inputEndTime" class="col-sm-2 control-label">To</label>
     <div class="col-sm-4">
-      <input type="time" class="form-control" id="inputEndTime" placeholder="Availability start time" required>
+      <input type="time" class="form-control" name="endTime" placeholder="Availability start time" required>
     </div>
   </div>
 

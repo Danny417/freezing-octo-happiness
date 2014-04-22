@@ -27,7 +27,7 @@
 			</c:if>
 			<div class="swiper-slide" style="background-image:url(/img/advanced_search.png)"><a href="/SearchController"></a></div>
 			<div class="swiper-slide" style="background-image:url(/img/quick_search.png)"><a id="quickSearch" href="/SearchController"></a></div>
-			<div class="swiper-slide" style="background-image:url(/img/register.png)"><a href="#"></a></div>
+			<div class="swiper-slide" style="background-image:url(/img/register.png)"><a href="/RegisterSpot"></a></div>
 			
 		</div>
 	</div>

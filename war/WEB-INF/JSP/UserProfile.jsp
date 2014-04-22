@@ -17,7 +17,7 @@
   <div style="float:right; margin-right:40px;"><a class="btn btn-primary" href="/">Back to Home</a>
       </div>
   
-  <h1 style="margin:40px; font-family:Harabara;"><font color="black">Welcome, User!</font></h1>
+  <h1 style="margin:40px; font-family:Harabara;"><font color="black">${user}</font></h1>
       
       
     <hr style="margin-left:40px; margin-right:40px; border-color:white;">
@@ -62,7 +62,7 @@
 
    <div class="panel panel-info"  style="margin:40px;">
       <div class="panel-heading">
-        <h3 class="panel-title">Listing History</h3>
+        <h3 class="panel-title">Own Parking Spots</h3>
       </div>
     <div class="panel-body">
     </div>

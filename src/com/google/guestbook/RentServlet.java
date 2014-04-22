@@ -26,7 +26,6 @@ public class RentServlet extends HttpServlet {
 			if(parkingID != null && !parkingID.isEmpty()) {
 				ParkingSpotModel ps = ParkingSpotModel.getParkingSpotById(ParkingSpotModel.getChildKeys(parkingID), pm);
 	            req.setAttribute("parkingSpot", ps);
-	            System.out.println(ps.getAddress());
 			}
 	        req.getRequestDispatcher("/WEB-INF/JSP/Rent.jsp").forward(req, resp);
 		} catch (ServletException e) {
@@ -41,6 +40,7 @@ public class RentServlet extends HttpServlet {
 	@Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp)
                 throws IOException {	
-		resp.sendRedirect("/UserProfile?userId="); 
+		System.out.println("test");
+		resp.sendRedirect("/UserProfile"); 
 	}
 }

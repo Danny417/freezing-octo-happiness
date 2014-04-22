@@ -77,7 +77,7 @@ function showMarkers() {
 		var lat = parseFloat(markers[mE].lat);
 		var lng = parseFloat(markers[mE].lng);
 		var myLatlng = new google.maps.LatLng(lat, lng);
-		markers[mE].parkingSpotID = markers[mE].parkingSpotID.replace(/&#034;/g, '')
+		markers[mE].parkingSpotID = markers[mE].parkingSpotID.replace(/&#034;/g, '');
 		var marker = new google.maps.Marker({       
 			position: myLatlng,
 			map: map,
@@ -91,9 +91,16 @@ function showMarkers() {
 }
 
 function addInfoBox(marker, mrkID){
+	// find the marker first
+	for (i = 0; i < markers.length; i++){
+		if (mrkID == (markers[i]).parkingSpotID.replace(/&#034;/g, '')){
+			var theMarker = markers[i];
+			break;
+		}
+	}
 	var myOptions = {
 		 content: '<div id="infoBox"><table><tr><td><div class="imgContainer"><div class="img img-thumbnail" id="img'+ mrkID +'" ></div></div>'
-		 +'<div name="desc">Description:<br/></div><div class="rateit bigstars" id="totalRank'+mrkID+'" data-rateit-starwidth="32" data-rateit-starheight="32"></div></td><td>'+
+		 +'<div name="desc">Description:'+theMarker.description +'<br/></div><div class="rateit bigstars" id="totalRank'+mrkID+'" data-rateit-starwidth="32" data-rateit-starheight="32"></div></td><td>'+
 			'<div id="content"><div class="msglist" id="'+mrkID+'" ></div>' +
 			  '<div style="padding:10px"><div class="rateit" id="rateit_'+mrkID+'"></div><textarea id="'+mrkID+'_post" rows="3" cols="10" class="form-control"></textarea><br/>' +			  
 			  '<input type="button" value="Post" onclick="postAjaxRequest(\''+ mrkID +'\')"/><input type="button" value="Rent" onclick="requestRent(\''+ mrkID +'\')"/></div></div></td></tr></table></div>'

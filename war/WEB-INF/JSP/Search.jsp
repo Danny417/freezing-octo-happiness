@@ -48,7 +48,8 @@
     				},
     				lat : '${ps.lat}',
     				lng : '${ps.lng}',
-    				address : '${ps.address}'
+    				address : '${ps.address}',
+            description : '${ps.description}'
     			}
     			<c:if test="${!status.last}">,</c:if>
     		</c:forEach>

@@ -32,6 +32,15 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
     </servlet-mapping>
     
     <servlet>
+        <servlet-name>Rent</servlet-name>
+        <servlet-class>com.google.guestbook.RentServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Rent</servlet-name>
+        <url-pattern>/Rent/*</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
         <servlet-name>RegisterSpot</servlet-name>
         <servlet-class>com.google.guestbook.RegisterSpotServlet</servlet-class>
     </servlet>

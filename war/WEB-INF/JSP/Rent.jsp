@@ -51,36 +51,36 @@
     </div>
 
   <!-- Latitude -->
-  <div class="form-group" style="margin-right:40px;">
-    <label for="inputLat" class="col-sm-2 control-label">Latitude</label>
-    <div class="col-sm-2">
-      <input type="number" class="form-control" id="inputLat" placeholder="Latitude Point">
+  <div class="form-group">
+        <label class="col-sm-2 control-label">Latitude</label>
+        <div class="col-sm-10">
+          <p class="form-control-static">46.02349234</p>
+        </div>
     </div>
-  </div>
 
   <!-- Longitude -->
-  <div class="form-group" style="margin-right:40px;">
-    <label for="inputLon" class="col-sm-2 control-label">Longitude</label>
-    <div class="col-sm-2">
-      <input type="number" class="form-control" id="inputLon" placeholder="Longitude Point">
+  <div class="form-group">
+        <label class="col-sm-2 control-label">Longitude</label>
+        <div class="col-sm-10">
+          <p class="form-control-static">123.12312321</p>
+        </div>
     </div>
-  </div>
   
   <!-- Adress -->
-  <div class="form-group" style="margin-right:40px;">
-    <label for="inputAddress" class="col-sm-2 control-label">Address</label>
-    <div class="col-sm-10">
-    <textarea class="form-control" rows="3" placeholder="Street Number, street name and city"></textarea>
+  <div class="form-group">
+        <label class="col-sm-2 control-label">Adress</label>
+        <div class="col-sm-10">
+          <p class="form-control-static">random address here</p>
+        </div>
     </div>
-  </div>
 
   <!-- Additional Description-->
-  <div class="form-group" style="margin-right:40px;">
-    <label for="inputDescription" class="col-sm-2 control-label">Spot Description (Optional)</label>
-    <div class="col-sm-10">
-    <textarea class="form-control" rows="3" placeholder="Street Number, street name and city"></textarea>
+  <div class="form-group">
+        <label class="col-sm-2 control-label">Additional Description</label>
+        <div class="col-sm-10">
+          <p class="form-control-static">blah0</p>
+        </div>
     </div>
-  </div>
 </form>
 </div>
 </div>

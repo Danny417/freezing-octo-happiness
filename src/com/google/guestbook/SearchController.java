@@ -49,42 +49,48 @@ public class SearchController extends HttpServlet{
         req.setAttribute("user", userService.getCurrentUser());
         req.setAttribute("login", userService.createLoginURL(req.getRequestURI()));
         req.setAttribute("logout", userService.createLogoutURL(req.getRequestURI()));	
-        String lat = req.getParameter("lat");	
-        String lng = req.getParameter("lng");	
-        if(lat != null && !lat.isEmpty() && lng != null && !lng.isEmpty()) {
-        	req.setAttribute("parkingSpots", searchByCoord(lat, lng));
+        String num = req.getParameter("num");
+        if(num != null && !num.isEmpty() && Integer.valueOf(num) != 0) {
+        	int loop = Integer.valueOf(num);
+        	List<Double> lats = new ArrayList<Double>();
+        	List<Double> lngs = new ArrayList<Double>();
+        	for(int i = 0; i < loop; i++) {
+    	        String lat = req.getParameter("lat"+i);	
+    	        String lng = req.getParameter("lng"+i);
+    	        if(lat != null && !lat.isEmpty() && lng != null && !lng.isEmpty()) {
+    	        	lats.add(Double.valueOf(lat));
+    	        	lngs.add(Double.valueOf(lng));
+    	        }    	        
+        	}	
+	        
+	        req.setAttribute("parkingSpots", searchByCoord(lats, lngs));
         }
     }
 	
 	//GAE has some limitation of inequality queries
 	//GeoHash is a better way to solve this problem but I do not have time to do that
 	//so...Brutal force!
-	private List<ParkingSpotModel> searchByCoord(String lat, String lng) {
+	private List<ParkingSpotModel> searchByCoord(List<Double> lats, List<Double> lngs) {
     	PersistenceManager pm = PMF.get().getPersistenceManager();
-    	Double maxlat = Double.valueOf(lat)+0.01;
-    	Double maxlng = Double.valueOf(lng)+0.01; //~1.1km range
-    	Double minlat = Double.valueOf(lat)-0.01;
-    	Double minlng = Double.valueOf(lng)-0.01;
-    	Query q = pm.newQuery(ParkingSpotModel.class, "lat <= maxlat");
-    	q.declareParameters("java.lang.Double maxlat");
-    	List<ParkingSpotModel> results = null;
+    	Query q = pm.newQuery(ParkingSpotModel.class);
+    	List<ParkingSpotModel> finalRes = null;
     	try {
-    		results = (List<ParkingSpotModel>) q.execute(maxlat);	
-    		List<ParkingSpotModel> removeList = new ArrayList<ParkingSpotModel>();
+    		List<ParkingSpotModel> results = (List<ParkingSpotModel>) q.execute();	
+    		finalRes = new ArrayList<ParkingSpotModel>();
     		for(ParkingSpotModel ps : results) {
-        		if(ps.getLat() < minlat || ps.getLng() < minlng || ps.getLng() > maxlng) {
-        			removeList.add(ps);
-        		}
+    			System.out.println(ps.getLat() +", "+ps.getLng());
+    			for(int i = 0; i < lats.size(); i++) {
+	        		if(ps.getLat() <= lats.get(i)+0.01 && ps.getLat() >= lats.get(i)-0.01 && ps.getLng() >= lngs.get(i)-0.01 && ps.getLng() <= lngs.get(i)+0.01) {
+	        			finalRes.add(ps);	        			
+	        		}
+    			}
         	}
-    		for(ParkingSpotModel ps : removeList) {
-    			results.remove(ps);
-    		}
     	} catch(Exception e) {
     		System.out.println(e.toString());
     	} finally {
     		q.closeAll();
     	}
     	
-    	return results;
+    	return finalRes;
 	}
 }

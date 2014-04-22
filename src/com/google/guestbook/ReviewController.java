@@ -54,10 +54,6 @@ public class ReviewController extends HttpServlet {
 	    @Override
 	    public void doPost(HttpServletRequest req, HttpServletResponse resp)
 	                throws IOException {	        
-	        //Key guestbookKey = KeyFactory.createKey("Guestbook", reqMarkerID);
-			//DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-			
-			//datastore.put(createGreetingEntity("Greeting", guestbookKey, req));   
 	    	createReviewModel(req);
 			resp.sendRedirect("/reviewController/?markerID="+req.getParameter("markerID")); //Post/Redirect/Get design pattern
 	    }

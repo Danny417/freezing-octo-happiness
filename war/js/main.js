@@ -19,7 +19,7 @@ function GetLocation(location) {
     lat = location.coords.latitude;
     lng = location.coords.longitude;
     acc = location.coords.accuracy;
-	$('[id = "quickSearch"]').attr('href', '/SearchController?num=1&lat='+lat+'&lng='+lng+'&acc'+acc+'&lat0='+lat+'&lng0='+lng+'&acc0='+acc);
+	$('[id = "quickSearch"]').attr('href', '/SearchController?num=1&lat0='+lat+'&lng0='+lng+'&acc0='+acc);
 }
 $(document).ready(function() {
 	if (navigator.geolocation) {

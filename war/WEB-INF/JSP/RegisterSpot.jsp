@@ -7,12 +7,11 @@
 <html>
   <head>
     <link type="text/css" rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" >
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
     <link type="text/css" rel="stylesheet" href="/stylesheets/registerSpot.css" />
    
    
     <meta name="viewport" content="width=device-width, initial-scale=1">  
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwIx4LV0tdO3OMeFZBvTroBgEBkFcbDTM&sensor=true"></script>
-    <script src="/js/infoBox.js" type="text/javascript"></script>
 
   </head>
   <body>
@@ -87,7 +86,7 @@
   <div class="form-group" style="margin-right:40px">
     <label for="inputDate" class="col-sm-2 control-label">Available Date</label>
     <div class="col-sm-4">
-      <input type="date" class="form-control" id="inputDate" placeholder="Availabile date">
+      <input type="text" class="date form-control" id="inputDate" placeholder="Availabile date">
     </div>
   </div>
 
@@ -127,5 +126,9 @@
 <p style="color:white; text-align:right; margin-right:40px">&#169; OurParkingSpot.com</p>
 
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script> 	
+  	<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+	<script>
+		$('.date').datepicker({dateFormat: 'yy-mm-dd'});
+	</script>
   </body>
 </html>

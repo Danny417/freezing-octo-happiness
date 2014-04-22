@@ -31,3 +31,8 @@ a {
 	background: -moz-linear-gradient(45deg, rgba(155,255,255,0.3), rgba(255,255,255,0.7), rgba(255,255,155,0.3)); /*Fx 3.6-15*/
 	background: linear-gradient(45deg, rgba(155,255,255,0.3), rgba(255,255,255,0.7), rgba(255,255,155,0.3)); /*Standard*/
 }
+
+@font-face {
+    font-family: Harabara; /*a name to be used later*/
+    src: url('/img/Harabara.TTF'); /*URL to font*/
+}

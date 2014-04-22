@@ -14,7 +14,7 @@
   </head>
   <body>
 
-  	<h1 style="margin:40px"><font face="Georgia" size="10" color="white"> Find a place to park. </font></h1>
+  	<h1 style="margin:40px; font-family:Harabara;"><font color="black" size="10">Find a place to park. </font></h1>
   	<hr style="margin-left:40px; margin-right:40px; border-color:white;">
   	<div class="swipeouttercontainner">
 	<div class="swiper-container">

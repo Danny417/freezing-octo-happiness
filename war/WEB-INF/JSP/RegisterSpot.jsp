@@ -16,7 +16,7 @@
   </head>
   <body>
 
-    <h1 style="margin:40px;"><font face="Georgia" color="white">Ready to list your parking spot? Register it here!</font></h1>
+    <h1 style="margin:40px; font-family:Harabara;"><font color="black">Ready to list your parking spot? Register it here!</font></h1>
     <hr style="margin-left:40px; margin-right:40px; border-color:white;">
 
     <div class="panel panel-default"  style="margin:40px;">

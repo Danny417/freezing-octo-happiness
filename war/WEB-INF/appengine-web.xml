@@ -34,6 +34,7 @@
 		<include path="/**.gif" />
 		<include path="/**.png" />
 		<include path="/**.jpg" />
+		<include path="/**.TTF" />
 	</static-files>
 	<resource-files>
 	</resource-files>

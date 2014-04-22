@@ -2,6 +2,7 @@ var xmlHttpReq = null;
 var swiper = new Swiper('.swiper-container', {
 	slidesPerView:3,
 	loop: true,
+	loopAdditionalSlides:2,
 	//3D Flow:
 	tdFlow: {
 		rotate : 50,

@@ -17,10 +17,7 @@
   <div style="float:right; margin-right:40px;"><a class="btn btn-primary" href="/">Back to Home</a>
       </div>
   
-  <c:if test="${empty requestScope.user}">
-    <c:if test="${not empty requestScope.user}">
-    <h1 style="margin:40px; font-family:Harabara;"><font color="black">${fn:escapeXml(requestScope.user.nickname)}'s profile</font></h1>
-      </c:if> 
+  <h1 style="margin:40px; font-family:Harabara;"><font color="black">Welcome, User!</font></h1>
       
       
     <hr style="margin-left:40px; margin-right:40px; border-color:white;">
@@ -79,9 +76,5 @@
 
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script> 	
   	<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-	<script>
-		$('.date').datepicker({dateFormat: 'MM d, yy', minDate:0})
-    $('#rentForm').validate();
-	</script>
   </body>
 </html>

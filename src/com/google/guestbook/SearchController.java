@@ -21,7 +21,6 @@ public class SearchController extends HttpServlet{
 	
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException{
-		PersistenceManager pm = PMF.get().getPersistenceManager();
         try {        	
             setReqAttr(req);
 	        req.getRequestDispatcher("/WEB-INF/JSP/Search.jsp").forward(req, resp);

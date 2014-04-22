@@ -24,13 +24,21 @@ window.onload = function() {
 	  		mapTypeId: google.maps.MapTypeId.HYBRID 
 		};
 	map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+	
+	var marker = new google.maps.Marker({       
+		position: new google.maps.LatLng(lat, lng),
+		map: map,
+		title : "Your Current Position"
+	});	
+	marker.setMap(map);		
 	//map.setTilt(45);
 	showMarkers();
 };
 
 function showMarkers() {	
 	var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
-	var parkingIcon = iconBase + 'parking_lot_maps.png';		     
+	var parkingIcon = iconBase + 'parking_lot_maps.png';	
+	
 	for(mE = 0; mE < markers.length; mE++) {
 		//var markerElement = markers[mE]['marker'];
 		
@@ -100,6 +108,9 @@ function getAjaxRequest(mrkID) {
 }
 
 function parseResponse(xmlDoc, xmlHttpReq, mrkID) {
+	$('.rateit').rateit();
+	$('.bigstars').rateit('readonly', true);
+	$('.bigstars').rateit('value', 0);
 	var jsonArray;
 	if(xmlDoc) jsonArray = JSON.parse(xmlHttpReq.responseText);
 	console.log(jsonArray);
@@ -115,8 +126,6 @@ function parseResponse(xmlDoc, xmlHttpReq, mrkID) {
 			totalRate += parseInt(jsonArray[i]['rating']);
 		}
 		document.getElementById(mrkID).innerHTML= htmlText;
-		$('.rateit').rateit();
-		$('.bigstars').rateit('readonly', true);
 		$('.bigstars').rateit('value', totalRate/jsonArray.length);
 	}
 	

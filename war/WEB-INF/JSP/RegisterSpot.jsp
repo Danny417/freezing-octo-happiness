@@ -18,7 +18,7 @@
 
     <div class="panel panel-default"  style="margin:40px;">
     <div class="panel-body">
-  	<form class="form-horizontal" role="form" method="post" action="RegisterSpot">
+  	<form class="form-horizontal" id="registerForm" role="form" method="post" action="RegisterSpot">
 
 	    <!-- parking spot ID-->
 	    <div class="form-group">
@@ -40,7 +40,7 @@
 	  	<div class="form-group" style="margin-right:40px;">
 	    	<label for="inputPrice" class="col-sm-2 control-label">Price per hour</label>
 	    	<div class="col-sm-2">
-	      		<input type="number" class="form-control" name="price" placeholder="Price per hour">
+	      		<input type="number" class="form-control" name="price" placeholder="Price per hour" required>
 	    	</div>
 	  	</div>
 	
@@ -48,7 +48,7 @@
 	  	<div class="form-group" style="margin-right:40px;">
 	    	<label for="inputLat" class="col-sm-2 control-label">Latitude</label>
 	    	<div class="col-sm-2">
-	      		<input type="number" class="form-control" name="lat" placeholder="Latitude Point">
+	      		<input type="number" class="form-control" name="lat" placeholder="Latitude Point" required>
 	    	</div>
 	  	</div>
 	
@@ -56,7 +56,7 @@
 	  	<div class="form-group" style="margin-right:40px;">
 	    	<label for="inputLon" class="col-sm-2 control-label">Longitude</label>
 	    	<div class="col-sm-2">
-	      		<input type="number" class="form-control" name="lng" placeholder="Longitude Point">
+	      		<input type="number" class="form-control" name="lng" placeholder="Longitude Point" required>
 	    	</div>
 	  	</div>
 	  
@@ -64,7 +64,7 @@
 	  	<div class="form-group" style="margin-right:40px;">
 	    	<label for="inputAddress" class="col-sm-2 control-label">Address</label>
 	    	<div class="col-sm-10">
-	    		<textarea class="form-control" rows="3" placeholder="Street Number, street name and city" name="address"></textarea>
+	    		<textarea class="form-control" rows="3" placeholder="Street Number, street name and city" name="address" required></textarea>
 	    	</div>
 	  	</div>
 	  	
@@ -72,7 +72,7 @@
 	  	<div class="form-group" style="margin-right:40px">
 	    	<label for="inputDate" class="col-sm-2 control-label">Available Date</label>
 	    	<div class="col-sm-4">
-	      		<input type="text" class="date form-control" name="date" placeholder="Availabile date">
+	      		<input type="text" class="date form-control" name="date" placeholder="Availabile date" required>
 	    	</div>
 	  	</div>
 	
@@ -80,14 +80,14 @@
 	  	<div class="form-group" style="margin-right:40px">
 	    	<label for="inputStartTime" class="col-sm-2 control-label">From</label>
 	    	<div class="col-sm-4">
-	      		<input type="time" class="form-control" name="startTime" placeholder="Availability start time">
+	      		<input type="time" class="form-control" name="startTime" placeholder="Availability start time" required>
 	    	</div>
 	  	</div>
 	  	
 	    <div class="form-group" style="margin-right:40px">
 	    	<label for="inputEndTime" class="col-sm-2 control-label">To</label>
 	    	<div class="col-sm-4">
-	      		<input type="time" class="form-control" name="endTime" placeholder="Availability start time">
+	      		<input type="time" class="form-control" name="endTime" placeholder="Availability start time" required>
 	    	</div>
 	  	</div>
 	
@@ -115,7 +115,8 @@
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script> 	
   	<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 	<script>
-		$('.date').datepicker({dateFormat: 'yy-mm-dd'});
+		$('.date').datepicker({dateFormat: 'yy-mm-dd', minDate:0})
+    $('#registerForm').validate();
 	</script>
   </body>
 </html>

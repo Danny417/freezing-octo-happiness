@@ -17,26 +17,18 @@
   	<div class="panel panel-default" style="margin:40px">
   		<div class="panel-body" id="menu">
   			<div class="btn-group">
-			  <a class="btn btn-default" href="/">Home</a>
-			  <div class="btn-group">
-			    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-			      Search
-			      <span class="caret"></span>
-			    </button>
-			    <ul class="dropdown-menu">
-			      <li><a href="#">By Map</a></li>
-			      <li><a href="#">By Text</a></li>
-			    </ul>
-			  </div>
-			  <a class="btn btn-default" href="/RegisterSpot">Register Parking Spot</a>
+			    <a class="btn btn-default" href="/">Home</a>			  
+			    <a class="btn btn-default" href="/RegisterSpot">Register Spot</a>
+				<div class="btn btn-primary" onclick="search()">Search</div>
+				<div class="btn btn-warning" onclick="map.clearOverlays();">Clear</div>	
 			</div>
   			<div style="float:right">
 			<c:if test="${empty requestScope.user}">
 				<a class="btn btn-primary" href="${login}">Sign in</a>
 			</c:if>
 			<c:if test="${not empty requestScope.user}">
-				Hello, ${fn:escapeXml(requestScope.user.nickname)}! <a class="btn btn-warning" href="${logout}"> sign out</a>
-			</c:if>
+				Welcome, ${fn:escapeXml(requestScope.user.nickname)}! <a class="btn btn-danger" href="${logout}"> sign out</a>
+			</c:if>	
 			</div>
 		</div>
 	</div>

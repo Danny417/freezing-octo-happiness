@@ -1,6 +1,9 @@
 var xmlHttpReq = null;
 var selectedMarkerID;
 var markers;
+var searchMarkers = [];
+var parkingMarkers = [];
+var searchStr = '/SearchController';
 var map;
 
 function getURLParam(variable) {
@@ -14,25 +17,56 @@ function getURLParam(variable) {
 	} 
 	return null;
 }
-		
+	
+function search() {
+	var url=searchStr+'?num='+searchMarkers.length;
+	for(var i = 0; i < searchMarkers.length; i++) {
+		url +='&lat'+i+'='+searchMarkers[i].position.lat()+'&lng'+i+'='+searchMarkers[i].position.lng()+'&acc'+i+'=100';
+	}
+	window.location = url;
+	
+};
 window.onload = function() {
-	var lat = parseFloat(getURLParam('lat')) || 49.232241;
-	var lng = parseFloat(getURLParam('lng')) || -123.12641;
+	var lat = parseFloat(getURLParam('lat0')) || 49.232241;
+	var lng = parseFloat(getURLParam('lng0')) || -123.12641;
 	var mapOptions = {
 	  		center: new google.maps.LatLng(lat,lng),//new google.maps.LatLng(37.34, -122.03),
 	  		zoom: 13,
 	  		mapTypeId: google.maps.MapTypeId.HYBRID 
 		};
 	map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+	google.maps.Map.prototype.clearOverlays = function() {
+	  for (var i = 0; i < searchMarkers.length; i++ ) {
+		  searchMarkers[i].setMap(null);
+	  }
+	  for(var i = 0; i < parkingMarkers.length; i++) {
+		  parkingMarkers[i].setMap(null);
+	  }
+	  searchMarkers.length = 0;
+	  parkingMarkers.length = 0;
+	  markers.length = 0;
+	}
+	if(getURLParam('num') !=null && getURLParam('num') != '0') {
+		for(var i = 0; i < parseInt(getURLParam('num')); i++) {
+			placeMarker(new google.maps.LatLng(getURLParam('lat'+i), getURLParam('lng'+i)));
+		}
+		showMarkers();
+	}
+	google.maps.event.addListener(map, 'click', function(event) {
+	   placeMarker(event.latLng);
+	});
+
 	
-	var marker = new google.maps.Marker({       
-		position: new google.maps.LatLng(lat, lng),
-		map: map,
-		title : "Your Current Position"
-	});	
-	marker.setMap(map);		
-	//map.setTilt(45);
-	showMarkers();
+};
+
+function placeMarker(location) {
+    var marker = new google.maps.Marker({
+        position: location, 
+        map: map,
+		title : "Search Location"
+    });
+    searchMarkers.push(marker);
+    return marker;
 };
 
 function showMarkers() {	
@@ -52,8 +86,8 @@ function showMarkers() {
 			map: map,
 			title : markers[mE].parkingSpotID,
 			icon : parkingIcon
-		});	
-		marker.setMap(map);			
+		});			
+		parkingMarkers.push(marker);
 		addInfoBox(marker, markers[mE].parkingSpotID);
 		
 	}

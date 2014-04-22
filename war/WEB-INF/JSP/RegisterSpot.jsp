@@ -48,7 +48,7 @@
 	  	<div class="form-group" style="margin-right:40px;">
 	    	<label for="inputLat" class="col-sm-2 control-label">Latitude</label>
 	    	<div class="col-sm-2">
-	      		<input type="number" class="form-control" name="lat" placeholder="Latitude Point" required>
+	      		<input type="number" step="any" class="form-control" name="lat" placeholder="Latitude Point" required>
 	    	</div>
 	  	</div>
 	
@@ -56,7 +56,7 @@
 	  	<div class="form-group" style="margin-right:40px;">
 	    	<label for="inputLon" class="col-sm-2 control-label">Longitude</label>
 	    	<div class="col-sm-2">
-	      		<input type="number" class="form-control" name="lng" placeholder="Longitude Point" required>
+	      		<input type="number" step="any" class="form-control" name="lng" placeholder="Longitude Point" required>
 	    	</div>
 	  	</div>
 	  

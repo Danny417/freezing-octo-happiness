@@ -112,12 +112,16 @@
     </div>
   </div>
 
-  <!-- Submit button -->
+  <!-- Submit and button -->
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
       <button type="submit" class="btn btn-default">Submit!</button>
+      <a class="btn btn-default" href="/">Back to Home Page</a>
+    
     </div>
   </div>
+
+
 </form>
 
 </div>

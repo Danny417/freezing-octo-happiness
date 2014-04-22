@@ -81,40 +81,21 @@
     <textarea class="form-control" rows="3" placeholder="Street Number, street name and city"></textarea>
     </div>
   </div>
-
-  <!-- Submit and button -->
-  <div class="form-group">
-    <div class="col-sm-offset-2 col-sm-10">
-      <button type="submit" class="btn btn-default">Submit!</button>
-      <a class="btn btn-default" href="/">Back to Home Page</a>
-    
-    </div>
-  </div>
 </form>
 </div>
 </div>
 
-  <!-- checkbox for multiple dates -->
-  <!--div class="form-group">
-    <div class="col-sm-offset-2 col-sm-10">
-      <div class="checkbox">
-        <label>
-          <input type="checkbox"> Remember me
-        </label>
-      </div>
-    </div>
-  </div-->
    <div class="panel panel-success"  style="margin:40px;">
       <div class="panel-heading">
         <h3 class="panel-title">Rent Period detail </h3>
       </div>
     <div class="panel-body">
-  <form class="form-horizontal" role="form">
+  <form class="form-horizontal" id="rentForm" role="form">
   <!-- Availability Date-->
   <div class="form-group" style="margin-right:40px">
     <label for="inputDate" class="col-sm-2 control-label">Available Date</label>
     <div class="col-sm-4">
-      <input type="text" class="date form-control" id="inputDate" placeholder="Availabile date">
+      <input type="text" class="date form-control" id="inputDate" placeholder="Availabile date" required>
     </div>
   </div>
 
@@ -122,13 +103,28 @@
   <div class="form-group" style="margin-right:40px">
     <label for="inputStartTime" class="col-sm-2 control-label">From</label>
     <div class="col-sm-4">
-      <input type="time" class="form-control" id="inputStartTime" placeholder="Availability start time">
+      <input type="time" class="form-control" id="inputStartTime" placeholder="Availability start time" required>
     </div>
   </div>
   <div class="form-group" style="margin-right:40px">
     <label for="inputEndTime" class="col-sm-2 control-label">To</label>
     <div class="col-sm-4">
-      <input type="time" class="form-control" id="inputEndTime" placeholder="Availability start time">
+      <input type="time" class="form-control" id="inputEndTime" placeholder="Availability start time" required>
+    </div>
+  </div>
+
+  <!-- Availability check -->
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button type="submit" class="btn btn-default">Check availability for chosen time slot</button>
+    </div>
+  </div>
+
+  <!-- Submit and button -->
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button type="submit" class="btn btn-default">Rent this spot!</button>
+      <a class="btn btn-default" href="/SearchController">Back to Search Page</a>
     </div>
   </div>
 </form>
@@ -144,7 +140,8 @@
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script> 	
   	<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 	<script>
-		$('.date').datepicker({minDate: 0});
+		$('.date').datepicker({dateFormat: 'MM d, yy', minDate:0})
+    $('#rentForm').validate();
 	</script>
   </body>
 </html>

@@ -115,7 +115,7 @@
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script> 	
   	<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 	<script>
-		$('.date').datepicker({dateFormat: 'yy-mm-dd', minDate:0})
+		$('.date').datepicker({dateFormat: 'MM d, yy', minDate:0});
     $('#registerForm').validate();
 	</script>
   </body>

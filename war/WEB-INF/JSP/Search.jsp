@@ -15,10 +15,9 @@
   </head>
   <body>
   	<div class="panel panel-default" style="margin:40px">
-  		<div class="panel-body">
+  		<div class="panel-body" id="menu">
   			<div class="btn-group">
 			  <a class="btn btn-default" href="/">Home</a>
-			  <button type="button" class="btn btn-default">Tutorial</button>
 			  <div class="btn-group">
 			    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
 			      Search
@@ -29,11 +28,11 @@
 			      <li><a href="#">By Text</a></li>
 			    </ul>
 			  </div>
+			  <a class="btn btn-default" href="/RegisterSpot">Register Parking Spot</a>
 			</div>
   			<div style="float:right">
 			<c:if test="${empty requestScope.user}">
 				<a class="btn btn-primary" href="${login}">Sign in</a>
-				<a class="btn btn-success" href="${login}">Register</a>
 			</c:if>
 			<c:if test="${not empty requestScope.user}">
 				Hello, ${fn:escapeXml(requestScope.user.nickname)}! <a class="btn btn-warning" href="${logout}"> sign out</a>

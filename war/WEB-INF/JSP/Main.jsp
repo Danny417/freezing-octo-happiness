@@ -14,13 +14,6 @@
   </head>
   <body>
 
-  	<!-- If user is logged in, show userprofile button -->
-  	<div style="float:right; margin-right:40px;">
-  	<c:if test="${not empty requestScope.user}">
-		<a class="btn btn-default" href="/UserProfile">My Profile</a>
-	</c:if>
-	</div>
-
   	<h1 style="margin:40px; font-family:Harabara;"><font color="black" size="10">Find a place to park. </font></h1>
   	<hr style="margin-left:40px; margin-right:40px; border-color:white;">
   	<div class="swipeouttercontainner">
@@ -33,7 +26,8 @@
 			<div class="swiper-slide" style="background-image:url(/img/advanced_search.png)"><a href="/SearchController"></a></div>
 			<div class="swiper-slide" style="background-image:url(/img/register.png)"><a href="/RegisterSpot"></a></div>			
 			<c:if test="${not empty requestScope.user}">
-				<div class="swiper-slide" style="background-image:url(/img/sign_out.png)"><a href="${logout}"></a></div>
+				<div class="swiper-slide" style="background-image:url(/img/my_profile.png)"><a href="/UserProfile"></a></div>
+				<div class="swiper-slide" style="background-image:url(/img/sign_out.png)" onClick=""><a href="${logout}"></a></div>
 			</c:if>
 		</div>
 	</div>

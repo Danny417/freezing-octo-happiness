@@ -1,7 +1,9 @@
 package com.google.guestbook;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -19,15 +21,15 @@ public class AvailabilityManagerModel {
 	@Persistent (valueStrategy = IdGeneratorStrategy.IDENTITY)
 	private Key managerKey;
 	
-	@Persistent (dependent = "true")
+	@Persistent 
 	private ParkingSpotModel parkingSpot;
 
 	@Persistent
 	private Map<Date, List<Boolean>> availability;
 	
-	public AvailabilityManagerModel(ParkingSpotModel pSpot, Map<Date, List<Boolean>> tSlots){
+	public AvailabilityManagerModel(ParkingSpotModel pSpot){
 		this.parkingSpot = pSpot;
-		this.availability = tSlots;
+		this.availability = new HashMap<Date, List<Boolean>>();
 	}
 	
 	public boolean isAvailable(Date desiredDate){
@@ -65,6 +67,23 @@ public class AvailabilityManagerModel {
 	    return res;
 	}
 	
+	public void addAvaliableTime(Date d, String startTime, String endTime) {
+		String[] hhmm = startTime.split(":");
+		int minutes = Integer.parseInt(hhmm[0])*60+Integer.parseInt(hhmm[1]);
+		int startIndex = minutes/30;
+		hhmm = endTime.split(":");
+		minutes = Integer.parseInt(hhmm[0])*60+Integer.parseInt(hhmm[1]);
+		int endIndex = minutes/30;
+		List<Boolean> timeSlots = new ArrayList<Boolean>();
+		for(int i = 0; i < 48 ; i++){
+			if(i >= startIndex && i <= endIndex) {
+				timeSlots.add(true);
+			} else {
+				timeSlots.add(false);
+			}
+		}
+		this.availability.put(d, timeSlots);		
+	}
 	// ACCESSORS
 	
 	public Key getManagerKey() {

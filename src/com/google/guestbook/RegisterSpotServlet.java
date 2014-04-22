@@ -1,14 +1,22 @@
 package com.google.guestbook;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
+import javax.jdo.PersistenceManager;
+import javax.jdo.Query;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.appengine.api.datastore.Email;
+import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 
@@ -31,8 +39,49 @@ public class RegisterSpotServlet extends HttpServlet {
 	
 	@Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp)
-                throws IOException {	        
-      	
+                throws IOException {	  
+    	UserService userService = UserServiceFactory.getUserService();
+        User user = userService.getCurrentUser();
+
+        PersistenceManager pm = PMF.get().getPersistenceManager();
+		try {        
+			double price = Double.valueOf(req.getParameter("price"));
+			ParkingSpotModel ps = new ParkingSpotModel(price, req.getParameter("address"), Double.valueOf(req.getParameter("lat")),Double.valueOf(req.getParameter("lng")));
+			String desc = req.getParameter("desc");
+			if(desc != null && !desc.isEmpty()) {
+				ps.setDescription(desc);
+			}
+			AvailabilityManagerModel avail = new AvailabilityManagerModel(ps);
+			Date d;
+			d = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH).parse(req.getParameter("date"));		
+			avail.addAvaliableTime(d, req.getParameter("startTime"), req.getParameter("endTime"));
+			
+			UserModel host = UserModel.getUserById(new Email(user.getEmail()), pm);
+        	if(host == null) {
+        		host = new UserModel(user.getNickname(), new Email(user.getEmail()));
+	        	pm.currentTransaction().begin();
+	    	    pm.makePersistent(host);
+	    	    pm.currentTransaction().commit();
+        	}
+        	
+        	host.addParkingSpot(ps);
+        	pm.currentTransaction().begin();
+    	    pm.makePersistent(host);
+    	    pm.currentTransaction().commit();
+    	    Query q = pm.newQuery(ParkingSpotModel.class);
+    	    List<ParkingSpotModel> results = (List<ParkingSpotModel>) q.execute();
+    	    for(ParkingSpotModel p : results) {
+    	    	System.out.println("test");
+    	    }
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e.toString());
+		} finally {
+        	if (pm.currentTransaction().isActive()) {
+    	        pm.currentTransaction().rollback();
+    	    }
+        }	
+		
 		//resp.sendRedirect("/reviewController/?markerID="+req.getParameter("markerID")); //Post/Redirect/Get design pattern
     }
 	private void setReqAttr(HttpServletRequest req) {

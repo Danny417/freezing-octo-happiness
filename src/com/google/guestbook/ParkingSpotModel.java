@@ -44,10 +44,7 @@ public class ParkingSpotModel{
 	
 	@Persistent
 	private double lng;
-	
-	@Persistent
-	private AvailabilityManagerModel availabilityManager;
-	
+		
 	@Persistent
 	private int accuraccy; 	// range
 
@@ -84,6 +81,8 @@ public class ParkingSpotModel{
 		this.address = address;
 		this.lat = lat;
 		this.lng = lng;
+		this.rating = 0;
+		this.accuraccy = 0;
 		this.reviews = new ArrayList<ReviewModel>();
 		this.parkingSpotID = KeyFactory.createKey(ParkingSpotModel.class.getSimpleName(), address+String.valueOf(lat)+String.valueOf(lng));
 	}
@@ -156,7 +155,7 @@ public class ParkingSpotModel{
 	public void setLng(double lng) {
 		this.lng = lng;
 	}
-	
+		
 	public static ParkingSpotModel getParkingSpotById(Key key, PersistenceManager pm) {
         ParkingSpotModel ps = null;
     	ps =  pm.getObjectById(ParkingSpotModel.class, key);

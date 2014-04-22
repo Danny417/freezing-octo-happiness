@@ -48,4 +48,13 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
         <servlet-name>RegisterSpot</servlet-name>
         <url-pattern>/RegisterSpot/*</url-pattern>
     </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>UserProfile</servlet-name>
+        <servlet-class>com.google.guestbook.UserProfileServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UserProfile</servlet-name>
+        <url-pattern>/UserProfile/*</url-pattern>
+    </servlet-mapping>
 </web-app>

@@ -63,7 +63,9 @@ public class SearchController extends HttpServlet{
     		List<ParkingSpotModel> results = (List<ParkingSpotModel>) q.execute();	
     		finalRes = new ArrayList<ParkingSpotModel>();
     		for(ParkingSpotModel ps : results) {
-    			System.out.println(ps.getAvailability().getAvailability());
+    			if(ps.getAvailability().isNotAvaliable()) {
+    				continue;
+    			}
     			for(int i = 0; i < lats.size(); i++) {
 	        		if(ps.getLat() <= lats.get(i)+0.01 && ps.getLat() >= lats.get(i)-0.01 && ps.getLng() >= lngs.get(i)-0.01 && ps.getLng() <= lngs.get(i)+0.01) {
 	        			finalRes.add(ps);	        			

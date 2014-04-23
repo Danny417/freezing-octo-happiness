@@ -26,8 +26,12 @@ public class AvailabilityManagerModel {
 	@Persistent
 	private Text availability;
 	
+	@Persistent
+	private Boolean isNotAvailable;
+	
 	public AvailabilityManagerModel(){
 		this.availability = new Text("{}");
+		this.isNotAvailable = true;
 	}
 	
 	public boolean isAvailable(Date desiredDate){
@@ -78,6 +82,7 @@ public class AvailabilityManagerModel {
 		}
 		Map<Date, List<Boolean>> result = new Gson().fromJson(this.availability.getValue(), HashMap.class);
 		result.put(d, timeSlots);
+		this.isNotAvailable = !timeSlots.contains(true);
 		this.availability = new Text(new Gson().toJson(result));	
 	}
 	public void setAvaliableTime(Date d, String startTime, String endTime, Boolean isAvali) {
@@ -85,10 +90,12 @@ public class AvailabilityManagerModel {
 		int startIndex = Integer.parseInt(startTime);
 		int endIndex = Integer.parseInt(endTime);
 		for(int i = 0; i < 48 ; i++){
-			if(i >= startIndex && i < endIndex) {
+			if(i >= startIndex && i <= endIndex) {
 				result.get(d.toString()).set(i, isAvali);
 			} 
 		}
+		
+		this.isNotAvailable = !result.get(d.toString()).contains(true);
 		this.availability = new Text(new Gson().toJson(result));	
 	}
 	// ACCESSORS
@@ -109,5 +116,8 @@ public class AvailabilityManagerModel {
 		this.availability = availability;
 	}
 
+	public Boolean isNotAvaliable() {
+		return this.isNotAvailable;
+	}
 	
 }

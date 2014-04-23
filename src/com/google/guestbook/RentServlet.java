@@ -66,20 +66,18 @@ public class RentServlet extends HttpServlet {
 			Date d = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH).parse(req.getParameter("date"));	
 			String startIndex =req.getParameter("startTime");
 			String endIndex = req.getParameter("endTime");
-			ps.getAvailability().setAvaliableTime(d, startIndex, endIndex, false);
-			double price = ps.getPrice()*(Integer.parseInt(endIndex)-Integer.parseInt(startIndex))/2;
-			RegisterParkingEntryModel entry = new RegisterParkingEntryModel(d, price, ps, client);
-			pm.currentTransaction().begin();
-    	    pm.makePersistent(ps);
-    	    pm.makePersistent(entry);    	    
-    	    pm.currentTransaction().commit();
-    	    pm.flush();
-    	    Query q = pm.newQuery(ParkingSpotModel.class);
-    	    List<ParkingSpotModel> results = (List<ParkingSpotModel>) q.execute();
-    	    for(ParkingSpotModel p : results) {
-    	    	System.out.println(p.getAvailability().getAvailability().getValue());
-    	    }
-    	    q = pm.newQuery(RegisterParkingEntryModel.class);
+			if(!ps.getAvailability().isNotAvaliable()) {
+				ps.getAvailability().setAvaliableTime(d, startIndex, endIndex, false);
+				double price = ps.getPrice()*(Integer.parseInt(endIndex)-Integer.parseInt(startIndex))/2;
+				RegisterParkingEntryModel entry = new RegisterParkingEntryModel(d, price, ps, client,startIndex,endIndex);
+				pm.currentTransaction().begin();
+	    	    pm.makePersistent(ps); 
+	    	    pm.makePersistent(entry);   	    
+	    	    pm.currentTransaction().commit();
+	    	    pm.flush();
+			}
+			
+    	    Query q = pm.newQuery(RegisterParkingEntryModel.class);
     	    List<RegisterParkingEntryModel> results2 = (List<RegisterParkingEntryModel>) q.execute();
     	    for(RegisterParkingEntryModel p : results2) {
     	    	System.out.println("test");

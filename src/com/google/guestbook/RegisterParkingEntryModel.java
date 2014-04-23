@@ -36,13 +36,12 @@ public class RegisterParkingEntryModel{
 	@Unowned
 	private ParkingSpotModel parkingSpot;
 	
-	public RegisterParkingEntryModel(Date bookingDate, double price, ParkingSpotModel parkingSpot, UserModel guest){
+	public RegisterParkingEntryModel(Date bookingDate, double price, ParkingSpotModel parkingSpot, UserModel guest, String startTime, String endTime){
 		this.price = price;
 		this.bookingDate = bookingDate;
 		this.parkingSpot = parkingSpot;
 		this.guest = guest;
-		System.out.println(bookingDate.toString()+parkingSpot.toString()+guest.toString());
-		this.registerParkingEntryKey = KeyFactory.createKey(RegisterParkingEntryModel.class.getSimpleName(), bookingDate.toString()+parkingSpot.toString()+guest.toString());
+		this.registerParkingEntryKey = KeyFactory.createKey(RegisterParkingEntryModel.class.getSimpleName(), bookingDate.toString()+startTime+endTime+parkingSpot.toString()+guest.toString());
 	}
 
 	public Key getRegisterParkingEntryKey() {

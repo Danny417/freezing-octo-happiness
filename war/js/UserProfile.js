@@ -14,12 +14,13 @@ window.onload = function() {
 		rentContent = rentContent + "<tbody>";
 		
 		for (var i=0; i < rentSpots.length; i++){
+			var bookDate = new Date(rentSpots[i].bookingDate);
 			rentContent = rentContent + "<tr>" +
 							"<th>" + i + "</th>" +
 							"<th>" + rentSpots[i].address + "</th>" +
 							"<th>" + rentSpots[i].lat + "/" + ownedSpots[i].lng + "</th>" +
 							"<th>" + rentSpots[i].price + "</th>" +
-							"<th>" + rentSpots[i].bookingDate + "</th>";
+							"<th>" + bookDate.toDateString() + "</th>";
 			if (((new Date()).getTime()) < ((new Date(rentSpots[i].bookingDate)).getTime())){
 				rentContent = rentContent + "<th><a class='btn btn-default' href='#'>Cancel</a></th></tr>";
 			} else {

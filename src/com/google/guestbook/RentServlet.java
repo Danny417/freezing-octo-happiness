@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
@@ -63,7 +64,10 @@ public class RentServlet extends HttpServlet {
         	}
 			String parkingID = req.getParameter("parkingID");
 			ParkingSpotModel ps = ParkingSpotModel.getParkingSpotById(ParkingSpotModel.getChildKeys(parkingID), pm);
-			Date d = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH).parse(req.getParameter("date"));	
+			Date d; 
+			SimpleDateFormat isoFormat = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
+			isoFormat.setTimeZone(TimeZone.getTimeZone("PST"));
+			d = isoFormat.parse(req.getParameter("date"));		
 			String startIndex =req.getParameter("startTime");
 			String endIndex = req.getParameter("endTime");
 			if(!ps.getAvailability().isNotAvaliable()) {

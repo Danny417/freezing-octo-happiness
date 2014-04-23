@@ -33,6 +33,7 @@
 	</div>
 	</div>
 	<hr style="margin-left:40px; margin-right:40px; border-color:white;">
+	<span style="color:white">This website is built for education use in UBC EECE 417 course.</span>
 	<p style="color:white; text-align:right; margin-right:40px">&#169; OurParkingSpot.com</p>	
 		
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
@@ -53,7 +54,9 @@ public class RegisterSpotServlet extends HttpServlet {
 			}
 			AvailabilityManagerModel avail = new AvailabilityManagerModel();
 			Date d;
-			d = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH).parse(req.getParameter("date"));		
+			SimpleDateFormat isoFormat = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
+			isoFormat.setTimeZone(TimeZone.getTimeZone("PST"));
+			d = isoFormat.parse(req.getParameter("date"));		
 			avail.addAvaliableTime(d, req.getParameter("startTime"), req.getParameter("endTime"));
 			ps.setAvailability(avail);
 			UserModel host = UserModel.getUserById(new Email(user.getEmail()), pm);

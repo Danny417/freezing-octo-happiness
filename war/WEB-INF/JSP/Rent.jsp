@@ -138,27 +138,33 @@
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script> 	
   	<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 	<script>
-		var avaliDate = $('[name="avaliability"]').val().replace('00:00:00', '').replace('{','').replace('}','').replace(/"/g,'').split(':');
-		var now = new Date(avaliDate[0]);
-		$('.date').datepicker({
-			dateFormat: 'MM d, yy', 
-			beforeShowDay : function(date) {
-				if(date.getTime() == now.getTime()) {
-					return [true];
+		var avaliDate = '';
+		var now = null;
+		$(document).ready(function() {
+			var temp = $('[name="avaliability"]').val().replace('{','').replace('}','').replace(/"/g,'');
+			var split = temp.lastIndexOf(':');
+			avaliDate = [temp.substring(0, split), temp.substring(split+1)];
+			now = new Date(avaliDate[0]);
+			$('.date').datepicker({
+				dateFormat: 'MM d, yy', 
+				beforeShowDay : function(date) {
+					if(date.getTime() == now.getTime()) {
+						return [true];
+					}
+					return [false];
 				}
-				return [false];
+			});
+			var avaliTime = $.parseJSON(avaliDate[1]);
+			for(var i = 0; i < avaliTime.length; i++) {
+				if(avaliTime[i]) {
+					var hr = parseInt(i*30/60);
+					var min = i*30%60;
+					if(hr < 10) hr = '0'+hr;
+					if(min == 0) min = '00';
+					$('select').append($('<option>', {value : i}).text(hr+':'+min));
+				}
 			}
 		});
-		var avaliTime = $.parseJSON(avaliDate[1]);
-		for(var i = 0; i < avaliTime.length; i++) {
-			if(avaliTime[i]) {
-				var hr = parseInt(i*30/60);
-				var min = i*30%60;
-				if(hr < 10) hr = '0'+hr;
-				if(min == 0) min = '00';
-				$('select').append($('<option>', {value : i}).text(hr+':'+min));
-			}
-		}
 	</script>
   </body>
 </html>

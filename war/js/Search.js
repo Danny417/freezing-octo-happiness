@@ -139,7 +139,7 @@ function getAjaxRequest(mrkID) {
 	try {
 		xmlHttpReq = new XMLHttpRequest();
 		xmlHttpReq.onreadystatechange = function() {httpCallBackFunction(mrkID);}
-		var url = "/reviewController/?markerID="+mrkID;
+		var url = "/reviewController?markerID="+mrkID;
 		
 		xmlHttpReq.open('GET', url, true);
     	xmlHttpReq.send(null);    	

@@ -94,27 +94,29 @@
       </div>
       <div class="panel-body">
     
-  <form class="form-horizontal" id="rentForm" role="form" method="post" action="Rent">
-  <!-- Availability Date-->
-  <div class="form-group" style="margin-right:40px">
-    <label for="inputDate" class="col-sm-2 control-label">Available Date</label>
-    <div class="col-sm-4">
-      <input type="text" class="date form-control" id="date" placeholder="Availabile date" required>
-    </div>
-  </div>
+	<form class="form-horizontal" id="rentForm" role="form" method="post" action="Rent">
+  		<input type="hidden" name="parkingID" value='${parkingID}' />
+
+  		<!-- Availability Date-->
+  		<div class="form-group" style="margin-right:40px">
+    		<label for="inputDate" class="col-sm-2 control-label">Available Date</label>
+    		<div class="col-sm-4">
+      			<input type="text" class="date form-control" id="date" name="date" placeholder="Availabile date" required>
+    		</div>
+  		</div>
 
   <!-- Availability Time Period-->
   <div class="form-group" style="margin-right:40px">
-    <label for="inputStartTime" class="col-sm-2 control-label">From</label>
+    <label for="startTime" class="col-sm-2 control-label">From</label>
     <div class="col-sm-4">
-      	<select class="form-control" name="startTime">
+      	<select class="form-control" name="startTime" id="startTime">
 		</select>
     </div>
   </div>
   <div class="form-group" style="margin-right:40px">
-    <label for="inputEndTime" class="col-sm-2 control-label">To</label>
+    <label for="endTime" class="col-sm-2 control-label">To</label>
     <div class="col-sm-4">
-      	<select class="form-control" name="endTime">
+      	<select class="form-control" name="endTime" id="endTime">
 		</select>
     </div>
   </div>

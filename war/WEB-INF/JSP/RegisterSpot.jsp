@@ -80,14 +80,14 @@
 	  	<div class="form-group" style="margin-right:40px">
 	    	<label for="inputStartTime" class="col-sm-2 control-label">From</label>
 	    	<div class="col-sm-4">
-	      		<input type="time" class="form-control" name="startTime" placeholder="Availability start time" required>
+	      		<select class="form-control" name="startTime"></select>
 	    	</div>
 	  	</div>
 	  	
 	    <div class="form-group" style="margin-right:40px">
 	    	<label for="inputEndTime" class="col-sm-2 control-label">To</label>
 	    	<div class="col-sm-4">
-	      		<input type="time" class="form-control" name="endTime" placeholder="Availability start time" required>
+	      		<select class="form-control" name="endTime"></select>
 	    	</div>
 	  	</div>
 	
@@ -116,6 +116,13 @@
   	<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 	<script>
 		$('.date').datepicker({dateFormat: 'MM d, yy', minDate:0});
+		for(var i = 0; i < 48; i++) {
+			var hr = parseInt(i*30/60);
+			var min = i*30%60;
+			if(hr < 10) hr = '0'+hr;
+			if(min == 0) min = '00';
+			$('select').append($('<option>', {value : i}).text(hr+':'+min));
+		}
 	</script>
   </body>
 </html>

@@ -40,7 +40,7 @@ public class UserProfileServlet extends HttpServlet {
             List<RegisterParkingEntryModel> relatedRegisterEntries = new ArrayList<RegisterParkingEntryModel>();
             List<ParkingSpotModel> rentParkingSpot = new ArrayList<ParkingSpotModel>();
             for (int i = 0; i < allregisterParkingEntries.size(); i++){
-            	if (allregisterParkingEntries.get(i).getGuest().getGmail() == (new Email(user.getEmail()))){
+            	if (allregisterParkingEntries.get(i).getGuest().equals(host)){
             		relatedRegisterEntries.add(allregisterParkingEntries.get(i));
             		rentParkingSpot.add(allregisterParkingEntries.get(i).getParkingSpot());
             	}

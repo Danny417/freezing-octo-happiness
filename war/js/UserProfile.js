@@ -20,8 +20,8 @@ window.onload = function() {
 							"<th>" + rentSpots[i].lat + "/" + ownedSpots[i].lng + "</th>" +
 							"<th>" + rentSpots[i].price + "</th>" +
 							"<th>" + rentSpots[i].bookingDate + "</th>";
-			if (Date.compare(new Date(), new Date(rentSpots[i].bookingDate)) < 0){
-				rentContent = rentContent + "<th>Cancel button here</th></tr>";
+			if (((new Date()).getTime()) < ((new Date(rentSpots[i].bookingDate)).getTime()))){
+				rentContent = rentContent + "<th><a class='btn btn-default' href='#'>Cancel</a></th></tr>";
 			} else {
 				rentContent = rentContent + "<th>Expired</th></tr>";
 			}

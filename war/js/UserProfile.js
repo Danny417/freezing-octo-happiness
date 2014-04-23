@@ -17,7 +17,7 @@ window.onload = function() {
 			rentContent = rentContent + "<tr>" +
 							"<th>" + i + "</th>" +
 							"<th>" + rentSpots[i].address + "</th>" +
-							"<th>" + rentSpots[i].lat + "/" + ownedSpots[i].lng + "</th>" +
+							"<th>" + rentSpots[i].lat + "/" + rentSpots[i].lng + "</th>" +
 							"<th>" + rentSpots[i].price + "</th>" +
 							"<th>" + rentSpots[i].bookingDate + "</th>";
 			if (((new Date()).getTime()) < ((new Date(rentSpots[i].bookingDate)).getTime())){

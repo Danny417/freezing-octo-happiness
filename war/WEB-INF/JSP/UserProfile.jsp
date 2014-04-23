@@ -34,6 +34,7 @@
                     <th>Rent Date</th>
                     <th>Location</th>
                     <th>Host</th>
+                    <th>Status</th>
                 </tr>
             </thead>
             <tbody>
@@ -42,18 +43,21 @@
                     <td>need to add this as table</td>
                     <td></td>
                     <td></td>
+                    <td><a class="btn btn-default" href="#">Cancel</a></td>
                 </tr>
                 <tr>
                     <td>124</td>
                     <td></td>
                     <td></td>
                     <td></td>
+                    <td><a class="btn btn-default" href="#">Cancel</a></td>
                 </tr>
                 <tr>
                     <td>125</td>
                     <td></td>
                     <td></td>
                     <td></td>
+                    <td>Expired</td>
                 </tr>
             </tbody>
         </table>
@@ -65,6 +69,20 @@
         <h3 class="panel-title">Own Parking Spots</h3>
       </div>
     <div class="panel-body">
+      <table class="table table-condensed" id="ownedSpotsTable">
+      <!--thead>
+              <tr>
+                    <th>Parking Spot ID</th>
+                    <th>Location</th>
+                    <th>Price</th>
+                    <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+              </tr>
+            </tbody-->
+          </table>
     </div>
   </div>
   
@@ -76,5 +94,20 @@
 
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script> 	
   	<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+
+    <script>
+      var ownedSpots = [
+        <c:forEach items="${ownedParkingSpot}" var="ownedParkingSpot" varStatus="status">
+        {
+          parkingSpotID : '${fn:escapeXml(ownedParkingSpot.parkingSpotID)}',
+          address : '${ownedParkingSpot.address}',
+          price : '${ownedParkingSpot.price}'
+        }
+        <c:if test="${!status.last}">,</c:if>
+        </c:forEach>
+       ];
+    </script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+    <script src="/js/UserProfile.js"></script> 
   </body>
 </html>

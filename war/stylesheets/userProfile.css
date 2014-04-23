@@ -18,3 +18,9 @@ body {
     font-family: Harabara; /*a name to be used later*/
     src: url('/img/Harabara.TTF'); /*URL to font*/
 }
+
+.btn {
+	font-size: 15px;
+    vertical-align: middle;
+    line-height:10px;
+}

@@ -1,7 +1,11 @@
 package com.google.guestbook;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
+import javax.jdo.PersistenceManager;
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
@@ -74,7 +78,6 @@ public class RegisterParkingEntryModel{
 	public void setParkingSpot(ParkingSpotModel parkingSpot) {
 		this.parkingSpot = parkingSpot;
 	}
-	
 	
 
 }

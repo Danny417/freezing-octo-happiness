@@ -20,6 +20,7 @@ public class UserProfileServlet extends HttpServlet {
 	
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException{
+
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		try {   
 			UserService userService = UserServiceFactory.getUserService();
@@ -43,17 +44,10 @@ public class UserProfileServlet extends HttpServlet {
             	}
             }
             System.out.println("number of rentParkingSpot = " + rentParkingSpot.size());
-            
+           
 	        req.getRequestDispatcher("/WEB-INF/JSP/UserProfile.jsp").forward(req, resp);
 		} catch (ServletException e) {
 			e.printStackTrace();
 		} 
-	}
-	
-	private void setReqAttr(HttpServletRequest req) {
-    	UserService userService = UserServiceFactory.getUserService();
-        req.setAttribute("user", userService.getCurrentUser());
-        req.setAttribute("login", userService.createLoginURL(req.getRequestURI()));
-        req.setAttribute("logout", userService.createLogoutURL(req.getRequestURI()));	
 	}
 }

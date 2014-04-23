@@ -107,20 +107,15 @@
   <div class="form-group" style="margin-right:40px">
     <label for="inputStartTime" class="col-sm-2 control-label">From</label>
     <div class="col-sm-4">
-      <input type="time" class="form-control" name="startTime" placeholder="Availability start time" required>
+      	<select class="form-control" name="startTime">
+		</select>
     </div>
   </div>
   <div class="form-group" style="margin-right:40px">
     <label for="inputEndTime" class="col-sm-2 control-label">To</label>
     <div class="col-sm-4">
-      <input type="time" class="form-control" name="endTime" placeholder="Availability start time" required>
-    </div>
-  </div>
-
-  <!-- Availability check -->
-  <div class="form-group">
-    <div class="col-sm-offset-2 col-sm-10">
-      <button type="submit" class="btn btn-default">Check availability for chosen time slot</button>
+      	<select class="form-control" name="endTime">
+		</select>
     </div>
   </div>
 
@@ -137,11 +132,31 @@
 
 <hr style="margin-left:40px; margin-right:40px; border-color:white;">
 <p style="color:white; text-align:right; margin-right:40px">&#169; OurParkingSpot.com</p>
-
+<input type="hidden" name="avaliability" value='${avaliability}' />
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script> 	
   	<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 	<script>
-		$('.date').datepicker({dateFormat: 'MM d, yy', minDate:0});
+		var avaliDate = $('[name="avaliability"]').val().replace('00:00:00', '').replace('{','').replace('}','').replace(/"/g,'').split(':');
+		var now = new Date(avaliDate[0]);
+		$('.date').datepicker({
+			dateFormat: 'MM d, yy', 
+			beforeShowDay : function(date) {
+				if(date.getTime() == now.getTime()) {
+					return [true];
+				}
+				return [false];
+			}
+		});
+		var avaliTime = $.parseJSON(avaliDate[1]);
+		for(var i = 0; i < avaliTime.length; i++) {
+			if(avaliTime[i]) {
+				var hr = parseInt(i*30/60);
+				var min = i*30%60;
+				if(hr < 10) hr = '0'+hr;
+				if(min == 0) min = '00';
+				$('select').append($('<option>', {value : i}).text(hr+':'+min));
+			}
+		}
 	</script>
   </body>
 </html>

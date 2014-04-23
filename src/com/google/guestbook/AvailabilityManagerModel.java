@@ -13,6 +13,7 @@ import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
 import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.Text;
 import com.google.gson.Gson;
 
 @PersistenceCapable
@@ -23,14 +24,14 @@ public class AvailabilityManagerModel {
 	private Key managerKey;
 	
 	@Persistent
-	private String availability;
+	private Text availability;
 	
 	public AvailabilityManagerModel(){
-		this.availability = "{}";
+		this.availability = new Text("{}");
 	}
 	
 	public boolean isAvailable(Date desiredDate){
-		Map<Date, List<Boolean>> result = new Gson().fromJson(this.availability, HashMap.class);
+		Map<Date, List<Boolean>> result = new Gson().fromJson(this.availability.getValue(), HashMap.class);
 		// check the date only (don't compare time yet)
 		List<Boolean> dateStatus = result.get(getZeroTimeDate(desiredDate));
 		
@@ -65,23 +66,30 @@ public class AvailabilityManagerModel {
 	}
 	
 	public void addAvaliableTime(Date d, String startTime, String endTime) {
-		String[] hhmm = startTime.split(":");
-		int minutes = Integer.parseInt(hhmm[0])*60+Integer.parseInt(hhmm[1]);
-		int startIndex = minutes/30;
-		hhmm = endTime.split(":");
-		minutes = Integer.parseInt(hhmm[0])*60+Integer.parseInt(hhmm[1]);
-		int endIndex = minutes/30;
+		int startIndex = Integer.parseInt(startTime);
+		int endIndex = Integer.parseInt(endTime);
 		List<Boolean> timeSlots = new ArrayList<Boolean>();
 		for(int i = 0; i < 48 ; i++){
-			if(i >= startIndex && i <= endIndex) {
+			if(i >= startIndex && i < endIndex) {
 				timeSlots.add(true);
 			} else {
 				timeSlots.add(false);
 			}
 		}
-		Map<Date, List<Boolean>> result = new Gson().fromJson(this.availability, HashMap.class);
+		Map<Date, List<Boolean>> result = new Gson().fromJson(this.availability.getValue(), HashMap.class);
 		result.put(d, timeSlots);
-		this.availability = new Gson().toJson(result);	
+		this.availability = new Text(new Gson().toJson(result));	
+	}
+	public void setAvaliableTime(Date d, String startTime, String endTime, Boolean isAvali) {
+		Map<String, List<Boolean>> result = new Gson().fromJson(this.availability.getValue(), HashMap.class);
+		int startIndex = Integer.parseInt(startTime);
+		int endIndex = Integer.parseInt(endTime);
+		for(int i = 0; i < 48 ; i++){
+			if(i >= startIndex && i < endIndex) {
+				result.get(d.toString()).set(i, isAvali);
+			} 
+		}
+		this.availability = new Text(new Gson().toJson(result));	
 	}
 	// ACCESSORS
 	
@@ -93,11 +101,11 @@ public class AvailabilityManagerModel {
 		this.managerKey = managerKey;
 	}
 
-	public String getAvailability() {
+	public Text getAvailability() {
 		return availability;
 	}
 
-	public void setAvailability(String availability) {
+	public void setAvailability(Text availability) {
 		this.availability = availability;
 	}
 

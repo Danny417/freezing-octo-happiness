@@ -12,6 +12,8 @@ import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
 import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
+import com.google.appengine.datanucleus.annotations.Unowned;
 
 @PersistenceCapable
 public class RegisterParkingEntryModel{
@@ -21,22 +23,26 @@ public class RegisterParkingEntryModel{
 	private Key registerParkingEntryKey;
 	
 	@Persistent
+	@Unowned
 	private UserModel guest;
 	
 	@Persistent
 	private Date bookingDate;
 	
 	@Persistent
-	private int price;
+	private double price;
 	
 	@Persistent
+	@Unowned
 	private ParkingSpotModel parkingSpot;
 	
-	public RegisterParkingEntryModel(Date bookingDate, int price, ParkingSpotModel parkingSpot, UserModel guest){
+	public RegisterParkingEntryModel(Date bookingDate, double price, ParkingSpotModel parkingSpot, UserModel guest){
 		this.price = price;
 		this.bookingDate = bookingDate;
 		this.parkingSpot = parkingSpot;
 		this.guest = guest;
+		System.out.println(bookingDate.toString()+parkingSpot.toString()+guest.toString());
+		this.registerParkingEntryKey = KeyFactory.createKey(RegisterParkingEntryModel.class.getSimpleName(), bookingDate.toString()+parkingSpot.toString()+guest.toString());
 	}
 
 	public Key getRegisterParkingEntryKey() {
@@ -63,7 +69,7 @@ public class RegisterParkingEntryModel{
 		this.bookingDate = bookingDate;
 	}
 
-	public int getPrice() {
+	public double getPrice() {
 		return price;
 	}
 

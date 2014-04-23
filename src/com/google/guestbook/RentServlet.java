@@ -26,6 +26,7 @@ public class RentServlet extends HttpServlet {
 			if(parkingID != null && !parkingID.isEmpty()) {
 				ParkingSpotModel ps = ParkingSpotModel.getParkingSpotById(ParkingSpotModel.getChildKeys(parkingID), pm);
 	            req.setAttribute("parkingSpot", ps);
+	            req.setAttribute("avaliability", ps.getAvailability().getAvailability());
 			}
 	        req.getRequestDispatcher("/WEB-INF/JSP/Rent.jsp").forward(req, resp);
 		} catch (ServletException e) {

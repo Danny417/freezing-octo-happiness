@@ -27,40 +27,8 @@
         <h3 class="panel-title">Booking History</h3>
       </div>
     <div class="panel-body">
-      <table class="table table-condensed">
-            <thead>
-                <tr>
-                    <th>Parking Spot ID</th>
-                    <th>Rent Date</th>
-                    <th>Location</th>
-                    <th>Host</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>123</td>
-                    <td>need to add this as table</td>
-                    <td></td>
-                    <td></td>
-                    <td><a class="btn btn-default" href="#">Cancel</a></td>
-                </tr>
-                <tr>
-                    <td>124</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td><a class="btn btn-default" href="#">Cancel</a></td>
-                </tr>
-                <tr>
-                    <td>125</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>Expired</td>
-                </tr>
-            </tbody>
-        </table>
+      <table class="table table-condensed" id="rentSpotsTable">
+      </table>
     </div>
   </div>
 
@@ -70,19 +38,7 @@
       </div>
     <div class="panel-body">
       <table class="table table-condensed" id="ownedSpotsTable">
-      <!--thead>
-              <tr>
-                    <th>Parking Spot ID</th>
-                    <th>Location</th>
-                    <th>Price</th>
-                    <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-              </tr>
-            </tbody-->
-          </table>
+      </table>
     </div>
   </div>
   
@@ -99,9 +55,25 @@
       var ownedSpots = [
         <c:forEach items="${ownedParkingSpot}" var="ownedParkingSpot" varStatus="status">
         {
-          parkingSpotID : '${fn:escapeXml(ownedParkingSpot.parkingSpotID)}',
+          lat : '${ownedParkingSpot.lat}',
+          lng : '${ownedParkingSpot.lng}',
           address : '${ownedParkingSpot.address}',
           price : '${ownedParkingSpot.price}'
+        }
+        <c:if test="${!status.last}">,</c:if>
+        </c:forEach>
+       ];
+    </script>
+
+    <script>
+      var rentSpots = [
+        <c:forEach items="${relatedRegisterEntries}" var="relatedRegisterEntries" varStatus="status">
+        {
+          lat : '${relatedRegisterEntries.parkingSpot.lat}',
+          lng : '${relatedRegisterEntries.parkingSpot.lng}',
+          address : '${relatedRegisterEntries.parkingSpot.address}',
+          price : '${relatedRegisterEntries.parkingSpot.price}',
+          bookingDate : '${relatedRegisterEntries.bookingDate}'
         }
         <c:if test="${!status.last}">,</c:if>
         </c:forEach>

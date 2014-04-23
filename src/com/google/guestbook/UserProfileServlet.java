@@ -32,17 +32,21 @@ public class UserProfileServlet extends HttpServlet {
             req.setAttribute("ownedParkingSpot", ownedParkingSpot);
             System.out.println(ownedParkingSpot.size());
             
-            List<RegisterParkingEntryModel> registerParkingEntries;
+            List<RegisterParkingEntryModel> allregisterParkingEntries;
             Query allEntriesQuery = pm.newQuery(RegisterParkingEntryModel.class);
-            registerParkingEntries = (List<RegisterParkingEntryModel>) allEntriesQuery.execute();
-            System.out.println("number of registerParkingEntry = "+ registerParkingEntries.size());
+            allregisterParkingEntries = (List<RegisterParkingEntryModel>) allEntriesQuery.execute();
+            System.out.println("number of registerParkingEntry = "+ allregisterParkingEntries.size());
             
+            List<RegisterParkingEntryModel> relatedRegisterEntries = new ArrayList<RegisterParkingEntryModel>();
             List<ParkingSpotModel> rentParkingSpot = new ArrayList<ParkingSpotModel>();
-            for (int i = 0; i < registerParkingEntries.size(); i++){
-            	if (registerParkingEntries.get(i).getGuest().getGmail() == (new Email(user.getEmail()))){
-            		rentParkingSpot.add(registerParkingEntries.get(i).getParkingSpot());
+            for (int i = 0; i < allregisterParkingEntries.size(); i++){
+            	if (allregisterParkingEntries.get(i).getGuest().getGmail() == (new Email(user.getEmail()))){
+            		relatedRegisterEntries.add(allregisterParkingEntries.get(i));
+            		rentParkingSpot.add(allregisterParkingEntries.get(i).getParkingSpot());
             	}
             }
+            req.setAttribute("relatedRegisterEntries", relatedRegisterEntries);
+            req.setAttribute("rentParkingSpot", rentParkingSpot);
             System.out.println("number of rentParkingSpot = " + rentParkingSpot.size());
            
 	        req.getRequestDispatcher("/WEB-INF/JSP/UserProfile.jsp").forward(req, resp);

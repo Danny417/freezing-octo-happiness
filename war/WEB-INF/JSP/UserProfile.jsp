@@ -69,6 +69,7 @@
       var rentSpots = [
         <c:forEach items="${relatedRegisterEntries}" var="relatedRegisterEntries" varStatus="status">
         {
+          id : '${relatedRegisterEntries.registerParkingEntryKey}',
           lat : '${relatedRegisterEntries.parkingSpot.lat}',
           lng : '${relatedRegisterEntries.parkingSpot.lng}',
           address : '${relatedRegisterEntries.parkingSpot.address}',

@@ -16,15 +16,15 @@ window.onload = function() {
 		for (var i=0; i < rentSpots.length; i++){
 			var bookDate = new Date(rentSpots[i].bookingDate);
 			rentContent = rentContent + "<tr>" +
-							"<th>" + i + "</th>" +
-							"<th>" + rentSpots[i].address + "</th>" +
-							"<th>" + rentSpots[i].lat + "/" + rentSpots[i].lng + "</th>" +
-							"<th>" + rentSpots[i].price + "</th>" +
-							"<th>" + bookDate.toDateString() + "</th>";
+							"<td>" + i + "</td>" +
+							"<td>" + rentSpots[i].address + "</td>" +
+							"<td>" + rentSpots[i].lat + "/" + rentSpots[i].lng + "</td>" +
+							"<td>" + rentSpots[i].price + "</td>" +
+							"<td>" + bookDate.toDateString() + "</td>";
 			if (((new Date()).getTime()) < ((new Date(rentSpots[i].bookingDate)).getTime())){
-				rentContent = rentContent + "<th><a class='btn btn-default' href='#'>Cancel</a></th></tr>";
+				rentContent = rentContent + "<td><a class='btn btn-default' href='/UserProfile?entryId="+rentSpots[i].id+"'>Cancel</a></td></tr>";
 			} else {
-				rentContent = rentContent + "<th>Expired</th></tr>";
+				rentContent = rentContent + "<td>Expired</td></tr>";
 			}
 		}
 		rentContent = rentContent + "</tbody>";
@@ -36,17 +36,17 @@ window.onload = function() {
 					"<th>Location</th>"+
 					"<th>Lat/Lon</th>" + 
 					"<th>Price per hour</th>"+
-					"<th>Status</th></tr></thead>";
+					"</tr></thead>";
 	if (ownedSpots.length > 0) {
 		ownedContent = ownedContent + "<tbody>";
 		
 		for (var i=0; i < ownedSpots.length; i++){
 			ownedContent = ownedContent + "<tr>" +
-							"<th>" + i + "</th>" +
-							"<th>" + ownedSpots[i].address + "</th>" +
-							"<th>" + ownedSpots[i].lat + "/" + ownedSpots[i].lng + "</th>" +
-							"<th>" + ownedSpots[i].price + "</th>" +
-							"<th></th></tr>";
+							"<td>" + i + "</td>" +
+							"<td>" + ownedSpots[i].address + "</td>" +
+							"<td>" + ownedSpots[i].lat + "/" + ownedSpots[i].lng + "</td>" +
+							"<td>" + ownedSpots[i].price + "</td>" +
+							"</tr>";
 		}
 		ownedContent = ownedContent + "</tbody>";
 	}

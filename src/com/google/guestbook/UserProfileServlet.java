@@ -2,6 +2,7 @@ package com.google.guestbook;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.jdo.PersistenceManager;
@@ -38,20 +39,45 @@ public class UserProfileServlet extends HttpServlet {
             System.out.println("number of registerParkingEntry = "+ allregisterParkingEntries.size());
             
             List<RegisterParkingEntryModel> relatedRegisterEntries = new ArrayList<RegisterParkingEntryModel>();
-            List<ParkingSpotModel> rentParkingSpot = new ArrayList<ParkingSpotModel>();
-            for (int i = 0; i < allregisterParkingEntries.size(); i++){
+
+        	String id = req.getParameter("entryId");
+           /* for (int i = 0; i < allregisterParkingEntries.size(); i++){
             	if (allregisterParkingEntries.get(i).getGuest().equals(host)){
+            		if(id != null && !id.isEmpty()) {
+                		if(id.equals(allregisterParkingEntries.get(i).getRegisterParkingEntryKey().toString())) {
+                			pm.deletePersistent(allregisterParkingEntries.get(i));
+                			continue;
+                		}
+                	}
             		relatedRegisterEntries.add(allregisterParkingEntries.get(i));
-            		rentParkingSpot.add(allregisterParkingEntries.get(i).getParkingSpot());
+            	}
+            }*/
+            Iterator<RegisterParkingEntryModel> itr = allregisterParkingEntries.iterator();
+            while (itr.hasNext()) {
+            	RegisterParkingEntryModel entry = itr.next();
+            	if (entry.getGuest().equals(host)){
+            		if(id != null && !id.isEmpty()) {
+                		if(id.equals(entry.getRegisterParkingEntryKey().toString())) {
+                			pm.deletePersistent(entry);
+                			continue;
+                		}
+                	}
+            		relatedRegisterEntries.add(entry);
             	}
             }
             req.setAttribute("relatedRegisterEntries", relatedRegisterEntries);
-            req.setAttribute("rentParkingSpot", rentParkingSpot);
-            System.out.println("number of rentParkingSpot = " + rentParkingSpot.size());
            
 	        req.getRequestDispatcher("/WEB-INF/JSP/UserProfile.jsp").forward(req, resp);
 		} catch (ServletException e) {
 			e.printStackTrace();
 		} 
 	}
+	
+	@Override
+    public void doPost(HttpServletRequest req, HttpServletResponse resp)
+                throws IOException {	
+		System.out.println("test");
+		System.out.println(req.getParameter("entryId"));
+		resp.sendRedirect("/UserProfile");
+    }
 }

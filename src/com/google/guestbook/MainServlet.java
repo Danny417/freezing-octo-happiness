@@ -14,7 +14,7 @@ public class MainServlet extends HttpServlet{
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException{
         try {
             setReqAttr(req);
-	        req.getRequestDispatcher("/WEB-INF/JSP/guestbook.jsp").forward(req, resp);
+	        req.getRequestDispatcher("/WEB-INF/JSP/Main.jsp").forward(req, resp);
 		} catch (ServletException e) {
 			e.printStackTrace();
 		}

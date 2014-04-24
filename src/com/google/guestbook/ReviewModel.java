@@ -10,17 +10,17 @@ import javax.jdo.annotations.PrimaryKey;
 import com.google.appengine.api.datastore.Key;
 
 @PersistenceCapable
-public class Review{
+public class ReviewModel{
 	
 	@PrimaryKey
 	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
 	private Key key;
 	
-	@Persistent (dependent = "true")
-	private ParkingSpot parkingSpot;
-	
+	@Persistent 
+	private ParkingSpotModel parkingSpot;
+			
 	@Persistent
-	private User guest;
+	private String username;
 	
 	@Persistent
 	private Date date;
@@ -29,23 +29,27 @@ public class Review{
 	private String reviewMessage;
 	
 	@Persistent
-	private int rating;
+	private double rating;
 	
-	public Review(User user, Date date, ParkingSpot parkingSpot, int rating){
-		this.guest = user;
+	public ReviewModel(Date date, double rating, String reviewMessage){
 		this.date = date;
-		this.parkingSpot = parkingSpot;
 		this.rating = rating;
+		this.reviewMessage = reviewMessage;		
 	}
 
-	public ParkingSpot getParkingSpot() {
+	public Key getKey() {
+		return this.key;
+	}
+	
+	public ParkingSpotModel getParkingSpot() {
 		return parkingSpot;
 	}
 
-	public User getUser() {
-		return guest;
+	public void setParkingSpot(ParkingSpotModel ps) {
+		this.parkingSpot = ps;
+		this.parkingSpot.addReview(this);
 	}
-
+	
 	public Date getDate() {
 		return date;
 	}
@@ -62,13 +66,19 @@ public class Review{
 		this.reviewMessage = reviewMessage;
 	}
 
-	public int getRating() {
+	public double getRating() {
 		return rating;
 	}
 
-	public void setRating(int rating) {
+	public void setRating(double rating) {
 		this.rating = rating;
 	}
 	
+	public void setUser(UserModel user) {
+		this.username = user.getName();
+	}
 	
+	public String getUser() {
+		return this.username;
+	}
 }

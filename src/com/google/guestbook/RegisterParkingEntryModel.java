@@ -1,38 +1,47 @@
 package com.google.guestbook;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
+import javax.jdo.PersistenceManager;
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
 import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
+import com.google.appengine.datanucleus.annotations.Unowned;
 
 @PersistenceCapable
-public class RegisterParkingEntry{
+public class RegisterParkingEntryModel{
 	
 	@PrimaryKey
 	@Persistent (valueStrategy = IdGeneratorStrategy.IDENTITY)
 	private Key registerParkingEntryKey;
 	
 	@Persistent
-	private User guest;
+	@Unowned
+	private UserModel guest;
 	
 	@Persistent
 	private Date bookingDate;
 	
 	@Persistent
-	private int price;
+	private double price;
 	
 	@Persistent
-	private ParkingSpot parkingSpot;
+	@Unowned
+	private ParkingSpotModel parkingSpot;
 	
-	public RegisterParkingEntry(Date bookingDate, int price, ParkingSpot parkingSpot, User guest){
+	public RegisterParkingEntryModel(Date bookingDate, double price, ParkingSpotModel parkingSpot, UserModel guest, String startTime, String endTime){
 		this.price = price;
 		this.bookingDate = bookingDate;
 		this.parkingSpot = parkingSpot;
 		this.guest = guest;
+		this.registerParkingEntryKey = KeyFactory.createKey(RegisterParkingEntryModel.class.getSimpleName(), bookingDate.toString()+startTime+endTime+parkingSpot.toString()+guest.toString());
 	}
 
 	public Key getRegisterParkingEntryKey() {
@@ -43,11 +52,11 @@ public class RegisterParkingEntry{
 		this.registerParkingEntryKey = registerParkingEntryKey;
 	}
 
-	public User getGuest() {
+	public UserModel getGuest() {
 		return guest;
 	}
 
-	public void setGuest(User guest) {
+	public void setGuest(UserModel guest) {
 		this.guest = guest;
 	}
 
@@ -59,7 +68,7 @@ public class RegisterParkingEntry{
 		this.bookingDate = bookingDate;
 	}
 
-	public int getPrice() {
+	public double getPrice() {
 		return price;
 	}
 
@@ -67,14 +76,13 @@ public class RegisterParkingEntry{
 		this.price = price;
 	}
 
-	public ParkingSpot getParkingSpot() {
+	public ParkingSpotModel getParkingSpot() {
 		return parkingSpot;
 	}
 
-	public void setParkingSpot(ParkingSpot parkingSpot) {
+	public void setParkingSpot(ParkingSpotModel parkingSpot) {
 		this.parkingSpot = parkingSpot;
 	}
-	
 	
 
 }

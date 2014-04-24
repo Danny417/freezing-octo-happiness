@@ -1,0 +1,26 @@
+.panel-success > .panel-footer {
+    color: #468847;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+}
+.panel-heading > .table, .panel-heading > .table th {
+    margin:0px;
+    border: 0px;
+}
+
+body {
+	background-image:url('/img/park.jpg');
+	background-repeat: no-repeat;
+	background-size: 100%;
+}
+
+@font-face {
+    font-family: Harabara; /*a name to be used later*/
+    src: url('/img/Harabara.TTF'); /*URL to font*/
+}
+
+.btn {
+	font-size: 15px;
+    vertical-align: middle;
+    line-height:10px;
+}

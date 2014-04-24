@@ -12,12 +12,49 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
         <servlet-name>main</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
+    
 	<servlet>
-        <servlet-name>ajax</servlet-name>
-        <servlet-class>com.google.guestbook.SignGuestbookServlet</servlet-class>
+        <servlet-name>SearchController</servlet-name>
+        <servlet-class>com.google.guestbook.SearchController</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>ajax</servlet-name>
-        <url-pattern>/ajax/*</url-pattern>
+        <servlet-name>SearchController</servlet-name>
+        <url-pattern>/SearchController/*</url-pattern>
+    </servlet-mapping>
+    
+	<servlet>
+        <servlet-name>reviewController</servlet-name>
+        <servlet-class>com.google.guestbook.ReviewController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>reviewController</servlet-name>
+        <url-pattern>/reviewController/*</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>Rent</servlet-name>
+        <servlet-class>com.google.guestbook.RentServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Rent</servlet-name>
+        <url-pattern>/Rent/*</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>RegisterSpot</servlet-name>
+        <servlet-class>com.google.guestbook.RegisterSpotServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>RegisterSpot</servlet-name>
+        <url-pattern>/RegisterSpot/*</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>UserProfile</servlet-name>
+        <servlet-class>com.google.guestbook.UserProfileServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UserProfile</servlet-name>
+        <url-pattern>/UserProfile/*</url-pattern>
     </servlet-mapping>
 </web-app>

@@ -1,0 +1,11 @@
+
+body {
+	background-image:url('/img/park.jpg');
+	background-repeat: no-repeat;
+	background-size: 100%;
+}
+
+@font-face {
+    font-family: Harabara; /*a name to be used later*/
+    src: url('/img/Harabara.TTF'); /*URL to font*/
+}

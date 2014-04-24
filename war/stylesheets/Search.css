@@ -1,0 +1,197 @@
+body {
+	background-image:url('/img/park.jpg');
+	background-repeat: no-repeat;
+	background-size: 100%;	
+}
+#content {
+	width:100%;
+	white-space:nowrap;
+}
+#map {
+	width: 100%;	
+	height: 800px;
+}
+#map-canvas { 
+	height: 100%;
+	bottom: 30px;
+}
+.block {
+  	padding: 40px;	
+}
+.box-shadow-right-bottom {
+  	padding: 20px;   
+  	border: 1px solid #d6e9c6;
+  	-moz-box-shadow: 10px 10px 15px #ccc;
+  	-webkit-box-shadow: 10px 10px 15px #ccc;
+  	box-shadow: 10px 10px 15px #ccc;  		
+}
+.badge {
+	float: right
+}
+
+.msglist {
+	bottom: 2px;
+	width:350px;
+	height:200px;	
+	overflow-y:auto;
+	opacity: 1;
+	color: #ffffff;
+	word-wrap:break-word;	
+	padding: 10px;
+	font-size: 12px;
+}
+
+textarea {
+	width: 250px;
+}
+
+div.bigstars div.rateit-range
+{
+    background: url(/img/star-white32.png);
+    height: 32px;
+}
+ 
+div.bigstars div.rateit-hover
+{
+    background: url(/img/star-gold32.png);
+}
+ 
+div.bigstars div.rateit-selected
+{
+    background: url(/img/star-red32.png);
+}
+ 
+div.bigstars div.rateit-reset
+{
+    background: url(/img/star-black32.png);
+    width: 32px;
+    height: 32px;
+}
+ 
+div.bigstars div.rateit-reset:hover
+{
+    background: url(/img/star-white32.png);
+}
+
+#infoBox{
+	border: 1px solid black; 
+	margin-top: 8px; 
+	background: -webkit-linear-gradient(45deg, rgba(69,68,95,1), rgba(49,42,183,0.8), rgba(14,10,93,1)); /*Safari*/
+	background: -o-linear-gradient(45deg, rgba(69,68,95,1), rgba(49,42,183,0.8), rgba(14,10,93,1)); /*Opera 11-12*/
+	background: -moz-linear-gradient(45deg, rgba(69,68,95,1), rgba(49,42,183,0.8), rgba(14,10,93,1)); /*Fx 3.6-15*/
+	background: linear-gradient(45deg, rgba(69,68,95,1), rgba(49,42,183,0.8), rgba(14,10,93,1)); /*Standard*/
+	padding: 5px;
+}
+
+#menu {
+	background: -webkit-linear-gradient(45deg, rgba(0,128,0,0.8), rgba(0,255,0,1), rgba(0,128,0,0.8)); /*Safari*/
+	background: -o-linear-gradient(45deg, rgba(0,128,0,0.8), rgba(0,255,0,1), rgba(0,128,0,0.8)); /*Opera 11-12*/
+	background: -moz-linear-gradient(45deg, rgba(0,128,0,0.8), rgba(0,255,0,1), rgba(0,128,0,0.8)); /*Fx 3.6-15*/
+	background: linear-gradient(45deg, rgba(0,128,0,0.8), rgba(0,255,0,1), rgba(0,128,0,0.8)); /*Standard*/	
+}
+
+input[type="button"]{
+	border:1px solid;
+	color: #ffffff;
+	border-color: #ffffff;
+	background-color: #0F5AD4;
+	box-shadow: 0px 0px 10px #ffffff;
+}
+
+div[name="desc"] {
+	color: #ffffff;
+	height: 160px;
+}
+div.img{
+	bottom: 8px;
+	left: 5px;
+	height: 160px;
+	width: 220px;
+}
+
+#img0{
+	background:url(http://cutestuff.co/wp-content/uploads/2012/06/adorable_panda.jpg);
+	background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+#img1{
+	background:url(http://www.fondosni.com/images/2013-04-07/Perrito%20cafe%20peludito-55489.jpg);
+	background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+#img2{
+	background:url(http://smashingpicture.com/wp-content/uploads/2012/06/llama.jpg);
+	background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+#img3{
+	background:url(http://www.today.colostate.edu/userfiles/images/dachshund_md.jpg);
+	background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+#img4{
+	background:url(http://www.topdreamer.com/wp-content/uploads/2013/08/tumblr_lrhjcn3Qn61r36twko1_400.jpg);
+	background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+#img5{
+	background:url(http://cdn2.hellogiggles.com/wp-content/uploads/2012/03/23/cute-animals-1.jpg);
+	background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+#img6{
+	background:url(http://webtoolfeed.files.wordpress.com/2012/04/poof-l1.jpg);
+	background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+#img7{
+	background:url(http://cdn.zmescience.com/wp-content/uploads/2012/10/cute-animals-02.jpg);
+	background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+#img8{
+	background:url(http://3219a2.medialib.glogster.com/media/14/14ea8766335deb68dd42383d67ebfc3cca99b2f0a9e98728900fa228f9940871/cute-animal1-jpg.jpg);
+	background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+#img9{
+	background:url(http://www.123inspiration.com/wp-content/uploads/2013/11/Cute-Animal-Photos-5.jpg);
+	background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+#img10{
+	background:url(http://prafulla.net/wp-content/sharenreadfiles/2011/02/cute-animals10.jpg);
+	background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+#img11{
+	background:url(http://justcuteanimals.com/wp-content/uploads/2012/11/cute-animal-bunny-rabbit-shopping-cart-trolly-store-carrot-lettuce-pics-600x450.jpg);
+	background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+#img12{
+	background:url(https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQU54lY8OMx4ZP0KuANp1YiuqCMmcESAaYcXs8qFcKbijfO-Jdg);
+	background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+#img13{
+	background:url(http://prafulla.net/wp-content/sharenreadfiles/2011/02/cute-animals10.jpg);
+	background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+
+.imgContainer div { 
+  -webkit-transition: all 0.5s ease;
+     -moz-transition: all 0.5s ease;
+       -o-transition: all 0.5s ease;
+      -ms-transition: all 0.5s ease;
+          transition: all 0.5s ease;
+}
+ 
+.imgContainer div:hover {
+  -webkit-transform: rotate(-10deg);
+     -moz-transform: rotate(-10deg);
+       -o-transform: rotate(-10deg);
+      -ms-transform: rotate(-10deg);
+          transform: rotate(-10deg);
+}

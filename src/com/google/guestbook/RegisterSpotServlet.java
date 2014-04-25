@@ -47,10 +47,10 @@ public class RegisterSpotServlet extends HttpServlet {
         PersistenceManager pm = PMF.get().getPersistenceManager();
 		try {        
 			double price = Double.valueOf(req.getParameter("price"));
-			ParkingSpotModel ps = new ParkingSpotModel(price, req.getParameter("address"), Double.valueOf(req.getParameter("lat")),Double.valueOf(req.getParameter("lng")));
+			ParkingSpotModel ps = new ParkingSpotModel(price, req.getParameter("address").replace("\n", " ").replace("\r", "").replace("'", ""), Double.valueOf(req.getParameter("lat")),Double.valueOf(req.getParameter("lng")));
 			String desc = req.getParameter("desc");
 			if(desc != null && !desc.isEmpty()) {
-				ps.setDescription(desc);
+				ps.setDescription(desc.replace("\n", " ").replace("\r", "").replace("'", ""));
 			}
 			AvailabilityManagerModel avail = new AvailabilityManagerModel();
 			Date d;

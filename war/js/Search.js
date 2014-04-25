@@ -155,12 +155,19 @@ function parseResponse(xmlDoc, xmlHttpReq, mrkID) {
 	var jsonArray;
 	if(xmlDoc) jsonArray = JSON.parse(xmlHttpReq.responseText);
 	console.log(jsonArray);
-	if(!(!jsonArray) && jsonArray.length > 0){			
+	if(!(!jsonArray) && jsonArray.length > 0){		
+		var m_names = new Array("January", "February", "March", 
+				"April", "May", "June", "July", "August", "September", 
+				"October", "November", "December");
 		var htmlText = "";
 		var totalRate = 0;
 		for (var i = 0; i < jsonArray.length; i++){
 			var username = (jsonArray[i]['username'] == undefined) ? 'nija user' : jsonArray[i]['username'];
-			htmlText = htmlText + "<b>" + jsonArray[i]['date'] +" <br/>"
+			var t = new Date(jsonArray[i]['date']+' UTC');
+			var hr = (t.getHours() > 9)? t.getHours() : '0'+t.getHours();
+			var min = (t.getMinutes() > 9)? t.getMinutes() : '0'+t.getMinutes();
+			
+			htmlText = htmlText + "<b>" + m_names[t.getMonth()] +' '+ t.getDate() +', '+t.getFullYear()+' '+hr+':'+min +" <br/>"
 			+ username +"</b> rates: "
 			+ jsonArray[i]['rating']+ " out of 5.<br/>" +
 			jsonArray[i]['reviewMessage']+"<br/>";

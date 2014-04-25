@@ -57,8 +57,6 @@ public class ReviewController extends HttpServlet {
 	        try {
 		    	ParkingSpotModel ps = ParkingSpotModel.getParkingSpotById(ParkingSpotModel.getChildKeys(req.getParameter("markerID")), pm);
 		        
-		        SimpleDateFormat isoFormat = new SimpleDateFormat("EEE d MMM yyyy HH:mm:ss z");
-		        isoFormat.setTimeZone(TimeZone.getTimeZone("PST"));
 		        ReviewModel review = new ReviewModel(new Date(), Double.parseDouble(req.getParameter("rating")), req.getParameter("content"));
 		        if(user != null) {
 		        	UserModel userModel = UserModel.getUserById(new Email(user.getEmail()), pm);
@@ -74,7 +72,10 @@ public class ReviewController extends HttpServlet {
 	        	pm.currentTransaction().begin();
 	    	    pm.makePersistent(ps);
 	    	    pm.currentTransaction().commit();
-	        } finally {
+	        } catch (Exception e) {
+	        	System.out.println(e.toString());
+	        }
+	        finally {
 	        	if (pm.currentTransaction().isActive()) {
 	    	        pm.currentTransaction().rollback();
 	    	    }

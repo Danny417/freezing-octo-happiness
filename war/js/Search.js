@@ -50,8 +50,8 @@ window.onload = function() {
 		for(var i = 0; i < parseInt(getURLParam('num')); i++) {
 			placeMarker(new google.maps.LatLng(getURLParam('lat'+i), getURLParam('lng'+i)));
 		}
-		showMarkers();
 	}
+	showMarkers();
 	google.maps.event.addListener(map, 'click', function(event) {
 	   placeMarker(event.latLng);
 	});
@@ -100,7 +100,7 @@ function addInfoBox(marker, mrkID){
 	}
 	var myOptions = {
 		 content: '<div id="infoBox"><table><tr><td><div class="imgContainer"><div class="img img-thumbnail" id="img'+ mrkID +'" ></div></div>'
-		 +'<div name="desc">Description:'+theMarker.description +'<br/></div><div class="rateit bigstars" id="totalRank'+mrkID+'" data-rateit-starwidth="32" data-rateit-starheight="32"></div></td><td>'+
+		 +'<div name="desc" style="word-wrap:break-word;width:220px">Description:'+theMarker.description +'<br/></div><div class="rateit bigstars" id="totalRank'+mrkID+'" data-rateit-starwidth="32" data-rateit-starheight="32"></div></td><td>'+
 			'<div id="content"><div class="msglist" id="'+mrkID+'" ></div>' +
 			  '<div style="padding:10px"><div class="rateit" id="rateit_'+mrkID+'"></div><textarea id="'+mrkID+'_post" rows="3" cols="10" class="form-control"></textarea><br/>' +			  
 			  '<input type="button" value="Post" onclick="postAjaxRequest(\''+ mrkID +'\')"/><input type="button" value="Rent" onclick="requestRent(\''+ mrkID +'\')"/></div></div></td></tr></table></div>'

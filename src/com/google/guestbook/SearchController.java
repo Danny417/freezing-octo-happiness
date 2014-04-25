@@ -49,6 +49,8 @@ public class SearchController extends HttpServlet{
         	}	
 	        
 	        req.setAttribute("parkingSpots", searchByCoord(lats, lngs));
+        } else {
+	        req.setAttribute("parkingSpots", searchByCoord(null, null));
         }
     }
 	
@@ -61,17 +63,21 @@ public class SearchController extends HttpServlet{
     	List<ParkingSpotModel> finalRes = null;
     	try {
     		List<ParkingSpotModel> results = (List<ParkingSpotModel>) q.execute();	
-    		finalRes = new ArrayList<ParkingSpotModel>();
-    		for(ParkingSpotModel ps : results) {
-    			if(ps.getAvailability().isNotAvaliable()) {
-    				continue;
-    			}
-    			for(int i = 0; i < lats.size(); i++) {
-	        		if(ps.getLat() <= lats.get(i)+0.01 && ps.getLat() >= lats.get(i)-0.01 && ps.getLng() >= lngs.get(i)-0.01 && ps.getLng() <= lngs.get(i)+0.01) {
-	        			finalRes.add(ps);	        			
-	        		}
-    			}
-        	}
+    		if(lats != null && lats.size() > 0 && lngs != null && lngs.size() > 0) {
+	    		finalRes = new ArrayList<ParkingSpotModel>();
+	    		for(ParkingSpotModel ps : results) {
+	    			if(ps.getAvailability().isNotAvaliable()) {
+	    				continue;
+	    			}
+	    			for(int i = 0; i < lats.size(); i++) {
+		        		if(ps.getLat() <= lats.get(i)+0.01 && ps.getLat() >= lats.get(i)-0.01 && ps.getLng() >= lngs.get(i)-0.01 && ps.getLng() <= lngs.get(i)+0.01) {
+		        			finalRes.add(ps);	        			
+		        		}
+	    			}
+	        	}
+	    	} else {
+	    		finalRes = new ArrayList<ParkingSpotModel>(results);
+	    	}
     	} catch(Exception e) {
     		System.out.println(e.toString());
     	} finally {
